@@ -101,7 +101,7 @@ if( ! is_null($content['error']))
 	echo form_upload($ad);
 	echo form_label('Coupon image:', $coupon['id']);
 	echo form_upload($coupon);
-	echo form_label('Title:', $title['id']);
+	echo form_label('Listing title (ie Business name, Organization name, etc...):', $title['id']);
 	echo form_input($title);
 	echo form_label('Description:', $description['id']);
 	echo form_textarea($description);
