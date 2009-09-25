@@ -55,6 +55,8 @@ if( ! is_null($content['error']))
 
 <h2>Create a new premium listing</h2>
 
+<?php echo $this->validation->error_string; //output any validation errors?>
+
 <?php
 	echo form_open_multipart($this->uri->uri_string());		
 	
