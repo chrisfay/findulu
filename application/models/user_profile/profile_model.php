@@ -97,11 +97,12 @@ class Profile_model extends Model
 		{
 			//build out data to go into listing meta table
 			$insert_meta_data = array(
-			'listing_id'            => $this->db->insert_id(),
-			'listing_ad_filename'   => $listing_data['ad'],
-			'listing_description'   => $listing_data['description'],
-			'listing_tags'          => $listing_data['tags'],
-			'listing_url'           => $listing_data['url'],		
+			'listing_id'               => $this->db->insert_id(),
+			'listing_ad_filename'      => $listing_data['ad'],
+			'listing_coupon_filename'  => $listing_data['coupon'],
+			'listing_description'      => $listing_data['description'],
+			'listing_tags'             => $listing_data['tags'],
+			'listing_url'              => $listing_data['url'],		
 			);
 			
 			$this->db->insert($this->table_listing_details, $insert_meta_data);			

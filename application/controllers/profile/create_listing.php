@@ -120,16 +120,7 @@ class Create_listing extends Controller
 			$data['content'] = $this->load->view('user_profile/create_premium_listing', $view_content, TRUE);
 			$this->profile->_loadDefaultTemplate($data);
 			return false;
-		}
-					
-		$config['upload_path']   = $this->config->item('ulu_upload_path');
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size']      = '1000';
-		$config['max_width']     = '400';
-		$config['max_height']    = '400';		
-		$field_name = 'ad';		
-		
-		$this->load->library('upload', $config);	
+		}				
 				
 		//the form was not submitted, display default view
 		if( ! $this->input->post('create_listing')) 
@@ -139,8 +130,18 @@ class Create_listing extends Controller
 			return;
 		}
 		
-		//check if a logo was inlcuded, if so, we need to verify and upload. If a logo was not included,
-		//we should use the default logo for all customers and move on to uploading form
+		/////////////////////////////// Ad upload stuff ///////////////////////////////
+		$config['upload_path']   = $this->config->item('ulu_upload_path');
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size']      = '1000';
+		$config['max_width']     = '400';
+		$config['max_height']    = '400';		
+		$field_name = 'ad';		
+		
+		$this->load->library('upload', $config);	
+		
+		//check if a ad was inlcuded, if so, we need to verify and upload. If a ad was not included,
+		//we should use the default ad for all customers and move on to uploading form
 		$uploadedFileName = '';
 		if(isset($_FILES['ad']['name']) && strlen($_FILES['ad']['name']) > 0)
 		{			
@@ -158,13 +159,47 @@ class Create_listing extends Controller
 			}			
 		}
 		else //assign default logo for upload		
-			$uploadedFileName = $this->config->item('ulu_default_listing_logo_image');			
+			$uploadedFileName = $this->config->item('ulu_default_listing_ad_image');			
+		/////////////////////////////// Ad upload stuff END///////////////////////////////
+		
+		/////////////////////////////// Coupon upload stuff ///////////////////////////////
+		$config['upload_path']   = $this->config->item('ulu_upload_path');
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size']      = '1000';
+		$config['max_width']     = '400';
+		$config['max_height']    = '400';		
+		$field_name = 'coupon';		
+		
+		$this->load->library('upload', $config);	
+		
+		//check if a ad was inlcuded, if so, we need to verify and upload. If a ad was not included,
+		//we should use the default ad for all customers and move on to uploading form
+		$uploadedCouponFileName = '';
+		if(isset($_FILES['coupon']['name']) && strlen($_FILES['coupon']['name']) > 0)
+		{			
+			if( ! $this->upload->do_upload($field_name))
+			{				
+				$view_content['content']['error'] = array('error' => $this->upload->display_errors());			
+				$data['content'] = $this->load->view('user_profile/create_premium_listing', $view_content, TRUE);
+				$this->profile->_loadDefaultTemplate($data);
+				return;
+			}
+			else			
+			{
+				$view_content['content']['file_details'] = $this->upload->data();	//build file upload view output
+				$uploadedCouponFileName = $view_content['content']['file_details']['file_name'];
+			}			
+		}
+		else //assign default logo for upload		
+			$uploadedCouponFileName = $this->config->item('ulu_default_listing_ad_image');			
+		/////////////////////////////// Ad upload stuff END///////////////////////////////
 		
 		
 		//process form data and insert into db
 		$listing_data = array(
 		'user_id'         => $this->session->userdata('user_id'),
 		'ad'              => $uploadedFileName,
+		'coupon'          => $uploadedCouponFileName,
 		'title'           => $this->input->post('title'),
 		'description'     => $this->input->post('description'),
 		'phone'           => $this->input->post('phone'),

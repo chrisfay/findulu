@@ -8,6 +8,13 @@ $ad = array(
 	'value' => '',
 );
 
+$coupon = array(
+	'id'    => 'listing_coupon',
+	'name'  => 'coupon',
+	'class' => 'input',
+	'value' => '',
+);
+
 $title = array(
 	'id'    => 'listing_title',
 	'name'  => 'title',
@@ -92,6 +99,8 @@ if( ! is_null($content['error']))
 	
 	echo form_label('Ad image:', $ad['id']);
 	echo form_upload($ad);
+	echo form_label('Coupon image:', $coupon['id']);
+	echo form_upload($coupon);
 	echo form_label('Title:', $title['id']);
 	echo form_input($title);
 	echo form_label('Description:', $description['id']);
