@@ -1,0 +1,7 @@
+#searchForm .submit{width:120px;bottom:-4px;}
+#searchForm label{margin-bottom:19px;}
+#searchForm .formContent{padding-top:40px;}
+#searchForm label.tall{margin-top:31px;}
+
+.module.tags li a{display:inline;padding:3px 7px 3px 0;color:#c4c4c4;white-space: nowrap;background:none;margin:0;}
+.module.tags li a:hover{color:#fff;background:none;}
