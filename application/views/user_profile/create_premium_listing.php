@@ -1,9 +1,9 @@
 <?php
 //create listing view - provides functions to create a new listing
 
-$logo = array(
-	'id'    => 'listing_logo',
-	'name'  => 'logo',
+$ad = array(
+	'id'    => 'listing_ad',
+	'name'  => 'ad',
 	'class' => 'input',
 	'value' => '',
 );
@@ -90,8 +90,8 @@ if( ! is_null($content['error']))
 <?php
 	echo form_open_multipart($this->uri->uri_string());		
 	
-	echo form_label('Logo image:', $logo['id']);
-	echo form_upload($logo);
+	echo form_label('Ad image:', $ad['id']);
+	echo form_upload($ad);
 	echo form_label('Title:', $title['id']);
 	echo form_input($title);
 	echo form_label('Description:', $description['id']);

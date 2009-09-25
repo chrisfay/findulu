@@ -127,7 +127,7 @@ class Create_listing extends Controller
 		$config['max_size']      = '1000';
 		$config['max_width']     = '400';
 		$config['max_height']    = '400';		
-		$field_name = 'logo';		
+		$field_name = 'ad';		
 		
 		$this->load->library('upload', $config);	
 				
@@ -142,7 +142,7 @@ class Create_listing extends Controller
 		//check if a logo was inlcuded, if so, we need to verify and upload. If a logo was not included,
 		//we should use the default logo for all customers and move on to uploading form
 		$uploadedFileName = '';
-		if(isset($_FILES['logo']['name']) && strlen($_FILES['logo']['name']) > 0)
+		if(isset($_FILES['ad']['name']) && strlen($_FILES['ad']['name']) > 0)
 		{			
 			if( ! $this->upload->do_upload($field_name))
 			{				
@@ -164,7 +164,7 @@ class Create_listing extends Controller
 		//process form data and insert into db
 		$listing_data = array(
 		'user_id'         => $this->session->userdata('user_id'),
-		'logo'            => $uploadedFileName,
+		'ad'              => $uploadedFileName,
 		'title'           => $this->input->post('title'),
 		'description'     => $this->input->post('description'),
 		'phone'           => $this->input->post('phone'),

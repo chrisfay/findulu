@@ -98,7 +98,7 @@ class Profile_model extends Model
 			//build out data to go into listing meta table
 			$insert_meta_data = array(
 			'listing_id'            => $this->db->insert_id(),
-			'logo_filename'         => $listing_data['logo'],
+			'listing_ad_filename'   => $listing_data['ad'],
 			'listing_description'   => $listing_data['description'],
 			'listing_tags'          => $listing_data['tags'],
 			'listing_url'           => $listing_data['url'],		

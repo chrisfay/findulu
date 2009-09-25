@@ -36,4 +36,6 @@ img.userAvatar{display:block;width:80px;height:80px;float:left;padding-right:15p
 ul.listing{padding:15px;background:#F1EFFE;border:1px solid #E1E1D5;margin: 5px 0;}
 ul.listing li{padding:2px 0;}
 
-.error{background:#FFFECC none repeat scroll 0 0;border:1px solid #EFDC90;color:#A9A014;font-family:"Arial",Arial,sans-serif;font-size:12px;font-weight:700;margin:5px 0;padding:5px;}
+/*.error{background:#FFFECC none repeat scroll 0 0;border:1px solid #EFDC90;color:#A9A014;font-family:"Arial",Arial,sans-serif;font-size:12px;font-weight:700;margin:5px 0;padding:5px;}*/
+.error{margin-bottom:5px;padding:10px 20px 10px 15px;background-color:#FFC6CA;border:1px solid;border-color:#EFB9C3;}
+
