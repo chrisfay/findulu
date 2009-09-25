@@ -20,6 +20,24 @@ $description = array(
 	'class' => 'textarea',	
 );
 
+$phone = array(
+	'id'    => 'listing_phone',
+	'name'  => 'phone',
+	'class' => 'input',	
+);
+
+$email = array(
+	'id'    => 'listing_email',
+	'name'  => 'email',
+	'class' => 'input',	
+);
+
+$address = array(
+	'id'    => 'listing_address',
+	'name'  => 'address',
+	'class' => 'input',	
+);
+
 $city = array(
 	'id'    => 'listing_city',
 	'name'  => 'city',
@@ -35,6 +53,12 @@ $state = array(
 $zipcode = array(
 	'id'    => 'listing_zipcode',
 	'name'  => 'zipcode',
+	'class' => 'input',	
+);
+
+$tags = array(
+	'id'    => 'listing_tags',
+	'name'  => 'tags',
 	'class' => 'input',	
 );
 
@@ -66,12 +90,20 @@ if( ! is_null($content['error']))
 	echo form_input($title);
 	echo form_label('Description:', $description['id']);
 	echo form_textarea($description);
+	echo form_label('Phone:', $phone['id']);
+	echo form_input($phone);
+	echo form_label('Email:', $email['id']);
+	echo form_input($email);
+	echo form_label('Address:', $address['id']);
+	echo form_input($address);
 	echo form_label('City:', $city['id']);
 	echo form_input($city);
 	echo form_label('State:', $state['id']);
 	echo form_input($state);
 	echo form_label('Zipcode:', $zipcode['id']);
 	echo form_input($zipcode);
+	echo form_label('Tags - separate keywords with comma (ie plumbing, water):', $tags['id']);
+	echo form_input($tags);
 	echo form_hidden('create_listing','1');
 ?>
 

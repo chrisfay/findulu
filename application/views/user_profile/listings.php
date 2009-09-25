@@ -19,8 +19,11 @@
 					'<li>listing_id: '.$data->listing_id.'</li>'.
 					'<li>user_id: '.$data->user_id.'</li>'.
 					'<li>title: '.$data->title.'</li>'.
+					'<li>phone: '.$data->phone.'</li>'.
+					'<li>email: '.$data->email.'</li>'.
+					'<li>address: '.$data->address.'</li>'.
 					'<li>city: '.$data->city.'</li>'.
-					'<li>state: '.$data->state.'</li>'.
+					'<li>state abbrev: '.$data->state_prefix.'</li>'.
 					'<li>zip: '.$data->zip.'</li>'.
 					'<li>listing_type_id: '.$data->listing_type_id.'</li>'.
 					'<li>status: '.$data->status.'</li>'.

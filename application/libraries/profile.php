@@ -22,7 +22,7 @@ class Profile
 			   '<li><a href="'.base_url().'profile/manage/manage_bookmarks">Bookmarks</a></li>'.	
 			   '<li><a href="'.base_url().'profile/manage/earnings">Earnings</a></li>'.				   
 			   
-			   (($this->ci->tank_auth->is_admin()) ? '<li><a href="'.base_url().'admin">Admin</a></li>' : '');
+			   (($this->ci->tank_auth->is_admin()) ? '<li><a href="'.base_url().'admin/general">Admin</a></li>' : '');
 		
 		return $nav;
 	}

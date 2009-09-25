@@ -51,10 +51,14 @@ class Profile_model extends Model
 		$listing_core_data = array(		
 		'user_id'         => $listing_data['user_id'],
 		'title'           => $listing_data['title'],		
+		'phone'           => $listing_data['phone'],		
+		'email'           => $listing_data['email'],		
+		'address'         => $listing_data['address'],		
 		'city'            => $listing_data['city'],
-		'state'           => $listing_data['state'],
+		'state_prefix'    => $listing_data['state_prefix'],
 		'zip'             => $listing_data['zipcode'],
 		'listing_type_id' => 1,
+		'creation_date'   => $listing_data['creation_date'],		
 		);
 						
 		$this->db->insert($this->table_listings, $listing_core_data);
@@ -62,9 +66,8 @@ class Profile_model extends Model
 		{
 			//build out data to go into listing meta table
 			$insert_meta_data = array(
-			'listing_id'            => $this->db->insert_id(),
-			'logo_filename'         => $listing_data['logo'],
-			'listing_description'   => $listing_data['description'],
+			'listing_id'            => $this->db->insert_id(),			
+			'listing_tags'   => $listing_data['tags'],
 			);
 			
 			$this->db->insert($this->table_listing_details, $insert_meta_data);			
@@ -78,11 +81,15 @@ class Profile_model extends Model
 	{
 		$listing_core_data = array(		
 		'user_id'         => $listing_data['user_id'],
-		'title'           => $listing_data['title'],		
+		'title'           => $listing_data['title'],				
+		'phone'           => $listing_data['phone'],		
+		'email'           => $listing_data['email'],		
+		'address'         => $listing_data['address'],		
 		'city'            => $listing_data['city'],
-		'state'           => $listing_data['state'],
+		'state_prefix'    => $listing_data['state_prefix'],
 		'zip'             => $listing_data['zipcode'],
-		'listing_type_id' => 2, //2 = premium listing
+		'listing_type_id' => 1,
+		'creation_date'   => $listing_data['creation_date'],	
 		);
 						
 		$this->db->insert($this->table_listings, $listing_core_data);
@@ -93,6 +100,7 @@ class Profile_model extends Model
 			'listing_id'            => $this->db->insert_id(),
 			'logo_filename'         => $listing_data['logo'],
 			'listing_description'   => $listing_data['description'],
+			'listing_tags'          => $listing_data['tags'],
 			);
 			
 			$this->db->insert($this->table_listing_details, $insert_meta_data);			

@@ -1,23 +1,28 @@
 <?php
 //create listing view - provides functions to create a new listing
 
-$logo = array(
-	'id'    => 'listing_logo',
-	'name'  => 'logo',
-	'class' => 'input',
-	'value' => '',
-);
-
 $title = array(
 	'id'    => 'listing_title',
 	'name'  => 'title',
 	'class' => 'input',	
 );
 
-$description = array(
-	'id'    => 'listing_description',
-	'name'  => 'description',
-	'class' => 'textarea',	
+$phone = array(
+	'id'    => 'listing_phone',
+	'name'  => 'phone',
+	'class' => 'input',	
+);
+
+$email = array(
+	'id'    => 'listing_email',
+	'name'  => 'email',
+	'class' => 'input',	
+);
+
+$address = array(
+	'id'    => 'listing_address',
+	'name'  => 'address',
+	'class' => 'input',	
 );
 
 $city = array(
@@ -35,6 +40,12 @@ $state = array(
 $zipcode = array(
 	'id'    => 'listing_zipcode',
 	'name'  => 'zipcode',
+	'class' => 'input',	
+);
+
+$tags = array(
+	'id'    => 'listing_tags',
+	'name'  => 'tags',
 	'class' => 'input',	
 );
 
@@ -59,19 +70,24 @@ if( ! is_null($content['error']))
 
 <?php
 	echo form_open_multipart($this->uri->uri_string());		
-	
-	echo form_label('Logo image:', $logo['id']);
-	echo form_upload($logo);
+
+
 	echo form_label('Title:', $title['id']);
 	echo form_input($title);
-	echo form_label('Description:', $description['id']);
-	echo form_textarea($description);
+	echo form_label('Phone:', $phone['id']);
+	echo form_input($phone);
+	echo form_label('Email:', $email['id']);
+	echo form_input($email);
+	echo form_label('Address:', $address['id']);
+	echo form_input($address);
 	echo form_label('City:', $city['id']);
 	echo form_input($city);
-	echo form_label('State:', $state['id']);
+	echo form_label('State Abbreviation:', $state['id']);
 	echo form_input($state);
 	echo form_label('Zipcode:', $zipcode['id']);
 	echo form_input($zipcode);
+	echo form_label('Tag (1 word allowed for free listing):', $tags['id']);
+	echo form_input($tags);
 	echo form_hidden('create_listing','1');
 ?>
 
