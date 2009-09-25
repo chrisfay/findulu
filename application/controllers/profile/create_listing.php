@@ -106,11 +106,12 @@ class Create_listing extends Controller
 		$rules['title']     = "trim|required|min_length[2]|max_length[255]";		
 		$rules['phone']     = "trim|required|numeric|min_length[10]|max_length[10]";
 		$rules['email']     = "trim|required|valid_email|max_length[255]";
+		$rules['url']       = "trim|max_length[255]";
 		$rules['address']   = "trim|required|min_length[2]|max_length[255]";
 		$rules['city']      = "trim|required|min_length[2]|max_length[50]|alpha";
 		$rules['state']     = "trim|required|min_length[2]|max_length[2]|alpha";
 		$rules['zipcode']   = "trim|required|min_length[5]|max_length[5]|numeric";
-		$rules['tags']       = "trim|required|min_length[2]|max_length[255]";
+		$rules['tags']      = "trim|required|min_length[2]|max_length[255]";
 		$this->validation->set_rules($rules);
 		
 		//run validation
@@ -162,12 +163,13 @@ class Create_listing extends Controller
 		
 		//process form data and insert into db
 		$listing_data = array(
-		'user_id'     => $this->session->userdata('user_id'),
-		'logo'        => $uploadedFileName,
+		'user_id'         => $this->session->userdata('user_id'),
+		'logo'            => $uploadedFileName,
 		'title'           => $this->input->post('title'),
-		'description'           => $this->input->post('description'),
+		'description'     => $this->input->post('description'),
 		'phone'           => $this->input->post('phone'),
 		'email'           => $this->input->post('email'),
+		'url'             => $this->input->post('url'),
 		'address'         => $this->input->post('address'),		
 		'city'            => $this->input->post('city'),
 		'state_prefix'    => $this->input->post('state'),

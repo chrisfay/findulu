@@ -32,6 +32,12 @@ $email = array(
 	'class' => 'input',	
 );
 
+$url = array(
+	'id'    => 'listing_url',
+	'name'  => 'url',
+	'class' => 'input',	
+);
+
 $address = array(
 	'id'    => 'listing_address',
 	'name'  => 'address',
@@ -94,6 +100,8 @@ if( ! is_null($content['error']))
 	echo form_input($phone);
 	echo form_label('Email:', $email['id']);
 	echo form_input($email);
+	echo form_label('Website url (ie http://example.com):', $url['id']);
+	echo form_input($url);
 	echo form_label('Address:', $address['id']);
 	echo form_input($address);
 	echo form_label('City:', $city['id']);

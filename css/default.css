@@ -35,3 +35,5 @@ textarea{display:block;}
 img.userAvatar{display:block;width:80px;height:80px;float:left;padding-right:15px;}
 ul.listing{padding:15px;background:#F1EFFE;border:1px solid #E1E1D5;margin: 5px 0;}
 ul.listing li{padding:2px 0;}
+
+.error{background:#FFFECC none repeat scroll 0 0;border:1px solid #EFDC90;color:#A9A014;font-family:"Arial",Arial,sans-serif;font-size:12px;font-weight:700;margin:5px 0;padding:5px;}

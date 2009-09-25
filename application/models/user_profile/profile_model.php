@@ -83,7 +83,7 @@ class Profile_model extends Model
 		'user_id'         => $listing_data['user_id'],
 		'title'           => $listing_data['title'],				
 		'phone'           => $listing_data['phone'],		
-		'email'           => $listing_data['email'],		
+		'email'           => $listing_data['email'],				
 		'address'         => $listing_data['address'],		
 		'city'            => $listing_data['city'],
 		'state_prefix'    => $listing_data['state_prefix'],
@@ -101,6 +101,7 @@ class Profile_model extends Model
 			'logo_filename'         => $listing_data['logo'],
 			'listing_description'   => $listing_data['description'],
 			'listing_tags'          => $listing_data['tags'],
+			'listing_url'           => $listing_data['url'],		
 			);
 			
 			$this->db->insert($this->table_listing_details, $insert_meta_data);			
