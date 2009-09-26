@@ -94,7 +94,7 @@ class Create_listing extends Controller
 	}		
 	
 	function premium()
-	{
+	{		
 		//build variables that should be passed to the avatar view
 		$view_content['content'] = array(
 			'error'        => NULL,      //any error messages that should be displayed
@@ -266,7 +266,7 @@ class Create_listing extends Controller
 		{
 			if (strpos(strtolower($row->zip_code), $q) !== false) 
 			{
-				echo $row->zip_code ."|".$row->zip_code."\n";
+				echo $row->zip_code ."|".$row->zip_code."\n";				
 			}
 			//echo $row->city;
 		}

@@ -196,7 +196,7 @@ class Profile_model extends Model
 	//return result set on match, or FALSE otherwise
 	function autocomplete_zipcode($q)
 	{				
-		$sql = "select DISTINCT zip_code from zip_code where zip_code LIKE (\"%$q%\") LIMIT 100";		
+		$sql = "select DISTINCT zip_code from zip_code where zip_code LIKE (\"%$q%\") LIMIT 30";		
 		$query = $this->db->query($sql);				
 		if($query->num_rows() > 0)				
 			return $query->result();
