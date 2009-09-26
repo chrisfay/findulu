@@ -74,5 +74,5 @@ class Profile
 			'content'   => $this->ci->load->view('user_profile/content', array(), true),
 			'footer'    => $this->ci->load->view('user_profile/footer', array(), true)
 		));
-	}
+	}		
 }

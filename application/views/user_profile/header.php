@@ -21,10 +21,16 @@
 <![endif]--> 
 <script type="text/javascript">
 $().ready(function() {
-	$("#city").autocomplete("search.php", {
+	$("#listing_city").autocomplete("/profile/create_listing/autocomplete_city", {
 		width: 260,
 		selectFirst: true,
-		mustMatch: true
+		mustMatch: true,
+	});
+	
+	$("#listing_zipcode").autocomplete("/profile/create_listing/autocomplete_zipcode", {
+		width: 260,
+		selectFirst: true,
+		mustMatch: true,
 	});
 });
 </script>

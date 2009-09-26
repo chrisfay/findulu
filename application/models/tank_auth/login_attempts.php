@@ -66,4 +66,4 @@ class Login_attempts extends Model
 }
 
 /* End of file login_attempts.php */
-/* Location: ./application/models/auth/login_attempts.php */
+/* Location: ./application/models/main/login_attempts.php */

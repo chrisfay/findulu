@@ -8,7 +8,7 @@ class Manage extends Controller
 		
 		//only logged in members allowed here
 		if (!$this->tank_auth->is_logged_in(TRUE)) {							
-			redirect('/auth/login/');
+			redirect('/main/login/');
 		}
 		
 		//load libraries, helpers, etc...
@@ -83,7 +83,7 @@ class Manage extends Controller
 	function update_email()
 	{
 		if (!$this->tank_auth->is_logged_in()) {								// not logged in or not activated
-			redirect('/auth/login/');
+			redirect('/main/login/');
 
 		} else {
 			$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
@@ -130,7 +130,7 @@ class Manage extends Controller
 		// Reset email
 		if ($this->tank_auth->activate_new_email($user_id, $new_email_key)) {	// success
 			$this->tank_auth->logout();
-			$data['content'] = $this->lang->line('auth_message_new_email_activated').' '.anchor(site_url('/auth/login/'), 'Login');
+			$data['content'] = $this->lang->line('auth_message_new_email_activated').' '.anchor(site_url('/main/login/'), 'Login');
 			$this->profile->_loadDefaultTemplate($data);
 
 		} else {																// fail
@@ -147,7 +147,7 @@ class Manage extends Controller
 	function unregister()
 	{
 		if (!$this->tank_auth->is_logged_in()) {								// not logged in or not activated
-			redirect('/auth/login/');
+			redirect('/main/login/');
 
 		} else {
 			$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');

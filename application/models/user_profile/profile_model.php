@@ -16,6 +16,8 @@ class Profile_model extends Model
 		$this->table_listings        = $this->config->item('ulu_listings_table');
 		$this->table_listing_details = $this->config->item('ulu_listing_details_table');
 		$this->table_listing_types   = $this->config->item('ulu_listing_type_table');		
+		$this->table_location        = $this->config->item('ulu_location_table');		
+		
 	}
 	
 	//update currently logged in users's avatar
@@ -175,5 +177,30 @@ class Profile_model extends Model
 					return FALSE;
 			break;			
 		}
+	}
+	
+	//query the city records in the db for matches to $q
+	//return result set on match, or FALSE otherwise
+	function autocomplete_city($q)
+	{				
+		$sql = "select DISTINCT city from zip_code where upper(city) LIKE upper(\"%$q%\")";		
+		$query = $this->db->query($sql);		
+		//echo $this->db->last_query();
+		if($query->num_rows() > 0)				
+			return $query->result();
+		else
+			return FALSE;
+	}
+	
+	//query the city records in the db for matches to $q
+	//return result set on match, or FALSE otherwise
+	function autocomplete_zipcode($q)
+	{				
+		$sql = "select DISTINCT zip_code from zip_code where zip_code LIKE (\"%$q%\") LIMIT 100";		
+		$query = $this->db->query($sql);				
+		if($query->num_rows() > 0)				
+			return $query->result();
+		else
+			return FALSE;
 	}
 }

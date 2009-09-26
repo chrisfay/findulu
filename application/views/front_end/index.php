@@ -11,7 +11,7 @@
 <a href="auth/logout">Log out</a> <a href="user_profile/">User Profile</a>
 <?php else: ?>
 <h1>Test home view - you are NOT logged in</h1>
-<a href="auth/login">Log in</a>
+<a href="/main/login">Log in</a>
 <? endif; ?>
 </body>
 </html>

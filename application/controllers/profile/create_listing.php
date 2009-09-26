@@ -8,7 +8,7 @@ class Create_listing extends Controller
 		
 		//only logged in members allowed here
 		if (!$this->tank_auth->is_logged_in(TRUE)) {							
-			redirect('/auth/login/');
+			redirect('/main/login/');
 		}
 		
 		//load libraries, helpers, etc...
@@ -226,6 +226,50 @@ class Create_listing extends Controller
 		$view_content['content']['message'] = '<h3>Successfully created listing</h3>';														
 		$data['content'] = $this->load->view('user_profile/create_premium_listing', $view_content, TRUE);								
 		$this->profile->_loadDefaultTemplate($data);
+	}
+	
+	//this function is called when a user types in the city input when creating a listing
+	//it returns the result set to show during autocompletion
+	//returns FALSE on failure, or the key/value array on success
+	function autocomplete_city()
+	{
+		if(! $q = $this->input->post('q'))
+			return FALSE;
+		
+		//connect to db and get records that match the user's keywords
+		if(! $results = $this->profile_model->autocomplete_city($q))
+			return FALSE;
+				
+		foreach ($results as $row) 
+		{
+			if (strpos(strtolower($row->city), $q) !== false) 
+			{
+				echo $row->city ."|".$row->city."\n";
+			}
+			//echo $row->city;
+		}
+	}
+	
+	//this function is called when a user types in the city input when creating a listing
+	//it returns the result set to show during autocompletion
+	//returns FALSE on failure, or the key/value array on success
+	function autocomplete_zipcode()
+	{
+		if(! $q = $this->input->post('q'))
+			return FALSE;
+		
+		//connect to db and get records that match the user's keywords
+		if(! $results = $this->profile_model->autocomplete_zipcode($q))
+			return FALSE;
+				
+		foreach ($results as $row) 
+		{
+			if (strpos(strtolower($row->zip_code), $q) !== false) 
+			{
+				echo $row->zip_code ."|".$row->zip_code."\n";
+			}
+			//echo $row->city;
+		}
 	}
 	
 	function upload_logo()

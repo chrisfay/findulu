@@ -15,7 +15,7 @@ class Auth extends Controller
 
 	function index()
 	{
-		redirect('/auth/login/');
+		redirect('/main/login/');
 	}
 
 	
@@ -58,7 +58,7 @@ class Auth extends Controller
 				// Send email with new password
 				$this->_send_email('reset_password', $data['email'], $data);
 
-				$this->_show_message($this->lang->line('auth_message_new_password_activated').' '.anchor(site_url('/auth/login/'), 'Login'));
+				$this->_show_message($this->lang->line('auth_message_new_password_activated').' '.anchor(site_url('/main/login/'), 'Login'));
 				return;
 
 			} else {														// fail
@@ -89,7 +89,7 @@ class Auth extends Controller
 		// Reset email
 		if ($this->tank_auth->activate_new_email($user_id, $new_email_key)) {	// success
 			$this->tank_auth->logout();
-			$this->_show_message($this->lang->line('auth_message_new_email_activated').' '.anchor(site_url('/auth/login/'), 'Login'));
+			$this->_show_message($this->lang->line('auth_message_new_email_activated').' '.anchor(site_url('/main/login/'), 'Login'));
 
 		} else {																// fail
 			$this->_show_message($this->lang->line('auth_message_new_email_failed'));

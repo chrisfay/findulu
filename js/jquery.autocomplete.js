@@ -359,6 +359,7 @@ $.Autocompleter = function(input, options) {
 			});
 			
 			$.ajax({
+				type: "post", //use post instead of get variables (for code igniter)
 				// try to leverage ajaxQueue plugin to abort previous requests
 				mode: "abort",
 				// limit abortion to this input
