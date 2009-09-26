@@ -4,13 +4,13 @@
 
 <?php echo anchor('profile/create_listing/free','Create free listing', array('title' => 'Create new listing')); //create new listing link ?><br />
 <?php echo anchor('profile/create_listing/premium','Create premium listing', array('title' => 'Create new listing')); //create new listing link ?>
-<br /></br />
+<br></br>
 
 <h2>Below are your current listings</h2>
 <?php
 	if(isset($content['listings']))
 	{
-		$count = 0;
+		$count = 1;
 		
 		foreach($content['listings'] as $data)
 		{
@@ -26,8 +26,7 @@
 					'<li>state abbrev: '             .$data->state_prefix.'</li>'.
 					'<li>zip: '                      .$data->zip.'</li>'.
 					'<li>listing_type_id: '          .$data->listing_type_id.'</li>'.
-					'<li>status: '                   .(($data->status == 0) ? 'Not yet approved' : 'Approved/Active').'</li>'.
-					'<li>listing_id: '               .$data->listing_id.'</li>'.
+					'<li>status: '                   .(($data->status == 0) ? 'Not yet approved' : 'Approved/Active').'</li>'.					
 					'<li>listing_description: '      .$data->listing_description.'</li>'.
 					'<li>listing_tags: '             .$data->listing_tags.'</li>'.
 					'<li>listing_ad_filename: '      .$data->listing_ad_filename.'</li>' .

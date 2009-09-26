@@ -9,6 +9,7 @@
 
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery-1.3.1.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/functions.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>css/jquery.autocomplete.css" />
 <!--[if IE 6]>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>css/ie6.css" />
 	<script type="text/javascript" src="<?php echo base_url() ?>js/DD_belatedPNG_0.0.7a.js"></script>
@@ -18,6 +19,15 @@
 <!--[if IE 7]>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>css/ie7.css" />		
 <![endif]--> 
+<script type="text/javascript">
+$().ready(function() {
+	$("#city").autocomplete("search.php", {
+		width: 260,
+		selectFirst: true,
+		mustMatch: true
+	});
+});
+</script>
 </head>
 <body>
 <div id="wrapper">
