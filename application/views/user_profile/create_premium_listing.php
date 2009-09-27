@@ -93,7 +93,7 @@ if( ! is_null($content['error']))
 	echo form_input($title);
 	echo form_label('Description:', $description['id']);
 	echo form_textarea($description);
-	echo form_label('Phone:', $phone['id']);
+	echo form_label('Phone: (ie. 555-555-5555)', $phone['id']);
 	echo form_input($phone);
 	echo form_label('Email:', $email['id']);
 	echo form_input($email);

@@ -39,7 +39,7 @@ class Create_listing extends Controller
 	
 		//form rules
 		$rules['title']     = "trim|required|min_length[2]|max_length[255]";		
-		$rules['phone']     = "trim|required|numeric|min_length[10]|max_length[10]";
+		$rules['phone']     = "trim|required|min_length[12]|max_length[12]|callback_is_valid_phone_number";
 		$rules['email']     = "trim|required|valid_email|max_length[255]";
 		$rules['address']   = "trim|required|min_length[2]|max_length[255]";		
 		$rules['zipcode']   = "trim|required|min_length[5]|max_length[5]|numeric";
@@ -102,7 +102,7 @@ class Create_listing extends Controller
 	
 		//form rules
 		$rules['title']     = "trim|required|min_length[2]|max_length[255]";		
-		$rules['phone']     = "trim|required|numeric|min_length[10]|max_length[10]";
+		$rules['phone']     = "trim|required|numeric|min_length[12]|max_length[12]";
 		$rules['email']     = "trim|required|valid_email|max_length[255]";
 		$rules['url']       = "trim|max_length[255]";
 		$rules['address']   = "trim|required|min_length[2]|max_length[255]";	
@@ -222,6 +222,8 @@ class Create_listing extends Controller
 		$this->profile->_loadDefaultTemplate($data);
 	}
 	
+	//----------- CALLBACKS ----------------//
+	
 	//checks if the tag field has spaces or words separated by commas
 	//RETURNS: FALSE on failure, or TRUE on success	
 	function tag_word_count_check($str)
@@ -247,6 +249,19 @@ class Create_listing extends Controller
 		
 		return TRUE;
 	}
+	
+	function is_valid_phone_number($str)
+	{
+		if(ereg("^[0-9]{3}-[0-9]{3}-[0-9]{4}$", $str))					
+			return TRUE;		
+		else
+		{			
+			$this->validation->set_message('is_valid_phone_number','The %s field must be a valid format (ie. 3334445555, 333.444.5555, 333-444-5555, 333 444 5555, (333) 444 5555 and all combinations thereof.)');		
+			return FALSE;
+		}
+	}
+	
+	//----------- [END] CALLBACKS ----------------//
 	
 	//this function is called when a user types in the city input when creating a listing
 	//it returns the result set to show during autocompletion

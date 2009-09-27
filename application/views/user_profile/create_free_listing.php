@@ -62,7 +62,7 @@ if( ! is_null($content['error']))
 
 	echo form_label('Listing title (ie Business name, Organization name, etc...):', $title['id']);
 	echo form_input($title);
-	echo form_label('Phone (ie 9131112222):', $phone['id']);
+	echo form_label('Phone (ie. 555-555-5555):', $phone['id']);
 	echo form_input($phone);
 	echo form_label('Email:', $email['id']);
 	echo form_input($email);
