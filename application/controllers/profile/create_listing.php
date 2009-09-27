@@ -43,7 +43,7 @@ class Create_listing extends Controller
 		$rules['email']     = "trim|required|valid_email|max_length[255]";
 		$rules['address']   = "trim|required|min_length[2]|max_length[255]";		
 		$rules['zipcode']   = "trim|required|min_length[5]|max_length[5]|numeric";
-		$rules['tags']       = "trim|required|min_length[2]|max_length[255]|callback_tag_word_count_check";
+		$rules['tags']      = "trim|required|min_length[2]|max_length[255]|callback_tag_word_count_check";
 		$this->validation->set_rules($rules);
 		
 		//run validation
@@ -132,7 +132,7 @@ class Create_listing extends Controller
 		$config['max_size']      = '1000';
 		$config['max_width']     = '400';
 		$config['max_height']    = '400';		
-		$field_name = 'ad';		
+		$field_name              = 'ad';		
 		
 		$this->load->library('upload', $config);	
 		
@@ -164,7 +164,7 @@ class Create_listing extends Controller
 		$config['max_size']      = '1000';
 		$config['max_width']     = '400';
 		$config['max_height']    = '400';		
-		$field_name = 'coupon';		
+		$field_name              = 'coupon';		
 		
 		$this->load->library('upload', $config);	
 		
@@ -207,7 +207,7 @@ class Create_listing extends Controller
 		'creation_date'   => gmdate("Y-m-d H:i:s", time()),
 		);
 		
-		//lets update db
+		//lets update db with listing information
 		if(! $this->profile_model->create_premium_listing($listing_data)) //failed to update db for some reason
 		{
 			$view_content['content']['message'] = '<h3>Failed to create listing</h3>';														
@@ -222,7 +222,7 @@ class Create_listing extends Controller
 		$this->profile->_loadDefaultTemplate($data);
 	}
 	
-	//----------- CALLBACKS ----------------//
+	//----------- CALLBACKS (for input fields) ----------------//
 	
 	//checks if the tag field has spaces or words separated by commas
 	//RETURNS: FALSE on failure, or TRUE on success	
@@ -250,6 +250,7 @@ class Create_listing extends Controller
 		return TRUE;
 	}
 	
+	//validations phone number field to format 555-555-5555
 	function is_valid_phone_number($str)
 	{
 		if(ereg("^[0-9]{3}-[0-9]{3}-[0-9]{4}$", $str))					
