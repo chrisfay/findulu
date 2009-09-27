@@ -66,6 +66,16 @@ $submit = array(
 				echo form_close();
 		?>
 		<!--[END] listing deletion form -->
+				
+		<!--[START] listing deletion form -->		
+		<br>
+		<?php 	echo form_open('admin/general/delete_all_listings');
+				echo form_label('Delete all listings:',$submit);				
+				echo form_submit($submit);
+				echo form_close();
+		?>
+		<br>
+		<!--[END] listing deletion form -->
 		
 		
 		<!--[START] show default site data -->

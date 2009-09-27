@@ -87,4 +87,20 @@ class Admin_model extends Model
 	{
 	
 	}
+	
+	//delete all listings out of the system (keep only for testing purposes)
+	//return TRUE on success or FALSE on failure
+	function delete_all_listings()
+	{
+		$this->db->empty_table($this->table_listing_details);
+		if($this->db->affected_rows() > 0)		
+		{
+			$this->db->empty_table($this->table_listings);
+			if($this->db->affected_rows() > 0)		
+				return TRUE;
+		}
+		
+		return FALSE;
+		
+	}
 }

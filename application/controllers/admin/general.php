@@ -74,4 +74,15 @@ class General extends Controller
 			
 		$this->admin_lib->_loadDefaultTemplate($data);		
 	}
+	
+	function delete_all_listings()
+	{
+		if($this->admin_model->delete_all_listings())
+			$data['messages'] = $this->messages = array('delete_all_listings' => "Successfully deleted all listings");
+		else					
+			$data['errors'] = $this->errors = array('delete_user' => "Failed to delete all listings for some reason");
+		
+			
+		$this->admin_lib->_loadDefaultTemplate($data);
+	}
 }

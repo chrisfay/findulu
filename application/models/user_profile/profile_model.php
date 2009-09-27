@@ -201,5 +201,5 @@ class Profile_model extends Model
 		$this->db->where('zip_code', $zipcode);
 		$query = $this->db->get();
 		return $query->num_rows() > 0;
-	}
+	}		
 }
