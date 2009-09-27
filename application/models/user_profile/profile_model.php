@@ -61,7 +61,7 @@ class Profile_model extends Model
 		'creation_date'   => $listing_data['creation_date'],		
 		);
 						
-		$this->db->insert($this->table_listings, $listing_core_data);
+		$this->db->insert($this->table_listings, $this->db->escape($listing_core_data));
 		if($this->db->affected_rows() > 0)
 		{
 			//build out data to go into listing meta table
@@ -70,7 +70,7 @@ class Profile_model extends Model
 			'listing_tags'   => $listing_data['tags'],
 			);
 			
-			$this->db->insert($this->table_listing_details, $insert_meta_data);			
+			$this->db->insert($this->table_listing_details, $this->db->escape($insert_meta_data));			
 			return TRUE;
 		}
 		else
@@ -190,5 +190,16 @@ class Profile_model extends Model
 			return $query->result();
 		else
 			return FALSE;
+	}
+	
+	//validates a zipcode passsed as parameter
+	//returns TRUE if valid or FALSE if not
+	function valid_zipcode($zipcode)
+	{
+		$this->db->select('zip_code');
+		$this->db->from($this->table_location);
+		$this->db->where('zip_code', $zipcode);
+		$query = $this->db->get();
+		return $query->num_rows() > 0;
 	}
 }

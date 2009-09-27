@@ -42,7 +42,7 @@ class Create_listing extends Controller
 		$rules['phone']     = "trim|required|min_length[12]|max_length[12]|callback_is_valid_phone_number";
 		$rules['email']     = "trim|required|valid_email|max_length[255]";
 		$rules['address']   = "trim|required|min_length[2]|max_length[255]";		
-		$rules['zipcode']   = "trim|required|min_length[5]|max_length[5]|numeric";
+		$rules['zipcode']   = "trim|required|min_length[5]|max_length[5]|numeric|callback_valid_zipcode";
 		$rules['tags']      = "trim|required|min_length[2]|max_length[255]|callback_tag_word_count_check";
 		$this->validation->set_rules($rules);
 		
@@ -102,11 +102,11 @@ class Create_listing extends Controller
 	
 		//form rules
 		$rules['title']     = "trim|required|min_length[2]|max_length[255]";		
-		$rules['phone']     = "trim|required|numeric|min_length[12]|max_length[12]";
+		$rules['phone']     = "trim|required|min_length[12]|max_length[12]";
 		$rules['email']     = "trim|required|valid_email|max_length[255]";
 		$rules['url']       = "trim|max_length[255]";
 		$rules['address']   = "trim|required|min_length[2]|max_length[255]";	
-		$rules['zipcode']   = "trim|required|min_length[5]|max_length[5]|numeric";
+		$rules['zipcode']   = "trim|required|min_length[5]|max_length[5]|numeric|callback_valid_zipcode";
 		$rules['tags']      = "trim|required|min_length[2]|max_length[255]|callback_tag_count_premium";
 		$this->validation->set_rules($rules);
 		
@@ -260,6 +260,19 @@ class Create_listing extends Controller
 			$this->validation->set_message('is_valid_phone_number','The %s field must be a valid format (ie. 3334445555, 333.444.5555, 333-444-5555, 333 444 5555, (333) 444 5555 and all combinations thereof.)');		
 			return FALSE;
 		}
+	}
+	
+	//verify the zip entered is valid
+	//return TRUE on success or FALSE otherwise
+	function valid_zipcode($zipcode)
+	{
+		if(! $this->profile_model->valid_zipcode($zipcode))
+		{
+			$this->validation->set_message('valid_zipcode', 'Invalid zipcode');
+			return FALSE;
+		}
+		
+		return TRUE;
 	}
 	
 	//----------- [END] CALLBACKS ----------------//
