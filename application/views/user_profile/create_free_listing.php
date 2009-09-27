@@ -25,18 +25,6 @@ $address = array(
 	'class' => 'input',	
 );
 
-$city = array(
-	'id'    => 'listing_city',
-	'name'  => 'city',
-	'class' => 'input',	
-);
-
-$state = array(
-	'id'    => 'listing_state',
-	'name'  => 'state',
-	'class' => 'input',	
-);
-
 $zipcode = array(
 	'id'    => 'listing_zipcode',
 	'name'  => 'zipcode',
@@ -79,11 +67,7 @@ if( ! is_null($content['error']))
 	echo form_label('Email:', $email['id']);
 	echo form_input($email);
 	echo form_label('Address:', $address['id']);
-	echo form_input($address);
-	echo form_label('City:', $city['id']);
-	echo form_input($city);
-	echo form_label('State Abbreviation:', $state['id']);
-	echo form_input($state);
+	echo form_input($address);	
 	echo form_label('Zipcode:', $zipcode['id']);
 	echo form_input($zipcode);
 	echo form_label('Tag (1 word allowed for free listing):', $tags['id']);

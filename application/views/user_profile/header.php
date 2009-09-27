@@ -20,13 +20,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>css/ie7.css" />		
 <![endif]--> 
 <script type="text/javascript">
-$().ready(function() {
-	$("#listing_city").autocomplete("/profile/create_listing/autocomplete_city", {
-		width: 260,
-		selectFirst: true,
-		mustMatch: true,
-	});
-	
+$().ready(function() {	
 	$("#listing_zipcode").autocomplete("/profile/create_listing/autocomplete_zipcode", {
 		width: 260,
 		selectFirst: true,

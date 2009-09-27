@@ -51,18 +51,6 @@ $address = array(
 	'class' => 'input',	
 );
 
-$city = array(
-	'id'    => 'listing_city',
-	'name'  => 'city',
-	'class' => 'input',	
-);
-
-$state = array(
-	'id'    => 'listing_state',
-	'name'  => 'state',
-	'class' => 'input',	
-);
-
 $zipcode = array(
 	'id'    => 'listing_zipcode',
 	'name'  => 'zipcode',
@@ -112,11 +100,7 @@ if( ! is_null($content['error']))
 	echo form_label('Website url (ie http://example.com):', $url['id']);
 	echo form_input($url);
 	echo form_label('Address:', $address['id']);
-	echo form_input($address);
-	echo form_label('City:', $city['id']);
-	echo form_input($city);
-	echo form_label('State:', $state['id']);
-	echo form_input($state);
+	echo form_input($address);	
 	echo form_label('Zipcode:', $zipcode['id']);
 	echo form_input($zipcode);
 	echo form_label('Tags - separate keywords with comma (ie plumbing, water):', $tags['id']);

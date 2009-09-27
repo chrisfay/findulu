@@ -23,8 +23,12 @@
 					'<li>email: '                    .$data->email.'</li>'.
 					'<li>address: '                  .$data->address.'</li>'.
 					'<li>city: '                     .$data->city.'</li>'.
+					'<li>county: '                         .$data->county.'</li>'.
+					'<li>state_name: '                     .$data->state_name.'</li>'.
 					'<li>state abbrev: '             .$data->state_prefix.'</li>'.
-					'<li>zip: '                      .$data->zip.'</li>'.
+					'<li>area_code: '                      .$data->area_code.'</li>'.
+					'<li>zip: '                      .$data->zip.'</li>'.					
+					'<li>time_zone: '                      .$data->time_zone.'</li>'.					
 					'<li>listing_type_id: '          .$data->listing_type_id.'</li>'.
 					'<li>status: '                   .(($data->status == 0) ? 'Not yet approved' : 'Approved/Active').'</li>'.					
 					'<li>listing_description: '      .$data->listing_description.'</li>'.

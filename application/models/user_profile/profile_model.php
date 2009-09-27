@@ -55,9 +55,7 @@ class Profile_model extends Model
 		'title'           => $listing_data['title'],		
 		'phone'           => $listing_data['phone'],		
 		'email'           => $listing_data['email'],		
-		'address'         => $listing_data['address'],		
-		'city'            => $listing_data['city'],
-		'state_prefix'    => $listing_data['state_prefix'],
+		'address'         => $listing_data['address'],				
 		'zip'             => $listing_data['zipcode'],
 		'listing_type_id' => 1,
 		'creation_date'   => $listing_data['creation_date'],		
@@ -86,9 +84,7 @@ class Profile_model extends Model
 		'title'           => $listing_data['title'],				
 		'phone'           => $listing_data['phone'],		
 		'email'           => $listing_data['email'],				
-		'address'         => $listing_data['address'],		
-		'city'            => $listing_data['city'],
-		'state_prefix'    => $listing_data['state_prefix'],
+		'address'         => $listing_data['address'],				
 		'zip'             => $listing_data['zipcode'],
 		'listing_type_id' => 1,
 		'creation_date'   => $listing_data['creation_date'],	
@@ -129,8 +125,9 @@ class Profile_model extends Model
 		{			
 			case 1:
 				$this->db->select('*');
-				$this->db->from('listings');
-				$this->db->join('listing_details_meta', 'listings.listing_id = listing_details_meta.listing_id');
+				$this->db->from($this->table_listings);
+				$this->db->join($this->table_listing_details, $this->table_listings .'.listing_id = ' . $this->table_listing_details .'.listing_id');
+				$this->db->join($this->table_location, $this->table_listings .'.zip = '. $this->table_location .'.zip_code');
 				$this->db->where('user_id',$user_id);
 				
 				$query = $this->db->get();
@@ -141,8 +138,9 @@ class Profile_model extends Model
 			break;
 			case 2:	
 				$this->db->select('*');
-				$this->db->from('listings');
-				$this->db->join('listing_details_meta', 'listings.listing_id = listing_details_meta.listing_id');
+				$this->db->from($this->table_listings);
+				$this->db->join($this->table_listing_details, $this->table_listings .'.listing_id = ' . $this->table_listing_details .'.listing_id');
+				$this->db->join($this->table_location, $this->table_listings .'.zip = '. $this->table_location .'.zip_code');
 				$this->db->where('user_id',$user_id);
 				$this->db->where('status',1);
 				
@@ -154,8 +152,9 @@ class Profile_model extends Model
 			break;
 			case 3:
 				$this->db->select('*');
-				$this->db->from('listings');
-				$this->db->join('listing_details_meta', 'listings.listing_id = listing_details_meta.listing_id');
+				$this->db->from($this->table_listings);
+				$this->db->join($this->table_listing_details, $this->table_listings .'.listing_id = ' . $this->table_listing_details .'.listing_id');
+				$this->db->join($this->table_location, $this->table_listings .'.zip = '. $this->table_location .'.zip_code');
 				$this->db->where('user_id',$user_id);
 				$this->db->where('status',0);
 				
@@ -167,7 +166,7 @@ class Profile_model extends Model
 			default:
 				$this->db->select('*');
 				$this->db->from('listings');
-				$this->db->join('listing_details_meta', 'listings.listing_id = listing_details_meta.listing_id');
+				$this->db->join($this->table_listing_details, 'listings.listing_id = listing_details_meta.listing_id');
 				$this->db->where('user_id',$user_id);
 								
 				$query = $this->db->get();
@@ -196,7 +195,7 @@ class Profile_model extends Model
 	//return result set on match, or FALSE otherwise
 	function autocomplete_zipcode($q)
 	{				
-		$sql = "select DISTINCT zip_code from zip_code where zip_code LIKE (\"%$q%\") LIMIT 30";		
+		$sql = "select DISTINCT zip_code from zip_code where zip_code LIKE (\"$q%\") LIMIT 10";		
 		$query = $this->db->query($sql);				
 		if($query->num_rows() > 0)				
 			return $query->result();
