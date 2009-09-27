@@ -27,6 +27,7 @@ $config['ulu_default_avatar']                = 'defaultAvatar.png';
 $config['ulu_default_listing_ad_image']      = 'defaultListingAd.png';
 $config['ulu_default_listing_coupon_image']  = 'defaultListingAd.png';
 $config['ulu_free_site_enabled']             = TRUE;                          //whether the site is in free mode or pay mode (FALSE)
+$config['ulu_max_tags']                      = 10;                    //maximum number of tags allowed for premuim uploads
 
 /* End of file findulu.php */
 /* Location: ./application/config/findulu.php */

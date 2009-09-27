@@ -176,23 +176,12 @@ class Profile_model extends Model
 					return FALSE;
 			break;			
 		}
-	}
+	}		
 	
 	//query the city records in the db for matches to $q
 	//return result set on match, or FALSE otherwise
-	function autocomplete_city($q)
-	{				
-		$sql = "select DISTINCT city from zip_code where upper(city) LIKE upper(\"%$q%\")";		
-		$query = $this->db->query($sql);		
-		//echo $this->db->last_query();
-		if($query->num_rows() > 0)				
-			return $query->result();
-		else
-			return FALSE;
-	}
-	
-	//query the city records in the db for matches to $q
-	//return result set on match, or FALSE otherwise
+	//This funciton is used when a user types in the zipcode input field and
+	//we autocomplete some results via jquery to make it easier
 	function autocomplete_zipcode($q)
 	{				
 		$sql = "select DISTINCT zip_code from zip_code where zip_code LIKE (\"$q%\") LIMIT 10";		

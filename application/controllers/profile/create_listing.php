@@ -43,7 +43,7 @@ class Create_listing extends Controller
 		$rules['email']     = "trim|required|valid_email|max_length[255]";
 		$rules['address']   = "trim|required|min_length[2]|max_length[255]";		
 		$rules['zipcode']   = "trim|required|min_length[5]|max_length[5]|numeric";
-		$rules['tags']       = "trim|required|min_length[2]|max_length[255]|alpha_numeric";
+		$rules['tags']       = "trim|required|min_length[2]|max_length[255]|callback_tag_word_count_check";
 		$this->validation->set_rules($rules);
 		
 		//run validation
@@ -89,6 +89,8 @@ class Create_listing extends Controller
 		$this->profile->_loadDefaultTemplate($data);
 	}		
 	
+	
+	//create a premium listing
 	function premium()
 	{		
 		//build variables that should be passed to the avatar view
@@ -105,7 +107,7 @@ class Create_listing extends Controller
 		$rules['url']       = "trim|max_length[255]";
 		$rules['address']   = "trim|required|min_length[2]|max_length[255]";	
 		$rules['zipcode']   = "trim|required|min_length[5]|max_length[5]|numeric";
-		$rules['tags']      = "trim|required|min_length[2]|max_length[255]";
+		$rules['tags']      = "trim|required|min_length[2]|max_length[255]|callback_tag_count_premium";
 		$this->validation->set_rules($rules);
 		
 		//run validation
@@ -185,7 +187,7 @@ class Create_listing extends Controller
 			}			
 		}
 		else //assign default logo for upload		
-			$uploadedCouponFileName = $this->config->item('ulu_default_listing_ad_image');			
+			$uploadedCouponFileName = $this->config->item('ulu_default_listing_coupon_image');			
 		/////////////////////////////// Ad upload stuff END///////////////////////////////
 		
 		
@@ -220,26 +222,30 @@ class Create_listing extends Controller
 		$this->profile->_loadDefaultTemplate($data);
 	}
 	
-	//this function is called when a user types in the city input when creating a listing
-	//it returns the result set to show during autocompletion
-	//returns FALSE on failure, or the key/value array on success
-	function autocomplete_city()
-	{
-		if(! $q = $this->input->post('q'))
-			return FALSE;
-		
-		//connect to db and get records that match the user's keywords
-		if(! $results = $this->profile_model->autocomplete_city($q))
-			return FALSE;
-				
-		foreach ($results as $row) 
+	//checks if the tag field has spaces or words separated by commas
+	//RETURNS: FALSE on failure, or TRUE on success	
+	function tag_word_count_check($str)
+	{		
+		if(sizeof(preg_split('/[;, \n]+/', $str)) > 1)
 		{
-			if (strpos(strtolower($row->city), $q) !== false) 
-			{
-				echo $row->city ."|".$row->city."\n";
-			}
-			//echo $row->city;
-		}
+			$this->validation->set_message('tag_word_count_check','The %s field can not be more than one word.');		
+			return FALSE;
+		}	
+		
+		return TRUE;
+	}
+	
+	//checks if number of tags is greater than allowed number
+	//returns TRUE if less than max, or FALSE otherwise
+	function tag_count_premium($str)
+	{
+		if(sizeof(preg_split('/[;, \n]+/', $str)) > $this->config->item('ulu_max_tags'))
+		{
+			$this->validation->set_message('tag_count_premium','The %s field can not have more than ' . $this->config->item('ulu_max_tags') . ' words');		
+			return FALSE;
+		}	
+		
+		return TRUE;
 	}
 	
 	//this function is called when a user types in the city input when creating a listing
