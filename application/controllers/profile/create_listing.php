@@ -177,7 +177,7 @@ class Create_listing extends Controller
 				$uploadedFileName = $view_content['content']['file_details']['file_name'];
 			}			
 		}
-		else //assign default logo for upload		
+		else //assign default ad for upload		
 			$uploadedFileName = $this->config->item('ulu_default_listing_ad_image');			
 		/////////////////////////////// Ad upload stuff END///////////////////////////////
 		
