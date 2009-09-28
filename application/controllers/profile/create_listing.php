@@ -46,6 +46,15 @@ class Create_listing extends Controller
 		$rules['tags']      = "trim|required|min_length[2]|max_length[255]|callback_tag_word_count_check";
 		$this->validation->set_rules($rules);
 		
+		//define the fields we're using for validation purposes
+		$fields['title']     = "Title";		
+		$fields['phone']     = "Phone";
+		$fields['email']     = "Email";
+		$fields['address']   = "Address";		
+		$fields['zipcode']   = "Zipcode";
+		$fields['tags']      = "Tags";
+		$this->validation->set_fields($fields);
+		
 		//run validation
 		if($this->validation->run() == FALSE)	
 		{		
@@ -101,14 +110,28 @@ class Create_listing extends Controller
 		);
 	
 		//form rules
-		$rules['title']     = "trim|required|min_length[2]|max_length[255]";		
-		$rules['phone']     = "trim|required|min_length[12]|max_length[12]";
-		$rules['email']     = "trim|required|valid_email|max_length[255]";
-		$rules['url']       = "trim|max_length[255]";
-		$rules['address']   = "trim|required|min_length[2]|max_length[255]";	
-		$rules['zipcode']   = "trim|required|min_length[5]|max_length[5]|numeric|callback_valid_zipcode";
-		$rules['tags']      = "trim|required|min_length[2]|max_length[255]|callback_tag_count_premium";
+		$rules['title']         = "trim|required|min_length[2]|max_length[255]";		
+		$rules['description']   = "trim|max_length[5000]";		
+		$rules['phone']         = "trim|required|min_length[12]|max_length[12]|callback_is_valid_phone_number";
+		$rules['email']         = "trim|required|valid_email|max_length[255]";
+		$rules['url']           = "trim|max_length[255]";
+		$rules['address']       = "trim|required|min_length[2]|max_length[255]";	
+		$rules['zipcode']       = "trim|required|min_length[5]|max_length[5]|numeric|callback_valid_zipcode";
+		$rules['tags']          = "trim|required|min_length[2]|max_length[255]|callback_tag_count_premium";
 		$this->validation->set_rules($rules);
+		
+		//define the fields we're using for validation purposes
+		$fields['ad']           = "Ad";		
+		$fields['coupon']       = "Coupon";		
+		$fields['title']        = "Title";		
+		$fields['description']  = "Description";		
+		$fields['phone']        = "Phone";
+		$fields['email']        = "Email";
+		$fields['url']          = "Url";
+		$fields['address']      = "Address";		
+		$fields['zipcode']      = "Zipcode";
+		$fields['tags']         = "Tags";
+		$this->validation->set_fields($fields);
 		
 		//run validation
 		if($this->validation->run() == FALSE)	

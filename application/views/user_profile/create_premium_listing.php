@@ -15,54 +15,6 @@ $coupon = array(
 	'value' => '',
 );
 
-$title = array(
-	'id'    => 'listing_title',
-	'name'  => 'title',
-	'class' => 'input',	
-);
-
-$description = array(
-	'id'    => 'listing_description',
-	'name'  => 'description',
-	'class' => 'textarea',	
-);
-
-$phone = array(
-	'id'    => 'listing_phone',
-	'name'  => 'phone',
-	'class' => 'input',	
-);
-
-$email = array(
-	'id'    => 'listing_email',
-	'name'  => 'email',
-	'class' => 'input',	
-);
-
-$url = array(
-	'id'    => 'listing_url',
-	'name'  => 'url',
-	'class' => 'input',	
-);
-
-$address = array(
-	'id'    => 'listing_address',
-	'name'  => 'address',
-	'class' => 'input',	
-);
-
-$zipcode = array(
-	'id'    => 'listing_zipcode',
-	'name'  => 'zipcode',
-	'class' => 'input',	
-);
-
-$tags = array(
-	'id'    => 'listing_tags',
-	'name'  => 'tags',
-	'class' => 'input',	
-);
-
 $submit = array(	
 	'class' => 'input',
 	'value' => 'Create listing',
@@ -70,9 +22,10 @@ $submit = array(
 
 //show errors
 if( ! is_null($content['error']))
-{	
+{	echo '<div class="error">';
 	foreach($content['error'] as $error)
 		echo $error;
+	echo '</div>';
 }
 ?>
 
@@ -80,15 +33,48 @@ if( ! is_null($content['error']))
 
 <h2>Create a new premium listing</h2>
 
-<?php echo $this->validation->error_string; //output any validation errors?>
+<?php //echo $this->validation->error_string; //output any validation errors?>
 
 <?php
-	echo form_open_multipart($this->uri->uri_string());		
+	echo form_open_multipart($this->uri->uri_string());
 	
 	echo form_label('Ad image:', $ad['id']);
+	echo $this->validation->ad_error;	
 	echo form_upload($ad);
+		
 	echo form_label('Coupon image:', $coupon['id']);
+	echo $this->validation->coupon_error;	
 	echo form_upload($coupon);
+?>
+
+	<label>Listing title (ie Business name, Organization name, etc...):</label>
+	<?php echo $this->validation->title_error; ?>
+	<input type="text" name="title" id="listing_title" value="<?php echo $this->validation->title; ?>" />
+	<label>Listing description:</label>
+	<?php echo $this->validation->description_error; ?>
+	<textarea name="description" id="listing_description"><?php echo $this->validation->description; ?></textarea>
+	<label>Phone (ie. 555-555-5555):</label>
+	<?php echo $this->validation->phone_error; ?>
+	<input type="text" name="phone" id="listing_phone" value="<?php echo $this->validation->phone; ?>" />
+	<label>Email:</label>
+	<?php echo $this->validation->email_error; ?>
+	<input type="text" name="email" id="listing_email" value="<?php echo $this->validation->email; ?>" />
+	<label>Website:</label>
+	<?php echo $this->validation->url_error; ?>
+	<input type="text" name="url" id="listing_url" value="<?php echo $this->validation->url; ?>" />
+	<label>Address:</label>
+	<?php echo $this->validation->address_error; ?>
+	<input type="text" name="address" id="listing_address" value="<?php echo $this->validation->address; ?>" />
+	<label>Zipcode:</label>
+	<?php echo $this->validation->zipcode_error; ?>
+	<input type="text" name="zipcode" id="listing_zipcode" value="<?php echo $this->validation->zipcode; ?>" />
+	<label>Tag (1 word allowed for free listing):</label>
+	<?php echo $this->validation->tags_error; ?>
+	<input type="text" name="tags" id="listing_tags" value="<?php echo $this->validation->tags; ?>" />
+
+<?	
+	
+	/*	
 	echo form_label('Listing title (ie Business name, Organization name, etc...):', $title['id']);
 	echo form_input($title);
 	echo form_label('Description:', $description['id']);
@@ -105,6 +91,7 @@ if( ! is_null($content['error']))
 	echo form_input($zipcode);
 	echo form_label('Tags - separate keywords with comma (ie plumbing, water):', $tags['id']);
 	echo form_input($tags);
+	*/
 	echo form_hidden('create_listing','1');
 ?>
 

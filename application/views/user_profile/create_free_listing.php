@@ -1,42 +1,6 @@
 <?php
 //create listing view - provides functions to create a new listing
 
-$title = array(
-	'id'    => 'listing_title',
-	'name'  => 'title',
-	'class' => 'input',	
-);
-
-$phone = array(
-	'id'    => 'listing_phone',
-	'name'  => 'phone',
-	'class' => 'input',	
-);
-
-$email = array(
-	'id'    => 'listing_email',
-	'name'  => 'email',
-	'class' => 'input',	
-);
-
-$address = array(
-	'id'    => 'listing_address',
-	'name'  => 'address',
-	'class' => 'input',	
-);
-
-$zipcode = array(
-	'id'    => 'listing_zipcode',
-	'name'  => 'zipcode',
-	'class' => 'input',	
-);
-
-$tags = array(
-	'id'    => 'listing_tags',
-	'name'  => 'tags',
-	'class' => 'input',	
-);
-
 $submit = array(	
 	'class' => 'input',
 	'value' => 'Create listing',
@@ -54,25 +18,31 @@ if( ! is_null($content['error']))
 
 <h2>Create a new free listing</h2>
 
-<?php echo $this->validation->error_string; //output any validation errors?>
+<?php //echo $this->validation->error_string; //output any validation errors?>
 
 <?php
 	echo form_open_multipart($this->uri->uri_string());		
-
-
-	echo form_label('Listing title (ie Business name, Organization name, etc...):', $title['id']);
-	echo form_input($title);
-	echo form_label('Phone (ie. 555-555-5555):', $phone['id']);
-	echo form_input($phone);
-	echo form_label('Email:', $email['id']);
-	echo form_input($email);
-	echo form_label('Address:', $address['id']);
-	echo form_input($address);	
-	echo form_label('Zipcode:', $zipcode['id']);
-	echo form_input($zipcode);
-	echo form_label('Tag (1 word allowed for free listing):', $tags['id']);
-	echo form_input($tags);
-	echo form_hidden('create_listing','1');
+?>
+	<label>Listing title (ie Business name, Organization name, etc...):</label>
+	<?php echo $this->validation->title_error; ?>
+	<input type="text" name="title" id="listing_title" value="<?php echo $this->validation->title; ?>" />
+	<label>Phone (ie. 555-555-5555):</label>
+	<?php echo $this->validation->phone_error; ?>
+	<input type="text" name="phone" id="listing_phone" value="<?php echo $this->validation->phone; ?>" />
+	<label>Email:</label>
+	<?php echo $this->validation->email_error; ?>
+	<input type="text" name="email" id="listing_email" value="<?php echo $this->validation->email; ?>" />
+	<label>Address:</label>
+	<?php echo $this->validation->address_error; ?>
+	<input type="text" name="address" id="listing_address" value="<?php echo $this->validation->address; ?>" />
+	<label>Zipcode:</label>
+	<?php echo $this->validation->zipcode_error; ?>
+	<input type="text" name="zipcode" id="listing_zipcode" value="<?php echo $this->validation->zipcode; ?>" />
+	<label>Tag (1 word allowed for free listing):</label>
+	<?php echo $this->validation->tags_error; ?>
+	<input type="text" name="tags" id="listing_tags" value="<?php echo $this->validation->tags; ?>" />
+<?
+	echo form_hidden('create_listing','1');		
 ?>
 
 <?php echo form_submit($submit); ?>
