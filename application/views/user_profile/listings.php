@@ -17,6 +17,7 @@
 			echo'<ul class="listing">'.
 					'<li><strong>Listing #'.$count.'</strong></li>'.
 					'<li>listing_id: '               .$data->listing_id.'</li>'.
+					'<li>creation_date: '            .$data->creation_date.' (GMT)</li>' .
 					'<li>user_id: '                  .$data->user_id.'</li>'.
 					'<li>title: '                    .$data->title.'</li>'.
 					'<li>phone: '                    .$data->phone.'</li>'.
@@ -34,8 +35,7 @@
 					'<li>listing_description: '      .$data->listing_description.'</li>'.
 					'<li>listing_tags: '             .$data->listing_tags.'</li>'.
 					'<li>listing_ad_filename: '      .'<br><img src="'.base_url().'uploads/'.((is_null($data->listing_ad_filename)) ? $this->config->item('ulu_default_listing_ad_image') : $data->listing_ad_filename).'" alt="ad image" /></li>' .
-					'<li>listing_coupon_filename: '  .'<br><img src="'.base_url().'uploads/'.((is_null($data->listing_coupon_filename)) ? $this->config->item('ulu_default_listing_coupon_image') : $data->listing_coupon_filename).'" alt="coupon image" /></li>' .
-					'<li>creation_date: '            .$data->creation_date.' (GMT)</li>' .
+					'<li>listing_coupon_filename: '  .'<br><img src="'.base_url().'uploads/'.((is_null($data->listing_coupon_filename)) ? $this->config->item('ulu_default_listing_coupon_image') : $data->listing_coupon_filename).'" alt="coupon image" /></li>' .					
 				'</ul>';
 			$count++;
 		}		
