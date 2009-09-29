@@ -1,3 +1,4 @@
+	<div class="clear"></div>
 	<div id="footer">
 		The footer | 
 		<?php echo (($logged_in) ? '<a href="'.base_url().'auth/logout">Log out</a> | <a href="'.base_url().

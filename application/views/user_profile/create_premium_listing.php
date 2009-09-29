@@ -38,11 +38,11 @@ if( ! is_null($content['error']))
 <?php
 	echo form_open_multipart($this->uri->uri_string());
 	
-	echo form_label('Ad image:', $ad['id']);
+	echo form_label('Ad image (336 X 280 px):', $ad['id']);
 	echo $this->validation->ad_error;	
 	echo form_upload($ad);
 		
-	echo form_label('Coupon image:', $coupon['id']);
+	echo form_label('Coupon image (336 X 280 px):', $coupon['id']);
 	echo $this->validation->coupon_error;	
 	echo form_upload($coupon);
 ?>

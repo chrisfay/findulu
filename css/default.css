@@ -27,7 +27,7 @@ textarea{display:block;}
 #page{}
 #wrapper{width:960px;margin:0 auto;margin-top:15px;}
 #content{margin:25px 0;}
-#footer{margin:25px 0;border-top:1px solid #000;padding-top:10px;}
+#footer{margin:25px 0;border-top:1px solid #000;padding-top:10px;width:960px;}
 #mainNav li{display:inline;margin-right:15px;}
 
 /*user profile*/

@@ -7,7 +7,7 @@
 | These details are used in emails sent by authorization library.
 |--------------------------------------------------------------------------
 */
-$config['website_name'] = 'Findulu';
+$config['website_name'] = 'findulu';
 $config['webmaster_email'] = 'chrisfay@cjfay.com';
 
 /*
