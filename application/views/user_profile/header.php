@@ -6,10 +6,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="<?php echo base_url() ?>css/reset.css" />
 <link rel="stylesheet" href="<?php echo base_url() ?>css/default.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>css/jquery.autocomplete.css" />
 
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery-1.3.1.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/functions.js"></script>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>css/jquery.autocomplete.css" />
+
 <!--[if IE 6]>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>css/ie6.css" />
 	<script type="text/javascript" src="<?php echo base_url() ?>js/DD_belatedPNG_0.0.7a.js"></script>
@@ -20,11 +21,11 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>css/ie7.css" />		
 <![endif]--> 
 <script type="text/javascript">
-$().ready(function() {	
+$(document).ready(function() {	
 	$("#listing_zipcode").autocomplete("/profile/create_listing/autocomplete_zipcode", {
 		width: 260,
-		selectFirst: true,
-		mustMatch: true,
+		selectFirst: 'true',
+		mustMatch: 'true'
 	});
 });
 </script>
