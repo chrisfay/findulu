@@ -178,7 +178,8 @@ class Create_listing extends Controller
 			}			
 		}
 		else //assign default ad for upload		
-			$uploadedFileName = $this->config->item('ulu_default_listing_ad_image');			
+			//$uploadedFileName = $this->config->item('ulu_default_listing_ad_image');			
+			$uploadedFileName = NULL;	
 		/////////////////////////////// Ad upload stuff END///////////////////////////////
 		
 		/////////////////////////////// Coupon upload stuff ///////////////////////////////
@@ -210,7 +211,8 @@ class Create_listing extends Controller
 			}			
 		}
 		else //assign default logo for upload		
-			$uploadedCouponFileName = $this->config->item('ulu_default_listing_coupon_image');			
+			//$uploadedCouponFileName = $this->config->item('ulu_default_listing_coupon_image');			
+			$uploadedCouponFileName = NULL;
 		/////////////////////////////// Ad upload stuff END///////////////////////////////
 		
 		

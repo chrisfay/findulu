@@ -68,30 +68,11 @@ if( ! is_null($content['error']))
 	<label>Zipcode:</label>
 	<?php echo $this->validation->zipcode_error; ?>
 	<input type="text" name="zipcode" id="listing_zipcode" value="<?php echo $this->validation->zipcode; ?>" />
-	<label>Tag (1 word allowed for free listing):</label>
+	<label>Tags (separate tags with commas ie. plumbing,repair):</label>
 	<?php echo $this->validation->tags_error; ?>
 	<input type="text" name="tags" id="listing_tags" value="<?php echo $this->validation->tags; ?>" />
 
-<?	
-	
-	/*	
-	echo form_label('Listing title (ie Business name, Organization name, etc...):', $title['id']);
-	echo form_input($title);
-	echo form_label('Description:', $description['id']);
-	echo form_textarea($description);
-	echo form_label('Phone: (ie. 555-555-5555)', $phone['id']);
-	echo form_input($phone);
-	echo form_label('Email:', $email['id']);
-	echo form_input($email);
-	echo form_label('Website url (ie http://example.com):', $url['id']);
-	echo form_input($url);
-	echo form_label('Address:', $address['id']);
-	echo form_input($address);	
-	echo form_label('Zipcode:', $zipcode['id']);
-	echo form_input($zipcode);
-	echo form_label('Tags - separate keywords with comma (ie plumbing, water):', $tags['id']);
-	echo form_input($tags);
-	*/
+<?			
 	echo form_hidden('create_listing','1');
 ?>
 

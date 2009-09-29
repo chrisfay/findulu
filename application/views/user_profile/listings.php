@@ -33,8 +33,8 @@
 					'<li>status: '                   .(($data->status == 0) ? 'Not yet approved' : 'Approved/Active').'</li>'.					
 					'<li>listing_description: '      .$data->listing_description.'</li>'.
 					'<li>listing_tags: '             .$data->listing_tags.'</li>'.
-					'<li>listing_ad_filename: '      .$data->listing_ad_filename.'</li>' .
-					'<li>listing_coupon_filename: '  .$data->listing_coupon_filename.'</li>' .
+					'<li>listing_ad_filename: '      .((is_null($data->listing_ad_filename))     ? $this->config->item('ulu_default_listing_ad_image') : $data->listing_ad_filename).'</li>' .
+					'<li>listing_coupon_filename: '  .((is_null($data->listing_coupon_filename)) ? $this->config->item('ulu_default_listing_coupon_image') : $data->listing_coupon_filename).'</li>' .
 					'<li>creation_date: '            .$data->creation_date.' (GMT)</li>' .
 				'</ul>';
 			$count++;
