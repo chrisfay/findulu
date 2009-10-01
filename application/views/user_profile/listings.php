@@ -34,6 +34,7 @@
 					'<li>status: '                   .(($data->status == 0) ? 'Not yet approved' : 'Approved/Active').'</li>'.					
 					'<li>listing_description: '      .$data->listing_description.'</li>'.
 					'<li>listing_tags: '             .$data->listing_tags.'</li>'.
+					'<li>listing_payment_interval: ' .$data->listing_payment_interval.'</li>'.
 					'<li>listing_ad_filename: '      .'<br><img src="'.base_url().'uploads/'.((is_null($data->listing_ad_filename)) ? $this->config->item('ulu_default_listing_ad_image') : $data->listing_ad_filename).'" alt="ad image" /></li>' .
 					'<li>listing_coupon_filename: '  .'<br><img src="'.base_url().'uploads/'.((is_null($data->listing_coupon_filename)) ? $this->config->item('ulu_default_listing_coupon_image') : $data->listing_coupon_filename).'" alt="coupon image" /></li>' .					
 				'</ul>';
