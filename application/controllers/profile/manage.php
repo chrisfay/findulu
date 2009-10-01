@@ -26,6 +26,8 @@ class Manage extends Controller
 	
 	function index($data = NULL)
 	{				
+		//show listing creation buttons on user profile home page
+		$data['listing_buttons'] = TRUE;
 		$this->profile->_loadDefaultTemplate($data);
 	}	
 	
