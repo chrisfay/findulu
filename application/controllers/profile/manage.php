@@ -24,10 +24,12 @@ class Manage extends Controller
 		
 	}
 	
+	//default user profile page
 	function index($data = NULL)
 	{				
 		//show listing creation buttons on user profile home page
-		$data['listing_buttons'] = TRUE;
+		$view_content['content']['stuff'] = 'Some content to load in the future for the index page';
+		$data['content'] = $this->load->view('user_profile/index_page', $view_content, TRUE);						
 		$this->profile->_loadDefaultTemplate($data);
 	}	
 	
