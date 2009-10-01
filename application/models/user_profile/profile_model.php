@@ -86,7 +86,7 @@ class Profile_model extends Model
 		'email'           => $listing_data['email'],				
 		'address'         => $listing_data['address'],				
 		'zip'             => $listing_data['zipcode'],
-		'listing_type_id' => 1,
+		'listing_type_id' => 2,
 		'creation_date'   => $listing_data['creation_date'],	
 		);
 						
@@ -177,7 +177,48 @@ class Profile_model extends Model
 					return FALSE;
 			break;			
 		}
-	}		
+	}	
+
+	//return all listing ids for user listing (either free or premium)
+	//All listings = 1
+	//Free only = 2
+	//Premium only = 3
+	function get_all_listing_ids($listing_type = 1, $user_id)
+	{
+		$this->db->select('listing_id');
+		$this->db->from($this->table_listings);		
+		$this->db->where('user_id',$user_id);
+		if($listing_type === 2) //if you want only free listings
+			$this->db->where('listing_type_id',1);
+		if($listing_type === 3) //if you want only premium listings
+			$this->db->where('listing_type_id',2);
+		
+		$query = $this->db->get();		
+		if($query->num_rows() > 0)				
+			return $query->result();
+		else
+			return FALSE;		
+	}
+	
+	//get all listing data for a single listing, and make sure the user_id matches the session_id for security
+	//returns a result set on success
+	//or FALSE on failure
+	function get_single_listing_details($listing_id, $user_id)
+	{		
+		$this->db->select('*');
+		$this->db->from($this->table_listings);		
+		$this->db->where('listings.listing_id', $listing_id);
+		$this->db->where('user_id', $user_id);
+		$this->db->join($this->table_listing_details, $this->table_listings .'.listing_id = ' . $this->table_listing_details .'.listing_id');
+		$this->db->join($this->table_location, $this->table_listings .'.zip = '. $this->table_location .'.zip_code');
+		
+		$query = $this->db->get();		
+		if($query->num_rows() > 0)				
+			return $query->result();
+		else
+			return FALSE;
+		
+	}
 	
 	//query the city records in the db for matches to $q
 	//return result set on match, or FALSE otherwise

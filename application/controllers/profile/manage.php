@@ -231,14 +231,34 @@ class Manage extends Controller
 		);
 		
 		$view_content['content']['message'] = 'Load some generic messages in here';
-		if(! $view_content['content']['listings'] = $this->profile_model->get_listings_by_userid(1, $this->session->userdata('user_id')))
-			$view_content['content']['listings'] = NULL;
+		
+		//load free listings for user
+		if(! $view_content['content']['free_listing_ids'] = $this->profile_model->get_all_listing_ids(2,$this->session->userdata('user_id')))
+			$view_content['content']['free_listing_ids'] = NULL;
+			
+		//load premium listings for user
+		if(! $view_content['content']['premium_listing_ids'] = $this->profile_model->get_all_listing_ids(3,$this->session->userdata('user_id')))
+			$view_content['content']['premium_listing_ids'] = NULL;
 		
 		$data['content'] = $this->load->view('user_profile/listings', $view_content, TRUE);
 		$this->profile->_loadDefaultTemplate($data);		
+	}
+
+	function view_single_listing($listing_id)
+	{
+		//build variables that should be passed to the view
+		$view_content['content'] = array(						
+			'message'      => NULL,      //any general messages to show			
+			'listings'     => NULL,      //an array of listing information
+		);
+		
+		$view_content['content']['message'] = 'Load some generic messages in here';
+		if(! $view_content['content']['listing'] = $this->profile_model->get_single_listing_details($listing_id,$this->session->userdata('user_id')))
+			$view_content['content']['listing'] = NULL;
+		
+		$data['content'] = $this->load->view('user_profile/listing_details', $view_content, TRUE);
+		$this->profile->_loadDefaultTemplate($data);		
 	}	
-	
-	
 	
 	function upload_logo()
 	{
