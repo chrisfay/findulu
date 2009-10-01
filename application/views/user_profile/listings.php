@@ -3,7 +3,7 @@
 ?>
 
 <?php echo anchor('profile/create_listing/free','Create free listing', array('title' => 'Create new listing')); //create new listing link ?><br />
-<?php echo anchor('profile/create_listing/premium','Create premium listing', array('title' => 'Create new listing')); //create new listing link ?>
+<?php echo anchor('profile/create_listing/premium','Purchase premium listing', array('title' => 'Create new listing')); //create new listing link ?>
 <br></br>
 
 <h2>Below are your current listings</h2>

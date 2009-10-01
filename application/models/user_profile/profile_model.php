@@ -101,6 +101,7 @@ class Profile_model extends Model
 			'listing_description'      => $listing_data['description'],
 			'listing_tags'             => $listing_data['tags'],
 			'listing_url'              => $listing_data['url'],		
+			'listing_payment_interval' => 1,	//need to update this to use the payment interval chosen by customer once built	
 			);
 			
 			$this->db->insert($this->table_listing_details, $this->db->escape($insert_meta_data));			
