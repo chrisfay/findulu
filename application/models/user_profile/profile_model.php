@@ -245,8 +245,13 @@ class Profile_model extends Model
 		return $query->num_rows() > 0;
 	}
 
-	//create the basic shell listing after a customer purchase a listing for the first time	
-	//RETURNS generated listing_id on success or FALSE on failure
+	/*
+	| create a shell listing upon a successful purchase
+	| The user will be able to fill in the details when they choose too
+	| until all details have been submitted (and the listing approved) it should
+	| be set to unaproved status so the partial listing does not show in search results
+	| RETURNS the listing_id of the new shell listing, or FALSE otherwise
+	*/
 	function create_shell_premium_listing($user_id, $zip_code,$payment_interval)
 	{
 		$listing_core_data = array(		
