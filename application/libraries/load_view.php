@@ -14,10 +14,7 @@ class Load_view
 	
 	//default template loader - helper library to build template view for main content
 	function _loadDefaultTemplate($data = NULL)
-	{
-		if(is_null($data))
-			$data['content'] = '';	
-		
+	{		
 		$data['logged_in'] = FALSE;		
 		if ($this->ci->tank_auth->is_logged_in(TRUE)) {							// logged in and activated
 			$data['logged_in'] = TRUE;

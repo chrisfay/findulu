@@ -11,12 +11,15 @@ class Main extends Controller
 		$this->load->library('form_validation');						
 		$this->load->library('load_view');						
 		$this->load->model('tank_auth/users');		
-		$this->lang->load('tank_auth');
+		$this->lang->load('tank_auth');				
 	}
 	
 	function index($data = NULL)
 	{			
-		$this->load_view->_loadDefaultTemplate();					
+		$view_content['view_content']['stuff'] = 'Some content to load in the future for the index page';		
+		$view_content['view_content']['username'] = $this->session->userdata('username');		
+		$data['content'] = $this->load->view('front_end/index', $view_content, TRUE);
+		$this->load_view->_loadDefaultTemplate($data);					
 	}
 		
 	/**

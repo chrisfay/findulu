@@ -6,12 +6,10 @@
 </head>
 
 <body>
-<?php if($logged_in): ?>
-<h1>Test home view - you are logged in</h1>
-<a href="auth/logout">Log out</a> <a href="user_profile/">User Profile</a>
+<?php if($this->tank_auth->is_logged_in()): ?>
+	<h1>Welcome <?php echo $view_content['username']; ?> - you are logged in</h1>
 <?php else: ?>
-<h1>Test home view - you are NOT logged in</h1>
-<a href="/main/login">Log in</a>
+	<h1>Welcome - you are NOT logged in</h1>		
 <? endif; ?>
 </body>
 </html>
