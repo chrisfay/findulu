@@ -243,5 +243,33 @@ class Profile_model extends Model
 		$this->db->where('zip_code', $zipcode);
 		$query = $this->db->get();
 		return $query->num_rows() > 0;
-	}		
+	}
+
+	//create the basic shell listing after a customer purchase a listing for the first time	
+	//RETURNS generated listing_id on success or FALSE on failure
+	function create_shell_premium_listing($user_id, $zip_code,$payment_interval)
+	{
+		$listing_core_data = array(		
+		'user_id'         => $user_id,		
+		'zip'             => $zip_code,
+		'listing_type_id' => 2,
+		'creation_date'   => gmdate("Y-m-d H:i:s", time()),	
+		);
+						
+		$this->db->insert($this->table_listings, $this->db->escape($listing_core_data));
+		if($this->db->affected_rows() > 0)
+		{
+			//build out data to go into listing meta table
+			$inserted_id = $this->db->insert_id();
+			$insert_meta_data = array(
+			'listing_id'               => $inserted_id,			
+			'listing_payment_interval' => $payment_interval,	//need to update this to use the payment interval chosen by customer once built	
+			);
+			
+			$this->db->insert($this->table_listing_details, $this->db->escape($insert_meta_data));			
+			return $inserted_id;
+		}
+		else
+			return FALSE;
+	}
 }

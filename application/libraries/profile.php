@@ -74,5 +74,17 @@ class Profile
 			'content'   => $this->ci->load->view('user_profile/content', array(), true),
 			'footer'    => $this->ci->load->view('user_profile/footer', array(), true)
 		));
-	}		
+	}
+
+	/*
+	| create a shell listing upon a successful purchase
+	| The user will be able to fill in the details when they choose too
+	| until all details have been submitted (and the listing approved) it should
+	| be set to unaproved status so the partial listing does not show in search results
+	| RETURNS the listing_id of the new shell listing, or FALSE otherwise
+	*/
+	function _create_premium_template_listing($user_id, $zipcode, $payment_interval)
+	{
+		//return $this->ci->profile_model->create_shell_premium_listing($user_id, $zipcode,$payment_interval);
+	}
 }

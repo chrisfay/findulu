@@ -18,6 +18,10 @@ class Purchase_listing extends Controller
 		$this->load->model('user_profile/profile_model');			
 		$this->load->library('validation');
 		$this->validation->set_error_delimiters('<div class="error">','</div>');
+		
+		$zip_code;         //this should be populated in the future by the purchase form
+		$payment_interval; //this should be populated in the future by the purchase form
+		
 	}
 	
 	function index()
@@ -42,7 +46,11 @@ class Purchase_listing extends Controller
 		}
 		
 		//purchase was successful
-		//TODO: create empty premium listing
+		//create empty premium listing
+		$listing_id = $this->profile_model->create_shell_premium_listing($this->session->userdata('user_id'), $this->zip_code, $this->payment_interval);
+
+		//TODO: create new controller called profile/edit_listing and pass $listing_id to it so the user can begin populating it		
+		echo anchor('profile/manage/view_single_listing/'.$listing_id, 'Populate purchased listing #'. $listing_id);
 	}
 	
 	//process a listing purchase form request
@@ -52,6 +60,13 @@ class Purchase_listing extends Controller
 		//process/validate input fields (ie)
 		//$credit_card_num = $this->input->post('credit_card');
 		//$credit_card_num = $this->input->post('credit_card');
+		
+		//set the zipcode to use when creating the shell template
+		$this->zip_code          = '85742'; //should use the form data when that has been coded, not this static zipcode
+		$this->payment_interval = '1';     //should use the form data when that has been coded, not this static interval
 		return TRUE; //purchase went through
 	}
+	
+	
+	
 }
