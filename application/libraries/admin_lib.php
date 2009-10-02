@@ -17,7 +17,7 @@ class Admin_lib
 	function _mainNav()
 	{		
 		$nav = '<li><a href="'.base_url().'">Findulu Home</a></li>'.
-			   '<li><a href="'.base_url().'profile/manage">User Profile</a></li>';
+			   '<li><a href="'.base_url().'profile/">User Profile</a></li>';
 		return $nav;
 	}	
 	

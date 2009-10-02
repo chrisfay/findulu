@@ -42,6 +42,8 @@
 
 $route['default_controller'] = "main";
 $route['scaffolding_trigger'] = "";
+$route['profile'] = 'profile/manage';
+
 
 
 /* End of file routes.php */

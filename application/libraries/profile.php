@@ -13,7 +13,7 @@ class Profile
 	function _mainNav($user_role = 1)
 	{		
 		$nav = '<li><a href="'.base_url().'">Findulu Home</a></li>'.
-			   '<li><a href="'.base_url().'profile/manage">User Profile</a></li>'.
+			   '<li><a href="'.base_url().'profile/">User Profile</a></li>'.
 			   '<li><a href="'.base_url().'profile/manage/update_password">Chage password</a></li>'.
 			   '<li><a href="'.base_url().'profile/manage/update_email">Chage email</a></li>'.			   
 			   '<li><a href="'.base_url().'profile/manage/unregister">Delete account</a></li>'.			   			   

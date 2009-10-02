@@ -29,7 +29,7 @@ class Manage extends Controller
 	{				
 		//show listing creation buttons on user profile home page
 		$view_content['content']['stuff'] = 'Some content to load in the future for the index page';
-		$data['content'] = $this->load->view('user_profile/index_page', $view_content, TRUE);						
+		$data['content'] = $this->load->view('user_profile/index', $view_content, TRUE);						
 		$this->profile->_loadDefaultTemplate($data);
 	}	
 	
