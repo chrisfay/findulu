@@ -262,7 +262,7 @@ class Manage extends Controller
 		
 		$data['content'] = $this->load->view('user_profile/listing_details', $view_content, TRUE);
 		$this->profile->_loadDefaultTemplate($data);		
-	}	
+	}
 	
 	function upload_logo()
 	{
