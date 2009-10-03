@@ -1,5 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php
 //create listing view - provides functions to create a new listing
 
 $ad = array(

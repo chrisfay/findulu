@@ -124,8 +124,8 @@ class Profile_model extends Model
 					
 		$this->db->where('user_id', $listing_data['user_id']);
 		$this->db->where('listing_id', $listing_data['listing_id']);
-		$this->db->update($this->table_listings, $this->db->escape($listing_core_data));
-		echo $this->db->last_query();
+		$this->db->where('listing_type_id', 1);	//make sure we're updating a free ad
+		$this->db->update($this->table_listings, $this->db->escape($listing_core_data));		
 		if($this->db->affected_rows() > 0)
 		{
 			//build out data to go into listing meta table
@@ -144,7 +144,38 @@ class Profile_model extends Model
 	
 	function update_premium_listing($listing_data)
 	{
-	
+		$listing_core_data = array(				
+		'title'           => $listing_data['title'],				
+		'phone'           => $listing_data['phone'],		
+		'email'           => $listing_data['email'],				
+		'address'         => $listing_data['address'],				
+		'zip'             => $listing_data['zipcode'],				
+		);		
+			
+		$this->db->where('user_id', $listing_data['user_id']); //make sure we're updating a listing for the logged in user only
+		$this->db->where('listing_id', $listing_data['listing_id']);		
+		$this->db->where('listing_type_id', 2);	//make sure we're updating a premium ad
+		$this->db->update($this->table_listings, $this->db->escape($listing_core_data));
+		if($this->db->affected_rows() > 0)
+		{
+			//build out data to go into listing meta table
+			$insert_meta_data = array(			
+			'listing_ad_filename'      => $listing_data['ad'],
+			'listing_coupon_filename'  => $listing_data['coupon'],
+			'listing_description'      => $listing_data['description'],
+			'listing_tags'             => $listing_data['tags'],
+			'listing_url'              => $listing_data['url'],					
+			);
+			
+			if($this->db->affected_rows() > 0)
+			{
+				$this->db->where('listing_id', $listing_data['listing_id']);
+				$this->db->update($this->table_listing_details, $this->db->escape($insert_meta_data));			
+				return TRUE;
+			}
+		}
+
+		return FALSE;
 	}
 	
 	/*
