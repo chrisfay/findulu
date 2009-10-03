@@ -16,6 +16,7 @@ class Profile_model extends Model
 		$this->table_listings        = $this->config->item('ulu_listings_table');
 		$this->table_listing_details = $this->config->item('ulu_listing_details_table');
 		$this->table_listing_types   = $this->config->item('ulu_listing_type_table');		
+		$this->table_listing_status  = $this->config->item('ulu_listing_status_type_table');	
 		$this->table_location        = $this->config->item('ulu_location_table');		
 		
 	}
@@ -279,6 +280,7 @@ class Profile_model extends Model
 		$this->db->select('listing_id');
 		$this->db->from($this->table_listings);		
 		$this->db->where('user_id',$user_id);
+		$this->db->where('status !=',2); //do not return deleted items
 		if($listing_type === 2) //if you want only free listings
 			$this->db->where('listing_type_id',1);
 		if($listing_type === 3) //if you want only premium listings
@@ -367,5 +369,19 @@ class Profile_model extends Model
 		}
 		else
 			return FALSE;
+	}
+	
+	/*
+	| Set the status type of the listing to 'deleted' (but don't actually delete it from the system)
+	| Parm: numeric listing id to delete and the user_id of the requester
+	| Returns TRUE on success or FALSE on failure
+	*/
+	function delete_listing($listing_id, $user_id)
+	{	
+		$this->db->where('listing_id', $listing_id);
+		$this->db->where('user_id', $user_id);		
+		$this->db->update($this->table_listings, array('status' => '2'));
+		
+		return $this->db->affected_rows() > 0;			
 	}
 }

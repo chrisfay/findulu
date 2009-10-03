@@ -19,7 +19,8 @@ $config['ulu_roles_table']                   = 'user_roles';
 $config['ulu_listings_table']                = 'listings';                    //core listing info (geo info and whatnot)
 $config['ulu_listing_details_table']         = 'listing_details_meta';        //stores additional listing info like description,tags,logo, etc..
 $config['ulu_listing_type_table']            = 'listing_type';                //stores the types of listings that can be created
-$config['ulu_location_table']                  = 'zip_code';                    //the table with all locale data (zipcode, city,state, etc...)
+$config['ulu_listing_status_type_table']     = 'listing_status_types';                //stores the types of listings that can be created
+$config['ulu_location_table']                = 'zip_code';                    //the table with all locale data (zipcode, city,state, etc...)
 
 //general
 $config['ulu_upload_path']                   = 'uploads/';

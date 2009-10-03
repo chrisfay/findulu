@@ -15,7 +15,9 @@
 		<?
 		foreach($content['free_listing_ids'] as $data)
 		{
-			echo anchor('profile/manage/view_single_listing/'.$data->listing_id, 'Listing '.$data->listing_id) . ' ' . anchor('profile/edit_listing/free/'.$data->listing_id, '(Edit)') . "<br />"; "<br />"; 
+			echo anchor('profile/manage/view_single_listing/'.$data->listing_id, 'Listing '.$data->listing_id) . ' ' . 
+				anchor('profile/edit_listing/free/'.$data->listing_id, '(Edit)') . ' ' . 
+				anchor('profile/manage/delete_listing/'.$data->listing_id, '(Delete)') ."<br />";  
 			
 			//echo '<a href="profile/manage/view_single_listing/'.$data.'">Listing'.$data.'</a>';			
 		}		
@@ -31,7 +33,11 @@
 		<?
 		foreach($content['premium_listing_ids'] as $data)
 		{
-			echo anchor('profile/manage/view_single_listing/'.$data->listing_id, 'Listing '.$data->listing_id) . ' ' . anchor('profile/edit_listing/premium/'.$data->listing_id, '(Edit)') . "<br />"; 
+			echo anchor('profile/manage/view_single_listing/'.$data->listing_id, 'Listing '.$data->listing_id) . ' ' . 
+				anchor('profile/edit_listing/premium/'.$data->listing_id, '(Edit)') .  ' ' .
+				anchor('profile/manage/delete_listing/'.$data->listing_id, '(Delete)') .
+				"<br />";
+				
 			
 			//echo '<a href="profile/manage/view_single_listing/'.$data.'">Listing'.$data.'</a>';			
 		}		

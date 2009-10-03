@@ -270,6 +270,18 @@ class Manage extends Controller
 		$this->profile->_loadDefaultTemplate($data);
 	}
 	
+	//set a listing to deleted status from user link
+	function delete_listing($listing_id)
+	{
+		if(! $this->profile_model->delete_listing($listing_id, $this->session->userdata('user_id')))
+		{
+			$data['content'] = 'Failed to delete listing';
+			return;
+		}
+		
+		$this->view_listings();
+	}
+	
 	function create_premium_listing()
 	{
 
