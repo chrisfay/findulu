@@ -50,7 +50,9 @@ class Purchase_listing extends Controller
 		$listing_id = $this->profile_model->create_shell_premium_listing($this->session->userdata('user_id'), $this->zip_code, $this->payment_interval);
 
 		//TODO: create new controller (or library) called profile/edit_listing and pass $listing_id to it so the user can begin populating it		
-		echo anchor('profile/manage/view_single_listing/'.$listing_id, 'Populate purchased listing');
+		$view_content['view_content']['listing_id']       = $listing_id;		
+		$data['content'] = $this->load->view('user_profile/purchase_success', $view_content, TRUE);
+		$this->profile->_loadDefaultTemplate($data);		
 	}
 	
 	//process a listing purchase form request
@@ -61,8 +63,8 @@ class Purchase_listing extends Controller
 		$this->zip_code          = $this->input->post('zipcode');
 		$this->payment_interval  = $this->input->post('payment_interval');
 		
-		//TODO: Add validation once we know the form process for sure!!
-				
-		return TRUE; //purchase went through
+		//TODO: Add better validation once we know the form process for sure!!				
+		if($this->profile_model->valid_zipcode($this->zip_code) && ($this->payment_interval == 1 || $this->payment_interval == 2 || $this->payment_interval == 3 || $this->payment_interval == 4))
+			return TRUE; //purchase went through
 	}	
 }

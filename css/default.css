@@ -30,6 +30,8 @@ select{display:block;}
 #content{margin:25px 0;}
 #footer{margin:25px 0;border-top:1px solid #000;padding-top:10px;width:960px;}
 #mainNav li{display:inline;margin-right:15px;}
+ul.listing li{display:block;clear:both;}
+ul.listing li span{width:180px;display:block;float:left;}
 
 /*user profile*/
 .userInfo h1{line-height:80px;}
