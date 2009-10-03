@@ -178,6 +178,30 @@ class Profile_model extends Model
 		return FALSE;
 	}
 	
+	//validates if the listing_id is really a valid free listing and is owned by the currently logged in user
+	function is_free_listing($listing_id, $user_id)
+	{		
+		$this->db->select('listing_id');				
+		$this->db->where('user_id',$user_id);
+		$this->db->where('listing_id',$listing_id);
+		$this->db->where('listing_type_id',1);
+		$query = $this->db->get($this->table_listings);		
+		
+		return $query->num_rows() > 0;				
+	}
+	
+	//validates if the listing_id is really a valid premium listing
+	function is_premium_listing($listing_id, $user_id)
+	{
+		$this->db->select('listing_id');				
+		$this->db->where('user_id',$user_id);
+		$this->db->where('listing_id',$listing_id);
+		$this->db->where('listing_type_id',2);
+		$query = $this->db->get($this->table_listings);		
+		
+		return $query->num_rows() > 0;
+	}
+	
 	/*
 	| get all listing information from main and meta listing tables
 	| Return :array of all data on success or FALSE on failure

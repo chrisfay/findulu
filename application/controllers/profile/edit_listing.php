@@ -29,11 +29,14 @@ class Edit_listing extends Controller
 	//edit a free listing
 	function free($listing_id = NULL)
 	{
-		if(is_null($listing_id))
+		if(is_null($listing_id) || !$this->profile_model->is_free_listing($listing_id, $this->session->userdata('user_id')))
 		{
 			redirect('profile/manage/view_listings');
 			return;
 		}
+		
+		//check if listing is valid and if its a free listing, otherwise re-route to listings page
+		
 			
 		//build variables that should be passed to the view
 		$view_content['content'] = array(
@@ -106,7 +109,7 @@ class Edit_listing extends Controller
 	//edit premium listing
 	function premium($listing_id = NULL)
 	{
-		if(is_null($listing_id))
+		if(is_null($listing_id) || !$this->profile_model->is_premium_listing($listing_id, $this->session->userdata('user_id')))
 		{
 			redirect('profile/manage/view_listings');
 			return;
