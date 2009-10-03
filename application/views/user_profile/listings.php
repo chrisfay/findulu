@@ -4,7 +4,7 @@
 
 <?php echo anchor('profile/create_listing/free','Create free listing', array('title' => 'Create new listing')); //create new listing link ?><br />
 <?php echo anchor('profile/purchase_listing','Purchase premium listing', array('title' => 'Create new listing')); //create new listing link ?>
-<br></br>
+<br /><br />
 
 <?php
 	//show urls to any listings
@@ -15,7 +15,7 @@
 		<?
 		foreach($content['free_listing_ids'] as $data)
 		{
-			echo anchor('profile/manage/view_single_listing/'.$data->listing_id, 'Listing '.$data->listing_id) . "<br>"; 
+			echo anchor('profile/manage/view_single_listing/'.$data->listing_id, 'Listing '.$data->listing_id) . "<br />"; 
 			
 			//echo '<a href="profile/manage/view_single_listing/'.$data.'">Listing'.$data.'</a>';			
 		}		
@@ -31,7 +31,7 @@
 		<?
 		foreach($content['premium_listing_ids'] as $data)
 		{
-			echo anchor('profile/manage/view_single_listing/'.$data->listing_id, 'Listing '.$data->listing_id) . "<br>"; 
+			echo anchor('profile/manage/view_single_listing/'.$data->listing_id, 'Listing '.$data->listing_id) . "<br />"; 
 			
 			//echo '<a href="profile/manage/view_single_listing/'.$data.'">Listing'.$data.'</a>';			
 		}		
