@@ -17,8 +17,7 @@ class Create_listing extends Controller
 		$this->load->library('form_validation');		
 		$this->load->model('user_profile/profile_model');			
 		$this->load->library('validation');
-		$this->validation->set_error_delimiters('<div class="error">','</div>');
-		
+		$this->validation->set_error_delimiters('<div class="error">','</div>');		
 	}
 	
 	function index($data = NULL)

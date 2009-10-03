@@ -49,7 +49,7 @@ class Purchase_listing extends Controller
 		//create empty premium listing
 		$listing_id = $this->profile_model->create_shell_premium_listing($this->session->userdata('user_id'), $this->zip_code, $this->payment_interval);
 
-		//TODO: create new controller (or library) called profile/edit_listing and pass $listing_id to it so the user can begin populating it		
+		//load purchase success view
 		$view_content['view_content']['listing_id']       = $listing_id;		
 		$data['content'] = $this->load->view('user_profile/purchase_success', $view_content, TRUE);
 		$this->profile->_loadDefaultTemplate($data);		

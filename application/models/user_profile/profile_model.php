@@ -111,6 +111,42 @@ class Profile_model extends Model
 			return FALSE;
 	}
 	
+	function update_free_listing($listing_data)
+	{
+		$listing_core_data = array(	
+		'listing_id'      => $listing_data['listing_id'],		
+		'title'           => $listing_data['title'],		
+		'phone'           => $listing_data['phone'],		
+		'email'           => $listing_data['email'],		
+		'address'         => $listing_data['address'],				
+		'zip'             => $listing_data['zipcode'],				
+		);
+					
+		$this->db->where('user_id', $listing_data['user_id']);
+		$this->db->where('listing_id', $listing_data['listing_id']);
+		$this->db->update($this->table_listings, $this->db->escape($listing_core_data));
+		echo $this->db->last_query();
+		if($this->db->affected_rows() > 0)
+		{
+			//build out data to go into listing meta table
+			$update_meta_data = array(			
+			'listing_tags'   => $listing_data['tags'],
+			);
+			
+			$this->db->where('listing_id', $listing_data['listing_id']);
+			$this->db->update($this->table_listing_details, $this->db->escape($update_meta_data));			
+			if($this->db->affected_rows() > 0)
+				return TRUE;
+		}
+		
+		return FALSE;	
+	}
+	
+	function update_premium_listing($listing_data)
+	{
+	
+	}
+	
 	/*
 	| get all listing information from main and meta listing tables
 	| Return :array of all data on success or FALSE on failure
