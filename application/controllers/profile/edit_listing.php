@@ -121,7 +121,7 @@ class Edit_listing extends Controller
 			'message'      => NULL,      //any general messages to show			
 			'existing_data'  => $this->profile_model->get_single_listing_details($listing_id, $this->session->userdata('user_id')),		
 		);
-	
+			
 		//form rules
 		$rules['title']         = "trim|required|min_length[2]|max_length[255]";		
 		$rules['description']   = "trim|max_length[5000]";		
@@ -190,8 +190,7 @@ class Edit_listing extends Controller
 				$uploadedFileName = $view_content['content']['file_details']['file_name'];
 			}			
 		}
-		else //assign default ad for upload		
-			//$uploadedFileName = $this->config->item('ulu_default_listing_ad_image');			
+		else //file not uploaded						
 			$uploadedFileName = NULL;	
 		/////////////////////////////// Ad upload stuff END///////////////////////////////
 		
@@ -223,8 +222,7 @@ class Edit_listing extends Controller
 				$uploadedCouponFileName = $view_content['content']['file_details']['file_name'];
 			}			
 		}
-		else //assign default logo for upload		
-			//$uploadedCouponFileName = $this->config->item('ulu_default_listing_coupon_image');			
+		else //file was not uploaded					
 			$uploadedCouponFileName = NULL;
 		/////////////////////////////// Ad upload stuff END///////////////////////////////
 		
@@ -244,7 +242,7 @@ class Edit_listing extends Controller
 		'zipcode'         => $this->input->post('zipcode'),
 		'tags'            => $this->input->post('tags'),		
 		);
-		
+				
 		//lets update db with listing information
 		if(! $this->profile_model->update_premium_listing($listing_data)) //failed to update db for some reason
 		{

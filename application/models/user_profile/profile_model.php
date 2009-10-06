@@ -158,13 +158,17 @@ class Profile_model extends Model
 		if($this->db->affected_rows() >= 0)
 		{
 			//build out data to go into listing meta table
-			$insert_meta_data = array(			
-			'listing_ad_filename'      => $listing_data['ad'],
-			'listing_coupon_filename'  => $listing_data['coupon'],
+			$insert_meta_data = array(						
 			'listing_description'      => $listing_data['description'],
 			'listing_tags'             => $listing_data['tags'],
 			'listing_url'              => $listing_data['url'],					
 			);
+			
+			//only update file names if a new file has been submitted
+			if(! is_null($listing_data['ad']))
+				$insert_meta_data['listing_ad_filename'] = $listing_data['ad'];
+			if(! is_null($listing_data['coupon']))
+				$insert_meta_data['listing_coupon_filename'] = $listing_data['coupon'];
 			
 			if($this->db->affected_rows() >= 0)
 			{
@@ -303,7 +307,7 @@ class Profile_model extends Model
 		$this->db->join($this->table_listing_details, $this->table_listings .'.listing_id = ' . $this->table_listing_details .'.listing_id');
 		$this->db->join($this->table_location, $this->table_listings .'.zip = '. $this->table_location .'.zip_code');
 		
-		$query = $this->db->get();		
+		$query = $this->db->get();			
 		if($query->num_rows() > 0)				
 			return $query->row();
 		else

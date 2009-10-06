@@ -17,7 +17,7 @@ $coupon = array(
 
 $submit = array(	
 	'class' => 'input',
-	'value' => 'Create listing',
+	'value' => 'Edit listing',
 );
 
 //show errors
@@ -31,7 +31,7 @@ if( ! is_null($content['error']))
 
 <?php if(! is_null($content['message'])) echo $content['message']; ?>
 
-<h2>Create a new premium listing</h2>
+<h2>Edit premium listing</h2>
 
 <?php //echo $this->validation->error_string; //output any validation errors?>
 
@@ -61,7 +61,7 @@ if( ! is_null($content['error']))
 	<input type="text" name="email" id="listing_email" value="<?php echo set_value('email', $content['existing_data']->email); ?>" />
 	<label>Website:</label>
 	<?php echo $this->validation->url_error; ?>
-	<input type="text" name="url" id="listing_url" value="<?php set_value('url', $content['existing_data']->listing_url); ?>" />
+	<input type="text" name="url" id="listing_url" value="<?php echo set_value('url', $content['existing_data']->listing_url); ?>" />
 	<label>Address:</label>
 	<?php echo $this->validation->address_error; ?>
 	<input type="text" name="address" id="listing_address" value="<?php echo set_value('address', $content['existing_data']->address); ?>" />
