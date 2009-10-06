@@ -46,7 +46,7 @@ if( ! is_null($content['error']))
 	echo form_label('Coupon image (336 X 280 px):', $coupon['id']);
 	echo $this->validation->coupon_error;	
 	echo form_upload($coupon);
-	echo '<img src="'.base_url().'uploads/'.((is_null($content['existing_data']->listing_coupon_filename)) ? $this->config->item('ulu_default_listing_ad_image') : $content['existing_data']->listing_coupon_filename).'" alt="coupon image" /><br />';	
+	echo '<img src="'.base_url().'uploads/'.((is_null($content['existing_data']->listing_coupon_filename)) ? $this->config->item('ulu_default_listing_coupon_image') : $content['existing_data']->listing_coupon_filename).'" alt="coupon image" /><br />';	
 ?>
 
 	<label>Listing title (ie Business name, Organization name, etc...):</label>
