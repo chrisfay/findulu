@@ -49,31 +49,31 @@ if( ! is_null($content['error']))
 
 	<label>Listing title (ie Business name, Organization name, etc...):</label>
 	<?php echo $this->validation->title_error; ?>
-	<input type="text" name="title" id="listing_title" value="<?php echo $this->validation->title; ?>" />
+	<input type="text" name="title" id="listing_title" value="<?php echo set_value('title', $content['existing_data']->title); ?>" />
 	<label>Listing description:</label>
 	<?php echo $this->validation->description_error; ?>
-	<textarea name="description" id="listing_description"><?php echo $this->validation->description; ?></textarea>
+	<textarea name="description" id="listing_description"><?php echo set_value('description', $content['existing_data']->listing_description);?></textarea>
 	<label>Phone (ie. 555-555-5555):</label>
 	<?php echo $this->validation->phone_error; ?>
-	<input type="text" name="phone" id="listing_phone" value="<?php echo $this->validation->phone; ?>" />
+	<input type="text" name="phone" id="listing_phone" value="<?php echo set_value('phone', $content['existing_data']->phone); ?>" />
 	<label>Email:</label>
 	<?php echo $this->validation->email_error; ?>
-	<input type="text" name="email" id="listing_email" value="<?php echo $this->validation->email; ?>" />
+	<input type="text" name="email" id="listing_email" value="<?php echo set_value('email', $content['existing_data']->email); ?>" />
 	<label>Website:</label>
 	<?php echo $this->validation->url_error; ?>
-	<input type="text" name="url" id="listing_url" value="<?php echo $this->validation->url; ?>" />
+	<input type="text" name="url" id="listing_url" value="<?php set_value('url', $content['existing_data']->listing_url); ?>" />
 	<label>Address:</label>
 	<?php echo $this->validation->address_error; ?>
-	<input type="text" name="address" id="listing_address" value="<?php echo $this->validation->address; ?>" />
+	<input type="text" name="address" id="listing_address" value="<?php echo set_value('address', $content['existing_data']->address); ?>" />
 	<label>Zipcode:</label>
 	<?php echo $this->validation->zipcode_error; ?>
-	<input type="text" name="zipcode" id="listing_zipcode" value="<?php echo $this->validation->zipcode; ?>" />
+	<input type="text" name="zipcode" id="listing_zipcode" value="<?php echo set_value('zipcode', $content['existing_data']->zip); ?>" />
 	<label>Tags (separate tags with commas ie. plumbing,repair):</label>
 	<?php echo $this->validation->tags_error; ?>
-	<input type="text" name="tags" id="listing_tags" value="<?php echo $this->validation->tags; ?>" />
+	<input type="text" name="tags" id="listing_tags" value="<?php echo set_value('tags', $content['existing_data']->listing_tags); ?>" />
 
 <?			
-	echo form_hidden('create_listing','1');
+	echo form_hidden('edit_listing','1');
 ?>
 
 <?php echo form_submit($submit); ?>

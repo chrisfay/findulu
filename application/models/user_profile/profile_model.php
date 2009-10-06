@@ -114,20 +114,19 @@ class Profile_model extends Model
 	
 	function update_free_listing($listing_data)
 	{
-		$listing_core_data = array(	
-		'listing_id'      => $listing_data['listing_id'],		
+		$listing_core_data = array(			
 		'title'           => $listing_data['title'],		
 		'phone'           => $listing_data['phone'],		
 		'email'           => $listing_data['email'],		
 		'address'         => $listing_data['address'],				
-		'zip'             => $listing_data['zipcode'],				
+		'zip'             => $listing_data['zipcode'],						
 		);
 					
 		$this->db->where('user_id', $listing_data['user_id']);
 		$this->db->where('listing_id', $listing_data['listing_id']);
 		$this->db->where('listing_type_id', 1);	//make sure we're updating a free ad
 		$this->db->update($this->table_listings, $this->db->escape($listing_core_data));		
-		if($this->db->affected_rows() > 0)
+		if($this->db->affected_rows() >= 0)
 		{
 			//build out data to go into listing meta table
 			$update_meta_data = array(			
@@ -136,10 +135,9 @@ class Profile_model extends Model
 			
 			$this->db->where('listing_id', $listing_data['listing_id']);
 			$this->db->update($this->table_listing_details, $this->db->escape($update_meta_data));			
-			if($this->db->affected_rows() > 0)
+			if($this->db->affected_rows() >= 0)
 				return TRUE;
-		}
-		
+		}		
 		return FALSE;	
 	}
 	
@@ -157,7 +155,7 @@ class Profile_model extends Model
 		$this->db->where('listing_id', $listing_data['listing_id']);		
 		$this->db->where('listing_type_id', 2);	//make sure we're updating a premium ad
 		$this->db->update($this->table_listings, $this->db->escape($listing_core_data));
-		if($this->db->affected_rows() > 0)
+		if($this->db->affected_rows() >= 0)
 		{
 			//build out data to go into listing meta table
 			$insert_meta_data = array(			
@@ -168,7 +166,7 @@ class Profile_model extends Model
 			'listing_url'              => $listing_data['url'],					
 			);
 			
-			if($this->db->affected_rows() > 0)
+			if($this->db->affected_rows() >= 0)
 			{
 				$this->db->where('listing_id', $listing_data['listing_id']);
 				$this->db->update($this->table_listing_details, $this->db->escape($insert_meta_data));			
@@ -307,10 +305,9 @@ class Profile_model extends Model
 		
 		$query = $this->db->get();		
 		if($query->num_rows() > 0)				
-			return $query->result();
+			return $query->row();
 		else
-			return FALSE;
-		
+			return FALSE;		
 	}
 	
 	//query the city records in the db for matches to $q

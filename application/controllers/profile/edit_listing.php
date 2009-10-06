@@ -16,7 +16,7 @@ class Edit_listing extends Controller
 		$this->load->config('tank_auth', TRUE);		
 		$this->load->library('form_validation');		
 		$this->load->model('user_profile/profile_model');			
-		$this->load->library('validation');
+		$this->load->library('validation');		
 		$this->validation->set_error_delimiters('<div class="error">','</div>');
 	}
 	
@@ -29,20 +29,19 @@ class Edit_listing extends Controller
 	//edit a free listing
 	function free($listing_id = NULL)
 	{
+		//listing id is invalid (or empty) or not owned by the logged in user - route to listing page
 		if(is_null($listing_id) || !$this->profile_model->is_free_listing($listing_id, $this->session->userdata('user_id')))
 		{
 			redirect('profile/manage/view_listings');
 			return;
-		}
-		
-		//check if listing is valid and if its a free listing, otherwise re-route to listings page
-		
+		}		
 			
 		//build variables that should be passed to the view
 		$view_content['content'] = array(
-			'error'        => NULL,      //any error messages that should be displayed
-			'file_details' => NULL,      //file details after upload is successful
-			'message'      => NULL,      //any general messages to show			
+			'error'          => NULL,      //any error messages that should be displayed
+			'file_details'   => NULL,      //file details after upload is successful
+			'message'        => NULL,      //any general messages to show						
+			'existing_data'  => $this->profile_model->get_single_listing_details($listing_id, $this->session->userdata('user_id')),		
 		);
 		
 		//form rules
@@ -63,21 +62,21 @@ class Edit_listing extends Controller
 		$fields['tags']      = "Tags";
 		$this->validation->set_fields($fields);
 		
+		//the form was not submitted, display default view
+		if( ! $this->input->post('edit_listing')) 
+		{						
+			$data['content'] = $this->load->view('user_profile/edit_free_listing', $view_content, TRUE);
+			$this->profile->_loadDefaultTemplate($data);
+			return;
+		}		
+		
 		//run validation
 		if($this->validation->run() == FALSE)	
 		{		
 			$data['content'] = $this->load->view('user_profile/edit_free_listing', $view_content, TRUE);
 			$this->profile->_loadDefaultTemplate($data);
 			return false;
-		}		
-				
-		//the form was not submitted, display default view
-		if( ! $this->input->post('create_listing')) 
-		{			
-			$data['content'] = $this->load->view('user_profile/edit_free_listing', $view_content, TRUE);
-			$this->profile->_loadDefaultTemplate($data);
-			return;
-		}
+		}						
 		
 		//process form data and insert into db
 		$listing_data = array(
@@ -94,14 +93,14 @@ class Edit_listing extends Controller
 		//lets update db
 		if(! $this->profile_model->update_free_listing($listing_data,$this->session->userdata('user_id'))) //failed to update db for some reason
 		{
-			$view_content['content']['message'] = '<h3>Failed to update listing</h3>';														
+			$view_content['content']['message'] = 'Nothing Updated';														
 			$data['content'] = $this->load->view('user_profile/edit_free_listing', $view_content, TRUE);						
 			$this->profile->_loadDefaultTemplate($data);
 			return;
 		}
 		
 		//succssfully created listing
-		$view_content['content']['message'] = '<h3>Successfully updated listing</h3>';														
+		$view_content['content']['message'] = 'Successfully updated listing';														
 		$data['content'] = $this->load->view('user_profile/edit_free_listing', $view_content, TRUE);								
 		$this->profile->_loadDefaultTemplate($data);
 	}
@@ -120,6 +119,7 @@ class Edit_listing extends Controller
 			'error'        => NULL,      //any error messages that should be displayed
 			'file_details' => NULL,      //file details after upload is successful
 			'message'      => NULL,      //any general messages to show			
+			'existing_data'  => $this->profile_model->get_single_listing_details($listing_id, $this->session->userdata('user_id')),		
 		);
 	
 		//form rules
@@ -146,21 +146,21 @@ class Edit_listing extends Controller
 		$fields['tags']         = "Tags";
 		$this->validation->set_fields($fields);
 		
+		//the form was not submitted, display default view
+		if( ! $this->input->post('edit_listing')) 
+		{			
+			$data['content'] = $this->load->view('user_profile/edit_premium_listing', $view_content, TRUE);
+			$this->profile->_loadDefaultTemplate($data);
+			return;
+		}
+		
 		//run validation
 		if($this->validation->run() == FALSE)	
 		{		
 			$data['content'] = $this->load->view('user_profile/edit_premium_listing', $view_content, TRUE);
 			$this->profile->_loadDefaultTemplate($data);
 			return false;
-		}				
-				
-		//the form was not submitted, display default view
-		if( ! $this->input->post('create_listing')) 
-		{			
-			$data['content'] = $this->load->view('user_profile/edit_premium_listing', $view_content, TRUE);
-			$this->profile->_loadDefaultTemplate($data);
-			return;
-		}
+		}											
 		
 		/////////////////////////////// Ad upload stuff ///////////////////////////////
 		$config['upload_path']   = $this->config->item('ulu_upload_path');
@@ -259,4 +259,59 @@ class Edit_listing extends Controller
 		$data['content'] = $this->load->view('user_profile/edit_premium_listing', $view_content, TRUE);								
 		$this->profile->_loadDefaultTemplate($data);
 	}
+	
+	//----------- CALLBACKS (for input fields) ----------------//
+	
+	//checks if the tag field has spaces or words separated by commas
+	//RETURNS: FALSE on failure, or TRUE on success	
+	function tag_word_count_check($str)
+	{		
+		if(sizeof(preg_split('/[;, \n]+/', $str)) > 1)
+		{
+			$this->validation->set_message('tag_word_count_check','The %s field can not be more than one word.');		
+			return FALSE;
+		}	
+		
+		return TRUE;
+	}
+	
+	//checks if number of tags is greater than allowed number
+	//returns TRUE if less than max, or FALSE otherwise
+	function tag_count_premium($str)
+	{
+		if(sizeof(preg_split('/[;, \n]+/', $str)) > $this->config->item('ulu_max_tags'))
+		{
+			$this->validation->set_message('tag_count_premium','The %s field can not have more than ' . $this->config->item('ulu_max_tags') . ' words');		
+			return FALSE;
+		}	
+		
+		return TRUE;
+	}
+	
+	//validations phone number field to format 555-555-5555
+	function is_valid_phone_number($str)
+	{
+		if(ereg("^[0-9]{3}-[0-9]{3}-[0-9]{4}$", $str))					
+			return TRUE;		
+		else
+		{			
+			$this->validation->set_message('is_valid_phone_number','The %s field must be a valid format (ie. 3334445555, 333.444.5555, 333-444-5555, 333 444 5555, (333) 444 5555 and all combinations thereof.)');		
+			return FALSE;
+		}
+	}
+	
+	//verify the zip entered is valid
+	//return TRUE on success or FALSE otherwise
+	function valid_zipcode($zipcode)
+	{
+		if(! $this->profile_model->valid_zipcode($zipcode))
+		{
+			$this->validation->set_message('valid_zipcode', 'Invalid zipcode');
+			return FALSE;
+		}
+		
+		return TRUE;
+	}
+	
+	//----------- [END] CALLBACKS ----------------//
 }
