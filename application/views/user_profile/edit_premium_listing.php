@@ -37,14 +37,16 @@ if( ! is_null($content['error']))
 
 <?php
 	echo form_open_multipart($this->uri->uri_string());
-	
+
 	echo form_label('Ad image (336 X 280 px):', $ad['id']);
 	echo $this->validation->ad_error;	
 	echo form_upload($ad);
-		
+	echo '<img src="'.base_url().'uploads/'.((is_null($content['existing_data']->listing_ad_filename)) ? $this->config->item('ulu_default_listing_ad_image') : $content['existing_data']->listing_ad_filename).'" alt="ad image" /><br />';
+
 	echo form_label('Coupon image (336 X 280 px):', $coupon['id']);
 	echo $this->validation->coupon_error;	
 	echo form_upload($coupon);
+	echo '<img src="'.base_url().'uploads/'.((is_null($content['existing_data']->listing_coupon_filename)) ? $this->config->item('ulu_default_listing_ad_image') : $content['existing_data']->listing_coupon_filename).'" alt="coupon image" /><br />';	
 ?>
 
 	<label>Listing title (ie Business name, Organization name, etc...):</label>

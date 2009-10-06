@@ -254,6 +254,11 @@ class Edit_listing extends Controller
 		
 		//succssfully created listing
 		$view_content['content']['message'] = '<h3>Successfully edited listing</h3>';														
+		
+		//refresh file data
+		$view_content['content']['existing_data'] = $this->profile_model->get_single_listing_details($listing_id, $this->session->userdata('user_id'));
+		
+		//display view
 		$data['content'] = $this->load->view('user_profile/edit_premium_listing', $view_content, TRUE);								
 		$this->profile->_loadDefaultTemplate($data);
 	}
