@@ -40,7 +40,7 @@ class Create_listing extends Controller
 		$rules['title']     = "trim|required|min_length[2]|max_length[255]";		
 		$rules['phone']     = "trim|required|min_length[12]|max_length[12]|callback_is_valid_phone_number";
 		$rules['email']     = "trim|required|valid_email|max_length[255]";
-		$rules['address']   = "trim|required|min_length[2]|max_length[255]";		
+		$rules['address']   = "trim|min_length[2]|max_length[255]";		
 		$rules['zipcode']   = "trim|required|min_length[5]|max_length[5]|numeric|callback_valid_zipcode";
 		$rules['tags']      = "trim|required|min_length[2]|max_length[255]|callback_tag_word_count_check";
 		$this->validation->set_rules($rules);
@@ -114,7 +114,7 @@ class Create_listing extends Controller
 		$rules['phone']         = "trim|required|min_length[12]|max_length[12]|callback_is_valid_phone_number";
 		$rules['email']         = "trim|required|valid_email|max_length[255]";
 		$rules['url']           = "trim|max_length[255]";
-		$rules['address']       = "trim|required|min_length[2]|max_length[255]";	
+		$rules['address']       = "trim|min_length[2]|max_length[255]";	
 		$rules['zipcode']       = "trim|required|min_length[5]|max_length[5]|numeric|callback_valid_zipcode";
 		$rules['tags']          = "trim|required|min_length[2]|max_length[255]|callback_tag_count_premium";
 		$this->validation->set_rules($rules);
