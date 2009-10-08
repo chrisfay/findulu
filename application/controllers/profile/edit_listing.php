@@ -110,8 +110,7 @@ class Edit_listing extends Controller
 			$data['content'] = $this->load->view('user_profile/edit_free_listing', $view_content, TRUE);						
 			$this->profile->_loadDefaultTemplate($data);
 			return;
-		}			
-		
+		}				
 		
 		//succssfully created listing
 		$view_content['content']['message'] = 'Successfully updated listing';														

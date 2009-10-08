@@ -57,7 +57,7 @@ class Tag_model extends Model
 	function cleanup_tags()
 	{
 		$q =   'DELETE FROM tags WHERE NOT EXISTS (
-					SELECT *
+					SELECT tag_id
 					FROM tag_mapping
 					WHERE tags.tag_id = tag_mapping.tag_id
 				)';
