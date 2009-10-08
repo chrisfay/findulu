@@ -13,7 +13,9 @@ class General extends Controller
 		
 		$this->load->library('admin_lib');
 		$this->load->library('profile');
+		$this->load->library('lib_tags');
 		$this->load->model('admin/admin_model');
+		$this->load->model('user_profile/tag_model');
 		$this->load->library('validation');
 		$this->validation->set_error_delimiters('<div class="error">','</div>');							
 		
@@ -75,10 +77,13 @@ class General extends Controller
 		$this->admin_lib->_loadDefaultTemplate($data);		
 	}
 	
+	//delete all listings from the system - permanently delete (not soft delete) including tag data
 	function delete_all_listings()
 	{
 		if($this->admin_model->delete_all_listings())
-			$data['messages'] = $this->messages = array('delete_all_listings' => "Successfully deleted all listings");
+		{			
+			$data['messages'] = $this->messages = array('delete_all_listings' => "Successfully deleted all listings");			
+		}
 		else					
 			$data['errors'] = $this->errors = array('delete_user' => "Failed to delete all listings for some reason");
 		

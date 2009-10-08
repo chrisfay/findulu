@@ -17,6 +17,8 @@ class Edit_listing extends Controller
 		$this->load->library('form_validation');		
 		$this->load->model('user_profile/profile_model');			
 		$this->load->library('validation');		
+		$this->load->library('lib_tags');
+		$this->load->model('user_profile/tag_model');
 		$this->validation->set_error_delimiters('<div class="error">','</div>');
 	}
 	
@@ -41,9 +43,10 @@ class Edit_listing extends Controller
 			'error'          => NULL,      //any error messages that should be displayed
 			'file_details'   => NULL,      //file details after upload is successful
 			'message'        => NULL,      //any general messages to show						
-			'existing_data'  => $this->profile_model->get_single_listing_details($listing_id, $this->session->userdata('user_id')),		
+			'existing_data'  => $this->profile_model->get_single_listing_details($listing_id, $this->session->userdata('user_id')),
+			'tags'           => $this->tag_model->get_tags($listing_id),
 		);
-		
+				
 		//form rules
 		$rules['title']     = "trim|required|min_length[2]|max_length[255]";		
 		$rules['phone']     = "trim|required|min_length[12]|max_length[12]|callback_is_valid_phone_number";
@@ -86,10 +89,11 @@ class Edit_listing extends Controller
 		'phone'           => $this->input->post('phone'),
 		'email'           => $this->input->post('email'),
 		'address'         => $this->input->post('address'),			
-		'zipcode'         => $this->input->post('zipcode'),
-		'tags'            => $this->input->post('tags'),		
+		'zipcode'         => $this->input->post('zipcode'),		
 		);
 		
+		$newTags = $this->input->post('tags');
+				
 		//lets update db
 		if(! $this->profile_model->update_free_listing($listing_data,$this->session->userdata('user_id'))) //failed to update db for some reason
 		{
@@ -98,6 +102,16 @@ class Edit_listing extends Controller
 			$this->profile->_loadDefaultTemplate($data);
 			return;
 		}
+		
+		//lets update tags with new ones					
+		if( ! $this->lib_tags->update_tags_bulk($newTags, $listing_id))
+		{
+			$view_content['content']['message'] = 'Nothing Updated';														
+			$data['content'] = $this->load->view('user_profile/edit_free_listing', $view_content, TRUE);						
+			$this->profile->_loadDefaultTemplate($data);
+			return;
+		}			
+		
 		
 		//succssfully created listing
 		$view_content['content']['message'] = 'Successfully updated listing';														

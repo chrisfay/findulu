@@ -18,7 +18,12 @@ if( ! is_null($content['error']))
 
 <h2>Edit listing</h2>
 
-<?php //echo $this->validation->error_string; //output any validation errors?>
+<?php
+	//build comma sep list of tags	
+	$tags = $content['tags'];	
+	foreach($tags as $tag)
+		$tagOutput = $tag->tag_text;
+?>
 
 <?php
 	echo form_open_multipart($this->uri->uri_string());		
@@ -40,7 +45,7 @@ if( ! is_null($content['error']))
 	<input type="text" name="zipcode" id="listing_zipcode" value="<?php echo set_value('zipcode', $content['existing_data']->zip); ?>" />
 	<label>Tag (1 word allowed for free listing):</label>
 	<?php echo $this->validation->tags_error; ?>
-	<input type="text" name="tags" id="listing_tags" value="<?php echo set_value('tags', $content['existing_data']->listing_tags); ?>" />
+	<input type="text" name="tags" id="listing_tags" value="<?php echo set_value('tags', $tagOutput); ?>" />
 <?
 	echo form_hidden('edit_listing','1');		
 ?>

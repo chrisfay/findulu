@@ -93,11 +93,13 @@ class Admin_model extends Model
 	function delete_all_listings()
 	{
 		$this->db->empty_table($this->table_listing_details);
+		$this->db->empty_table('tag_mapping');
+		$this->db->empty_table('tags');
+		$this->db->empty_table($this->table_listings);
+		
 		if($this->db->affected_rows() > 0)		
 		{
-			$this->db->empty_table($this->table_listings);
-			if($this->db->affected_rows() > 0)		
-				return TRUE;
+			return TRUE;
 		}
 		
 		return FALSE;

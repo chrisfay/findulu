@@ -28,7 +28,9 @@ class Tag_model extends Model
 	//if tag already exists, simply add mapping enter to it for the listing_id
 	//return TRUE on success or FALSE on failure
 	function create_new_tag_and_mapp($tag, $listing_id)
-	{			
+	{	
+		$tag_id = NULL;		
+		
 		if(! $this->tag_exists($tag))		
 		{
 			if(! $tag_id = $this->create_new_tag($tag))
@@ -38,7 +40,7 @@ class Tag_model extends Model
 		{
 			//get the id of the existing tag
 			$tag_id = $this->get_tag_id($tag);
-		}		
+		}					
 		
 		//add entry in mapping table
 		if($this->tag_mapping_exists($tag_id, $listing_id))

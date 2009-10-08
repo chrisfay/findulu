@@ -114,6 +114,7 @@ class Profile_model extends Model
 		return FALSE;
 	}
 	
+	//updates a listing	
 	function update_free_listing($listing_data)
 	{
 		$listing_core_data = array(			
@@ -129,40 +130,8 @@ class Profile_model extends Model
 		$this->db->where('listing_type_id', 1);	//make sure we're updating a free ad
 		$this->db->update($this->table_listings, $this->db->escape($listing_core_data));		
 		if($this->db->affected_rows() >= 0)
-		{
-			
-			//insert the tag (or add mapping for existing tag)
-			if (!empty($listing_data['tags']))
-			{
-				$this->db->where('tag_text', $listing_data['tags']);
-				$query = $this->db->get('tags',1);
-			
-				if ( $query->num_rows() == 1 )
-				{
-					//tag already exists
-					$row = $query->row_array();
-					$tag_id = $row['tag_id'];
-				}
-				else
-				{
-					//new tag - lets insert it into the database and grab the generated tag_id
-					$tag_data = array('tag_text' => $listing_data['tags']);
-					$this->db->insert('tags', $tag_data);
-				
-					$tag_id = $this->db->insert_id();
-				}
-			
-				//create the user_id -> tag_id mapping
-				$tag_assoc_data =    array(
-										'tag_id'     => $tag_id,										
-										'listing_id' => $listing_id,
-									);
-			
-				$this->db->insert('tag_mapping', $tag_assoc_data);								
-			}
-			
-			if($this->db->affected_rows() >= 0)
-				return TRUE;
+		{			
+			return TRUE;
 		}		
 		return FALSE;	
 	}
@@ -412,5 +381,12 @@ class Profile_model extends Model
 		$this->db->update($this->table_listings, array('status' => '2'));
 		
 		return $this->db->affected_rows() > 0;			
+	}
+	
+	//fully delete all records associated with an id - used usually during rollback stuff when another query fails during listing creation
+	function delete_listing_data_perm($listing_id)
+	{
+		$this->db->delete('listing_details_meta', array('listing_id' => $listing_id));
+		$this->db->delete('listings', array('listing_id' => $listing_id));		
 	}
 }

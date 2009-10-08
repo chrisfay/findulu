@@ -29,11 +29,35 @@ class Lib_tags
 	
 	}
 	
+	//tags comma sep list of tags and process each one, passing them to create_new_tag_and_mapp
+	//used when updating a listing
+	//RETURNS TRUE on success FALSE on failure
+	function update_tags_bulk($tags = NULL, $listing_id = NULL)
+	{	
+		if(is_null($tags) || is_null($listing_id))
+			return FALSE;
+		
+		$tags = str_replace(', ', ',', $tags);
+		$tags = str_replace('_', ' ', $tags);
+		$tags = explode(',', $tags);
+		
+		foreach ($tags as $tag) 
+		{				
+			$tag = trim($tag);
+			
+			if (!empty($tag))
+			{
+				$this->create_new_tag_and_mapp($tag, $listing_id);
+			}			
+		}
+		return FALSE;		
+	}
+	
 	//both create a new tag and add the listing to tag_id mapping
 	function create_new_tag_and_mapp($tag, $listing_id)
 	{		
 		if (!empty($tag) && !empty($listing_id))		
-		{
+		{			
 			return $this->ci->tag_model->create_new_tag_and_mapp($tag, $listing_id);
 		}
 		
