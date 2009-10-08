@@ -48,7 +48,7 @@ class Profile_model extends Model
 	
 	//inserts a new free listing (must insert into main listing table as well as listing descripton table if needed)
 	//parms: expects an associative array of fields/values
-	//returns TRUE on success or FALSE on failure
+	//returns listing_id on success or FALSE on failure
 	function create_free_listing($listing_data)
 	{		
 		$listing_core_data = array(		
@@ -61,50 +61,18 @@ class Profile_model extends Model
 		'listing_type_id' => 1,
 		'creation_date'   => $listing_data['creation_date'],		
 		);
-						
+								
 		$this->db->insert($this->table_listings, $this->db->escape($listing_core_data));
 		if($this->db->affected_rows() > 0)
 		{
 			//build out data to go into listing meta table
 			$listing_id = $this->db->insert_id();
 			$insert_meta_data = array(
-			'listing_id'            => $listing_id,			
-			//'listing_tags'   => $listing_data['tags'],
+			'listing_id'            => $listing_id,						
 			);
 			
 			$this->db->insert($this->table_listing_details, $this->db->escape($insert_meta_data));			
-			
-			//insert the tag (or add mapping for existing tag)
-			if (!empty($listing_data['tags']))
-			{
-				$this->db->where('tag_text', $listing_data['tags']);
-				$query = $this->db->get('tags',1);
-			
-				if ( $query->num_rows() == 1 )
-				{
-					//tag already exists
-					$row = $query->row_array();
-					$tag_id = $row['tag_id'];
-				}
-				else
-				{
-					//new tag - lets insert it into the database and grab the generated tag_id
-					$tag_data = array('tag_text' => $listing_data['tags']);
-					$this->db->insert('tags', $tag_data);
-				
-					$tag_id = $this->db->insert_id();
-				}
-			
-				//create the user_id -> tag_id mapping
-				$tag_assoc_data =    array(
-										'tag_id'     => $tag_id,										
-										'listing_id' => $listing_id,
-									);
-			
-				$this->db->insert('tag_mapping', $tag_assoc_data);
-				
-				return TRUE;
-			}			
+			return $listing_id;					
 		}	
 		
 		return FALSE;
@@ -162,13 +130,37 @@ class Profile_model extends Model
 		$this->db->update($this->table_listings, $this->db->escape($listing_core_data));		
 		if($this->db->affected_rows() >= 0)
 		{
-			//build out data to go into listing meta table
-			$update_meta_data = array(			
-			'listing_tags'   => $listing_data['tags'],
-			);
 			
-			$this->db->where('listing_id', $listing_data['listing_id']);
-			$this->db->update($this->table_listing_details, $this->db->escape($update_meta_data));			
+			//insert the tag (or add mapping for existing tag)
+			if (!empty($listing_data['tags']))
+			{
+				$this->db->where('tag_text', $listing_data['tags']);
+				$query = $this->db->get('tags',1);
+			
+				if ( $query->num_rows() == 1 )
+				{
+					//tag already exists
+					$row = $query->row_array();
+					$tag_id = $row['tag_id'];
+				}
+				else
+				{
+					//new tag - lets insert it into the database and grab the generated tag_id
+					$tag_data = array('tag_text' => $listing_data['tags']);
+					$this->db->insert('tags', $tag_data);
+				
+					$tag_id = $this->db->insert_id();
+				}
+			
+				//create the user_id -> tag_id mapping
+				$tag_assoc_data =    array(
+										'tag_id'     => $tag_id,										
+										'listing_id' => $listing_id,
+									);
+			
+				$this->db->insert('tag_mapping', $tag_assoc_data);								
+			}
+			
 			if($this->db->affected_rows() >= 0)
 				return TRUE;
 		}		
@@ -330,6 +322,7 @@ class Profile_model extends Model
 	}
 	
 	//get all listing data for a single listing, and make sure the user_id matches the session_id for security
+	//does NOT inlclude tags (must use get_tags() function to get those)
 	//returns a result set on success
 	//or FALSE on failure
 	function get_single_listing_details($listing_id, $user_id)
@@ -340,14 +333,15 @@ class Profile_model extends Model
 		$this->db->where('user_id', $user_id);
 		$this->db->join($this->table_listing_details, $this->table_listings .'.listing_id = ' . $this->table_listing_details .'.listing_id');
 		$this->db->join($this->table_location, $this->table_listings .'.zip = '. $this->table_location .'.zip_code');
-		
+						
 		$query = $this->db->get();			
+		
 		if($query->num_rows() > 0)				
 			return $query->row();
 		else
 			return FALSE;		
 	}
-	
+		
 	//query the city records in the db for matches to $q
 	//return result set on match, or FALSE otherwise
 	//This funciton is used when a user types in the zipcode input field and

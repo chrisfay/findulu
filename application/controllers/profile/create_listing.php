@@ -17,6 +17,7 @@ class Create_listing extends Controller
 		$this->load->library('form_validation');		
 		$this->load->model('user_profile/profile_model');			
 		$this->load->library('validation');
+		$this->load->library('lib_tags');
 		$this->validation->set_error_delimiters('<div class="error">','</div>');		
 	}
 	
@@ -77,13 +78,14 @@ class Create_listing extends Controller
 		'phone'           => $this->input->post('phone'),
 		'email'           => $this->input->post('email'),
 		'address'         => $this->input->post('address'),			
-		'zipcode'         => $this->input->post('zipcode'),
-		'tags'            => trim($this->input->post('tags')),
+		'zipcode'         => $this->input->post('zipcode'),		
 		'creation_date'   => gmdate("Y-m-d H:i:s", time()),
 		);
 		
+		$tag = trim($this->input->post('tags')); //single tag
+		
 		//lets update db
-		if(! $this->profile_model->create_free_listing($listing_data)) //failed to update db for some reason
+		if(! $listing_id = $this->profile_model->create_free_listing($listing_data)) //failed to update db for some reason
 		{
 			$view_content['content']['message'] = '<h3>Failed to create listing</h3>';														
 			$data['content'] = $this->load->view('user_profile/create_free_listing', $view_content, TRUE);						
@@ -91,14 +93,26 @@ class Create_listing extends Controller
 			return;
 		}
 		
+		//insert single tag into database
+		if(! $this->lib_tags->create_new_tag_and_mapp($tag, $listing_id))
+		{
+			$view_content['content']['message'] = '<h3>Failed to add tag to database</h3>';														
+			$data['content'] = $this->load->view('user_profile/create_free_listing', $view_content, TRUE);						
+			$this->profile->_loadDefaultTemplate($data);
+			return;
+		}
+			
+		
+		
 		//succssfully created listing
 		$view_content['content']['message'] = '<h3>Successfully created listing</h3>';														
 		$data['content'] = $this->load->view('user_profile/create_free_listing', $view_content, TRUE);								
 		$this->profile->_loadDefaultTemplate($data);
 	}		
 	
-	
-	//create a premium listing
+	//WE ONLY 'EDIT' PREMIUM LISTINGS NOW, WE DON'T CREATE THEM DIRECTLY (THEY ARE CREATED AS AN EMTPY SHELL ON PURCHASE AND THEN EDITED)
+	//create a premium listing 
+	/*
 	function premium()
 	{		
 		//build variables that should be passed to the avatar view
@@ -116,7 +130,7 @@ class Create_listing extends Controller
 		$rules['url']           = "trim|max_length[255]";
 		$rules['address']       = "trim|min_length[2]|max_length[255]";	
 		$rules['zipcode']       = "trim|required|min_length[5]|max_length[5]|numeric|callback_valid_zipcode";
-		$rules['tags']          = "trim|required|min_length[2]|max_length[255]|callback_tag_count_premium";
+		$rules['tags']          = "trim|required|min_length[2]|max_length[255]|callback_valid_tags";
 		$this->validation->set_rules($rules);
 		
 		//define the fields we're using for validation purposes
@@ -245,6 +259,7 @@ class Create_listing extends Controller
 		$data['content'] = $this->load->view('user_profile/create_premium_listing', $view_content, TRUE);								
 		$this->profile->_loadDefaultTemplate($data);
 	}
+	*/
 	
 	//----------- CALLBACKS (for input fields) ----------------//
 	
@@ -261,11 +276,11 @@ class Create_listing extends Controller
 		return TRUE;
 	}
 	
-	//checks if number of tags is greater than allowed number
-	//returns TRUE if less than max, or FALSE otherwise
-	function tag_count_premium($str)
+	//checks if number of tags is greater than allowed number and if they are in the correct form
+	//returns TRUE on success, or FALSE otherwise
+	function valid_tags($str)
 	{
-		if(sizeof(preg_split('/[;, \n]+/', $str)) > $this->config->item('ulu_max_tags'))
+		if(sizeof(preg_split('/[, \n]+/', $str)) > $this->config->item('ulu_max_tags'))
 		{
 			$this->validation->set_message('tag_count_premium','The %s field can not have more than ' . $this->config->item('ulu_max_tags') . ' words');		
 			return FALSE;
