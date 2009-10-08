@@ -66,16 +66,49 @@ class Profile_model extends Model
 		if($this->db->affected_rows() > 0)
 		{
 			//build out data to go into listing meta table
+			$listing_id = $this->db->insert_id();
 			$insert_meta_data = array(
-			'listing_id'            => $this->db->insert_id(),			
-			'listing_tags'   => $listing_data['tags'],
+			'listing_id'            => $listing_id,			
+			//'listing_tags'   => $listing_data['tags'],
 			);
 			
 			$this->db->insert($this->table_listing_details, $this->db->escape($insert_meta_data));			
-			return TRUE;
-		}
-		else
-			return FALSE;
+			
+			//insert the tag (or add mapping for existing tag)
+			if (!empty($listing_data['tags']))
+			{
+				$this->db->where('tag_text', $listing_data['tags']);
+				$query = $this->db->get('tags',1);
+			
+				if ( $query->num_rows() == 1 )
+				{
+					//tag already exists
+					$row = $query->row_array();
+					$tag_id = $row['tag_id'];
+				}
+				else
+				{
+					//new tag - lets insert it into the database and grab the generated tag_id
+					$tag_data = array('tag_text' => $listing_data['tags']);
+					$this->db->insert('tags', $tag_data);
+				
+					$tag_id = $this->db->insert_id();
+				}
+			
+				//create the user_id -> tag_id mapping
+				$tag_assoc_data =    array(
+										'tag_id'     => $tag_id,
+										'user_id'    => $listing_data['user_id'],
+										'listing_id' => $listing_id,
+									);
+			
+				$this->db->insert('tag_mapping', $tag_assoc_data);
+				
+				return TRUE;
+			}			
+		}	
+		
+		return FALSE;
 	}
 	
 	function create_premium_listing($listing_data)
@@ -106,10 +139,12 @@ class Profile_model extends Model
 			);
 			
 			$this->db->insert($this->table_listing_details, $this->db->escape($insert_meta_data));			
+			
+			//TODO: Add tag creation logic similar to what I've done for free listing creation above
 			return TRUE;
 		}
-		else
-			return FALSE;
+		
+		return FALSE;
 	}
 	
 	function update_free_listing($listing_data)

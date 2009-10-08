@@ -78,7 +78,7 @@ class Create_listing extends Controller
 		'email'           => $this->input->post('email'),
 		'address'         => $this->input->post('address'),			
 		'zipcode'         => $this->input->post('zipcode'),
-		'tags'            => $this->input->post('tags'),
+		'tags'            => trim($this->input->post('tags')),
 		'creation_date'   => gmdate("Y-m-d H:i:s", time()),
 		);
 		
