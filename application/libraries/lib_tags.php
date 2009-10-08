@@ -58,8 +58,7 @@ class Lib_tags
 		//remove any tags that are missing mapping entries in tag_mapping
 		$this->ci->tag_model->cleanup_tags();
 		
-		return TRUE;
-		
+		return TRUE;		
 	}
 	
 	//both create a new tag and add the listing to tag_id mapping

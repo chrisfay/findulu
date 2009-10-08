@@ -20,6 +20,7 @@ class Manage extends Controller
 		$this->load->model('user_profile/profile_model');	
 		$this->lang->load('tank_auth');
 		$this->load->library('validation');
+		$this->load->model('user_profile/tag_model');
 		$this->validation->set_error_delimiters('<div class="error">','</div>');
 		
 	}
@@ -231,7 +232,7 @@ class Manage extends Controller
 		//build variables that should be passed to the default listing details view
 		$view_content['content'] = array(						
 			'message'      => NULL,      //any general messages to show			
-			'listings'     => NULL,      //an array of listing information
+			'listings'     => NULL,      //an array of listing information			
 		);
 		
 		$view_content['content']['message'] = 'Load some generic messages in here';
@@ -254,6 +255,7 @@ class Manage extends Controller
 		$view_content['content'] = array(						
 			'message'      => NULL,      //any general messages to show			
 			'listings'     => NULL,      //an array of listing information
+			'tags'         => $this->tag_model->get_tags($listing_id),
 		);
 		
 		$view_content['content']['message'] = 'Load some generic messages in here';
