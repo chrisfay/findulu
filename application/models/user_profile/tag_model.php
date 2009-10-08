@@ -22,7 +22,7 @@ class Tag_model extends Model
 			return $query->result();
 		else
 			return FALSE;				
-	}
+	}		
 
 	//create a new tag in tags and a mapping entry in tag_mapping
 	//if tag already exists, simply add mapping enter to it for the listing_id
@@ -53,6 +53,17 @@ class Tag_model extends Model
 		}		
 	}
 	
+	//remove any tags without a corresponding tag_mapping entry
+	function cleanup_tags()
+	{
+		$q =   'DELETE FROM tags WHERE NOT EXISTS (
+					SELECT *
+					FROM tag_mapping
+					WHERE tags.tag_id = tag_mapping.tag_id
+				)';
+		
+		$query = $this->db->query($q);
+	}
 	
 	//add a new tag to tags table
 	//return generated tag_id on success, or FALSE on failure
@@ -101,6 +112,7 @@ class Tag_model extends Model
 		return FALSE;
 	}
 	
+	//check if a tag mapping already exists in tag_mapping table
 	function tag_mapping_exists($tag_id, $listing_id)
 	{
 		$this->db->where('tag_id', $tag_id);
@@ -112,5 +124,16 @@ class Tag_model extends Model
 		else
 			return FALSE;
 	}
+	
+	//clear out tag mapping entries for listing via listing_id
+	function delete_tag_mappings($listing_id)
+	{		
+		$this->db->where('listing_id', $listing_id);
+		$this->db->delete('tag_mapping');
+		if($this->db->affected_rows() > 0)
+			return TRUE;
+			
+		return FALSE;
+	}	
 	
 }

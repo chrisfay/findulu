@@ -41,16 +41,25 @@ class Lib_tags
 		$tags = str_replace('_', ' ', $tags);
 		$tags = explode(',', $tags);
 		
+		//if tags array has an element we need to first clear out any mapping entries
+		if(sizeof($tags) > 0)
+			$this->ci->tag_model->delete_tag_mappings($listing_id);
+		
 		foreach ($tags as $tag) 
 		{				
 			$tag = trim($tag);
 			
 			if (!empty($tag))
 			{
-				$this->create_new_tag_and_mapp($tag, $listing_id);
-			}			
+				$this->create_new_tag_and_mapp($tag, $listing_id);		
+			}						
 		}
-		return FALSE;		
+		
+		//remove any tags that are missing mapping entries in tag_mapping
+		$this->ci->tag_model->cleanup_tags();
+		
+		return TRUE;
+		
 	}
 	
 	//both create a new tag and add the listing to tag_id mapping
