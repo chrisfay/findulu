@@ -97,8 +97,7 @@ class Profile_model extends Model
 			
 				//create the user_id -> tag_id mapping
 				$tag_assoc_data =    array(
-										'tag_id'     => $tag_id,
-										'user_id'    => $listing_data['user_id'],
+										'tag_id'     => $tag_id,										
 										'listing_id' => $listing_id,
 									);
 			
