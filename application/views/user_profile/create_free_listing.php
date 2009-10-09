@@ -25,22 +25,22 @@ if( ! is_null($content['error']))
 ?>
 	<label>Listing title (ie Business name, Organization name, etc...):</label>
 	<?php echo $this->validation->title_error; ?>
-	<input type="text" name="title" id="listing_title" value="<?php echo $this->validation->title; ?>" />
+	<input type="text" name="title" id="listing_title" value="<?php echo form_prep($this->validation->title); ?>" />
 	<label>Phone (ie. 555-555-5555):</label>
 	<?php echo $this->validation->phone_error; ?>
-	<input type="text" name="phone" id="listing_phone" value="<?php echo $this->validation->phone; ?>" />
+	<input type="text" name="phone" id="listing_phone" value="<?php echo form_prep($this->validation->phone); ?>" />
 	<label>Email:</label>
 	<?php echo $this->validation->email_error; ?>
-	<input type="text" name="email" id="listing_email" value="<?php echo $this->validation->email; ?>" />
+	<input type="text" name="email" id="listing_email" value="<?php echo form_prep($this->validation->email); ?>" />
 	<label>Address:</label>
 	<?php echo $this->validation->address_error; ?>
-	<input type="text" name="address" id="listing_address" value="<?php echo $this->validation->address; ?>" />
+	<input type="text" name="address" id="listing_address" value="<?php echo form_prep($this->validation->address); ?>" />
 	<label>Zipcode:</label>
 	<?php echo $this->validation->zipcode_error; ?>
-	<input type="text" name="zipcode" id="listing_zipcode" value="<?php echo $this->validation->zipcode; ?>" />
+	<input type="text" name="zipcode" id="listing_zipcode" value="<?php echo form_prep($this->validation->zipcode); ?>" />
 	<label>Tag (1 word allowed for free listing):</label>
 	<?php echo $this->validation->tags_error; ?>
-	<input type="text" name="tags" id="listing_tags" value="<?php echo $this->validation->tags; ?>" />
+	<input type="text" name="tags" id="listing_tags" value="<?php echo form_prep($this->validation->tags); ?>" />
 <?
 	echo form_hidden('create_listing','1');		
 ?>
