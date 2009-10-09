@@ -89,6 +89,7 @@ if( ! is_null($content['error']))
 	<?php echo $this->validation->tags_error; ?>
 	<input type="text" name="tags" id="listing_tags" value="<?php echo set_value('tags', $tagOutput); ?>" />
 	<label>Listing description:</label>
+	<div class="clear" style="padding-bottom:25px"></div>
 	<?php echo $this->validation->description_error; ?>
 	<textarea name="description" id="listing_description"><?php echo set_value('description', $content['existing_data']->listing_description);?></textarea>
 
