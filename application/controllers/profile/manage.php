@@ -265,7 +265,7 @@ class Manage extends Controller
 		
 		//convert the description from 'markdown' to plain html
 		//we are using the php markdown library/codeigniter helper to convert this (its the markdown_helper.php file)
-		$view_content['content']['listing']->listing_description = htmlentities(Markdown($view_content['content']['listing']->listing_description));
+		$view_content['content']['listing']->listing_description = Markdown($view_content['content']['listing']->listing_description);
 		
 		$data['content'] = $this->load->view('user_profile/listing_details', $view_content, TRUE);
 		$this->profile->_loadDefaultTemplate($data);		
