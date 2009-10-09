@@ -39,7 +39,7 @@ class Create_listing extends Controller
 	
 		//form rules
 		$rules['title']     = "trim|required|min_length[2]|max_length[255]";		
-		$rules['phone']     = "trim|required|min_length[12]|max_length[12]|callback_is_valid_phone_number";
+		$rules['phone']     = "trim|min_length[12]|max_length[12]|callback_is_valid_phone_number";
 		$rules['email']     = "trim|required|valid_email|max_length[255]";
 		$rules['address']   = "trim|min_length[2]|max_length[255]";		
 		$rules['zipcode']   = "trim|required|min_length[5]|max_length[5]|numeric|callback_valid_zipcode";

@@ -9,5 +9,6 @@
 <script type='text/javascript' src='<?php echo base_url() ?>js/jquery.bgiframe.min.js'></script>
 <script type='text/javascript' src='<?php echo base_url() ?>js/jquery.ajaxQueue.js'></script>
 <script type='text/javascript' src='<?php echo base_url() ?>js/jquery.autocomplete.js'></script>
+<script type="text/javascript" src='<?php echo base_url() ?>wmd/wmd.js'></script>
 </body>
 </html>

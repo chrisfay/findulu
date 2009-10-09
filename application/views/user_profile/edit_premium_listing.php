@@ -31,8 +31,8 @@ if( ! is_null($content['error']))
 
 <?php
 	//build comma sep list of tags	
-	if(isset($content['tags']))
-	{
+	if(sizeof($content['tags']) > 0)
+	{				
 		$tags = $content['tags'];	
 		$tagCount = sizeof($tags);
 		$tagOutput = '';
@@ -43,6 +43,8 @@ if( ! is_null($content['error']))
 			$i++;
 		}
 	}
+	else
+		$tagOutput = ''; //no tags created yet(shell listing so far)
 ?>
 
 <?php if(! is_null($content['message'])) echo $content['message']; ?>
@@ -67,10 +69,7 @@ if( ! is_null($content['error']))
 
 	<label>Listing title (ie Business name, Organization name, etc...):</label>
 	<?php echo $this->validation->title_error; ?>
-	<input type="text" name="title" id="listing_title" value="<?php echo set_value('title', $content['existing_data']->title); ?>" />
-	<label>Listing description:</label>
-	<?php echo $this->validation->description_error; ?>
-	<textarea name="description" id="listing_description"><?php echo set_value('description', $content['existing_data']->listing_description);?></textarea>
+	<input type="text" name="title" id="listing_title" value="<?php echo set_value('title', $content['existing_data']->title); ?>" />	
 	<label>Phone (ie. 555-555-5555):</label>
 	<?php echo $this->validation->phone_error; ?>
 	<input type="text" name="phone" id="listing_phone" value="<?php echo set_value('phone', $content['existing_data']->phone); ?>" />
@@ -89,6 +88,9 @@ if( ! is_null($content['error']))
 	<label>Tags (separate tags with commas ie. plumbing,repair):</label>
 	<?php echo $this->validation->tags_error; ?>
 	<input type="text" name="tags" id="listing_tags" value="<?php echo set_value('tags', $tagOutput); ?>" />
+	<label>Listing description:</label>
+	<?php echo $this->validation->description_error; ?>
+	<textarea name="description" id="listing_description"><?php echo set_value('description', $content['existing_data']->listing_description);?></textarea>
 
 <?			
 	echo form_hidden('edit_listing','1');
@@ -96,3 +98,6 @@ if( ! is_null($content['error']))
 
 <?php echo form_submit($submit); ?>
 <?php echo form_close(); ?>
+
+<!--show description preview -->
+<div class="wmd-preview"></div>

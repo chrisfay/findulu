@@ -16,8 +16,7 @@ class Tag_model extends Model
 		$this->db->join('tag_mapping', 'tags.tag_id = tag_mapping.tag_id');
 		$this->db->where('tag_mapping.listing_id', $listing_id);
 		
-		$query = $this->db->get();			
-		//echo $this->db->last_query();
+		$query = $this->db->get();					
 		if($query->num_rows() > 0)				
 			return $query->result();
 		else

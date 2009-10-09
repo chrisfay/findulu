@@ -133,13 +133,13 @@ class Edit_listing extends Controller
 			'file_details' => NULL,      //file details after upload is successful
 			'message'      => NULL,      //any general messages to show			
 			'existing_data'  => $this->profile_model->get_single_listing_details($listing_id, $this->session->userdata('user_id')),		
-			'tags'           => $this->tag_model->get_tags($listing_id),
+			'tags'           => (($this->tag_model->get_tags($listing_id)) ? $this->tag_model->get_tags($listing_id) : array() ),
 		);
 			
 		//form rules
 		$rules['title']         = "trim|required|min_length[2]|max_length[255]";		
 		$rules['description']   = "trim|max_length[5000]";		
-		$rules['phone']         = "trim|required|min_length[12]|max_length[12]|callback_is_valid_phone_number";
+		$rules['phone']         = "trim|min_length[12]|max_length[12]|callback_is_valid_phone_number";
 		$rules['email']         = "trim|required|valid_email|max_length[255]";
 		$rules['url']           = "trim|max_length[255]";
 		$rules['address']       = "trim|min_length[2]|max_length[255]";	
