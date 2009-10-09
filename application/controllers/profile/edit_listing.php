@@ -18,6 +18,7 @@ class Edit_listing extends Controller
 		$this->load->model('user_profile/profile_model');			
 		$this->load->library('validation');		
 		$this->load->library('lib_tags');
+		$this->load->library('HTMLPurifier');
 		$this->load->model('user_profile/tag_model');
 		$this->validation->set_error_delimiters('<div class="error">','</div>');
 	}
@@ -248,7 +249,7 @@ class Edit_listing extends Controller
 		'ad'              => $uploadedFileName,
 		'coupon'          => $uploadedCouponFileName,
 		'title'           => $this->input->post('title'),
-		'description'     => $this->input->post('description'),
+		'description'     => $this->cleanDescription($this->input->post('description')),
 		'phone'           => $this->input->post('phone'),
 		'email'           => $this->input->post('email'),
 		'url'             => $this->input->post('url'),
@@ -257,6 +258,10 @@ class Edit_listing extends Controller
 		);
 		
 		$newTags = $this->input->post('tags'); //tags the user has submitted
+		
+		//TODO: whitelist html tags in description, and filter unwanted tags
+		
+
 						
 		//lets update db with listing information
 		if(! $this->profile_model->update_premium_listing($listing_data)) //failed to update db for some reason
@@ -286,6 +291,25 @@ class Edit_listing extends Controller
 		$data['content'] = $this->load->view('user_profile/edit_premium_listing', $view_content, TRUE);								
 		$this->profile->_loadDefaultTemplate($data);
 	}
+	
+	//HTML FILTERING FOR DESCRIPTION FIELD
+	//filters html in description field using htmlpurifier and only allows whitelisted tags
+	//http://rdjs.co.uk/web/HTML-Purifier-a-solution-for-allowing-html-in-website-form-input/1
+	//http://htmlpurifier.org
+	function cleanDescription($dirtyHtml)
+	{
+	  // load the config and overide defaults as necessary
+	  $config = HTMLPurifier_Config::createDefault();
+	  $config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
+	  $config->set('HTML.AllowedElements', 'a,em,blockquote,p,strong,pre,code');
+	  $config->set('HTML.AllowedAttributes', 'a.href,a.title');
+	  $config->set('HTML.TidyLevel', 'light'); 
+
+	  // run the escaped html code through the purifier 
+	  $cleanHtml = $this->htmlpurifier->purify($dirtyHtml, $config);
+	  return $cleanHtml;
+	}
+
 	
 	//----------- CALLBACKS (for input fields) ----------------//
 	
