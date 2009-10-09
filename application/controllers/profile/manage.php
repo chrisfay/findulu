@@ -19,8 +19,9 @@ class Manage extends Controller
 		$this->load->library('tank_auth');		
 		$this->load->model('user_profile/profile_model');	
 		$this->lang->load('tank_auth');
-		$this->load->library('validation');
+		$this->load->library('validation');		
 		$this->load->model('user_profile/tag_model');
+		$this->load->helper('markdown');
 		$this->validation->set_error_delimiters('<div class="error">','</div>');
 		
 	}
@@ -261,6 +262,10 @@ class Manage extends Controller
 		$view_content['content']['message'] = 'Load some generic messages in here';
 		if(! $view_content['content']['listing'] = $this->profile_model->get_single_listing_details($listing_id,$this->session->userdata('user_id')))
 			$view_content['content']['listing'] = NULL;
+		
+		//convert the description from 'markdown' to plain html
+		//we are using the php markdown library/codeigniter helper to convert this (its the markdown_helper.php file)
+		$view_content['content']['listing']->listing_description = htmlentities(Markdown($view_content['content']['listing']->listing_description));
 		
 		$data['content'] = $this->load->view('user_profile/listing_details', $view_content, TRUE);
 		$this->profile->_loadDefaultTemplate($data);		
