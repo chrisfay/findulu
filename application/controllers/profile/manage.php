@@ -282,29 +282,7 @@ class Manage extends Controller
 		}
 		
 		$this->view_listings();
-	}
-	
-	function create_premium_listing()
-	{
-
-	}
-	
-	function update_keywords()
-	{
-	
-	}
-	
-	function update_listing_text()
-	{
-	
-	}
-	
-	function update_tags()
-	{
-	
-	}
-	
-	
+	}			
 }
 /* End of file user_profile.php */
 /*Location: /application/controllers/user_profile.php*/

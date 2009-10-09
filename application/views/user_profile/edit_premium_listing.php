@@ -29,6 +29,22 @@ if( ! is_null($content['error']))
 }
 ?>
 
+<?php
+	//build comma sep list of tags	
+	if(isset($content['tags']))
+	{
+		$tags = $content['tags'];	
+		$tagCount = sizeof($tags);
+		$tagOutput = '';
+		$i = 1;
+		foreach($tags as $tag)
+		{
+			$tagOutput .= (($tagCount == $i) ? $tag->tag_text : $tag->tag_text . ',');
+			$i++;
+		}
+	}
+?>
+
 <?php if(! is_null($content['message'])) echo $content['message']; ?>
 
 <h2>Edit premium listing</h2>
@@ -72,7 +88,7 @@ if( ! is_null($content['error']))
 	<input type="text" name="zipcode" id="listing_zipcode" value="<?php echo set_value('zipcode', $content['existing_data']->zip); ?>" />
 	<label>Tags (separate tags with commas ie. plumbing,repair):</label>
 	<?php echo $this->validation->tags_error; ?>
-	<input type="text" name="tags" id="listing_tags" value="<?php echo set_value('tags', $content['existing_data']->listing_tags); ?>" />
+	<input type="text" name="tags" id="listing_tags" value="<?php echo set_value('tags', $tagOutput); ?>" />
 
 <?			
 	echo form_hidden('edit_listing','1');

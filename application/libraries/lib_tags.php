@@ -38,7 +38,8 @@ class Lib_tags
 			return FALSE;
 		
 		$tags = str_replace(', ', ',', $tags);
-		$tags = str_replace('_', ' ', $tags);
+		$tags = str_replace('_', '-', $tags);
+		$tags = str_replace(' ', '-', $tags);
 		$tags = explode(',', $tags);
 		
 		//if tags array has an element we need to first clear out any mapping entries

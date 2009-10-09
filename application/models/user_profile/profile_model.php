@@ -76,43 +76,7 @@ class Profile_model extends Model
 		}	
 		
 		return FALSE;
-	}
-	
-	function create_premium_listing($listing_data)
-	{
-		$listing_core_data = array(		
-		'user_id'         => $listing_data['user_id'],
-		'title'           => $listing_data['title'],				
-		'phone'           => $listing_data['phone'],		
-		'email'           => $listing_data['email'],				
-		'address'         => $listing_data['address'],				
-		'zip'             => $listing_data['zipcode'],
-		'listing_type_id' => 2,
-		'creation_date'   => $listing_data['creation_date'],	
-		);
-						
-		$this->db->insert($this->table_listings, $this->db->escape($listing_core_data));
-		if($this->db->affected_rows() > 0)
-		{
-			//build out data to go into listing meta table
-			$insert_meta_data = array(
-			'listing_id'               => $this->db->insert_id(),
-			'listing_ad_filename'      => $listing_data['ad'],
-			'listing_coupon_filename'  => $listing_data['coupon'],
-			'listing_description'      => $listing_data['description'],
-			'listing_tags'             => $listing_data['tags'],
-			'listing_url'              => $listing_data['url'],		
-			'listing_payment_interval' => 1,	//need to update this to use the payment interval chosen by customer once built	
-			);
-			
-			$this->db->insert($this->table_listing_details, $this->db->escape($insert_meta_data));			
-			
-			//TODO: Add tag creation logic similar to what I've done for free listing creation above
-			return TRUE;
-		}
-		
-		return FALSE;
-	}
+	}		
 	
 	//updates a listing	
 	function update_free_listing($listing_data)
@@ -154,8 +118,7 @@ class Profile_model extends Model
 		{
 			//build out data to go into listing meta table
 			$insert_meta_data = array(						
-			'listing_description'      => $listing_data['description'],
-			'listing_tags'             => $listing_data['tags'],
+			'listing_description'      => $listing_data['description'],			
 			'listing_url'              => $listing_data['url'],					
 			);
 			

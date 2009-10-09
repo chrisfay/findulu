@@ -133,6 +133,7 @@ class Edit_listing extends Controller
 			'file_details' => NULL,      //file details after upload is successful
 			'message'      => NULL,      //any general messages to show			
 			'existing_data'  => $this->profile_model->get_single_listing_details($listing_id, $this->session->userdata('user_id')),		
+			'tags'           => $this->tag_model->get_tags($listing_id),
 		);
 			
 		//form rules
@@ -252,15 +253,25 @@ class Edit_listing extends Controller
 		'email'           => $this->input->post('email'),
 		'url'             => $this->input->post('url'),
 		'address'         => $this->input->post('address'),			
-		'zipcode'         => $this->input->post('zipcode'),
-		'tags'            => $this->input->post('tags'),		
+		'zipcode'         => $this->input->post('zipcode'),	
 		);
-				
+		
+		$newTags = $this->input->post('tags'); //tags the user has submitted
+						
 		//lets update db with listing information
 		if(! $this->profile_model->update_premium_listing($listing_data)) //failed to update db for some reason
 		{
 			$view_content['content']['message'] = '<h3>Failed to edit listing</h3>';														
 			$data['content'] = $this->load->view('user_profile/edit_premium_listing', $view_content, TRUE);						
+			$this->profile->_loadDefaultTemplate($data);
+			return;
+		}
+		
+		//lets update tags with new ones					
+		if( ! $this->lib_tags->update_tags_bulk($newTags, $listing_id))
+		{
+			$view_content['content']['message'] = 'Nothing Updated';														
+			$data['content'] = $this->load->view('user_profile/edit_free_listing', $view_content, TRUE);						
 			$this->profile->_loadDefaultTemplate($data);
 			return;
 		}
