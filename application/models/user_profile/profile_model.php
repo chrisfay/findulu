@@ -120,6 +120,7 @@ class Profile_model extends Model
 			$insert_meta_data = array(						
 			'listing_description'      => $listing_data['description'],			
 			'listing_url'              => $listing_data['url'],					
+			'listing_payment_interval' => $listing_data['payment_interval'],					
 			);
 			
 			//only update file names if a new file has been submitted

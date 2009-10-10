@@ -15,9 +15,16 @@ $coupon = array(
 	'value' => '',
 );
 
+$payment_intervals = array(
+	'1'     => 'Monthly',
+	'2'     => 'Quarterly',
+	'3'     => 'Every 6 mos',
+	'4'     => 'Annualy',
+);
+
 $submit = array(	
 	'class' => 'input',
-	'value' => 'Edit listing',
+	'value' => 'Submit edits',
 );
 
 //show errors
@@ -84,7 +91,10 @@ if( ! is_null($content['error']))
 	<input type="text" name="address" id="listing_address" value="<?php echo form_prep(set_value('address', $content['existing_data']->address)); ?>" />
 	<label>Zipcode:</label>
 	<?php echo $this->validation->zipcode_error; ?>
-	<input type="text" name="zipcode" id="listing_zipcode" value="<?php echo form_prep(set_value('zipcode', $content['existing_data']->zip)); ?>" />
+	<input type="text" name="zipcode" id="listing_zipcode" value="<?php echo form_prep(set_value('zipcode', $content['existing_data']->zip)); ?>" />	
+	<label>Payment Interval</label>
+	<?php echo $this->validation->payment_interval_error; ?>
+	<?php echo form_dropdown('payment_interval',$payment_intervals, form_prep(set_value('payment_interval', $content['existing_data']->listing_payment_interval))); ?>	
 	<label>Tags (separate tags with commas ie. plumbing,repair):</label>
 	<?php echo $this->validation->tags_error; ?>
 	<input type="text" name="tags" id="listing_tags" value="<?php echo form_prep(set_value('tags', $tagOutput)); ?>" />

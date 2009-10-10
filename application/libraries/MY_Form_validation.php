@@ -22,15 +22,17 @@ class MY_Form_validation extends CI_Form_validation
 	 */
 	function set_value($field = '', $default = '')
 	{			
-		if (! isset($_POST[$field]))		
+		if (! isset($_POST[$field]))	//form data not submitted	
 			return form_prep($default);		
 		
-		if($this->form_update_success) //if the form was successfully updated			
+		if($this->form_update_success) //if the form was successfully updated we should show default data, not outdated post data
 			return form_prep($default);						
 		
-		return form_prep($_POST[$field]);
+		return form_prep($_POST[$field]); //errors were found, show the original submitted post data
 	}	
 	
+	//sets the success/failure of the form udpate - used above to re-populate the correct
+	//date in the input fields
 	function set_form_update_status($status = FALSE)
 	{
 		$this->form_update_success = $status;

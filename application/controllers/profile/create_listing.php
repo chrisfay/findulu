@@ -103,7 +103,10 @@ class Create_listing extends Controller
 			$data['content'] = $this->load->view('user_profile/create_free_listing', $view_content, TRUE);						
 			$this->profile->_loadDefaultTemplate($data);
 			return;
-		}		
+		}
+
+		//set form validation library to update form success so fields re-populate properly
+		$this->form_validation->set_form_update_status($success = TRUE);
 		
 		//succssfully created listing
 		$view_content['content']['message'] = '<h3>Successfully created listing</h3>';														

@@ -111,7 +111,14 @@ class Edit_listing extends Controller
 			$data['content'] = $this->load->view('user_profile/edit_free_listing', $view_content, TRUE);						
 			$this->profile->_loadDefaultTemplate($data);
 			return;
-		}				
+		}
+
+		//refresh data for input fields
+		$view_content['content']['existing_data']  = $this->profile_model->get_single_listing_details($listing_id, $this->session->userdata('user_id'));
+		$view_content['content']['tags']           = $this->tag_model->get_tags($listing_id);		
+		
+		//set form validation library to update form success so fields re-populate properly
+		$this->form_validation->set_form_update_status($success = TRUE);		
 		
 		//succssfully created listing
 		$view_content['content']['message'] = 'Successfully updated listing';														
@@ -138,27 +145,29 @@ class Edit_listing extends Controller
 		);
 			
 		//form rules
-		$rules['title']         = "trim|required|min_length[2]|max_length[255]";		
-		$rules['description']   = "trim|max_length[5000]";		
-		$rules['phone']         = "trim|min_length[12]|max_length[12]|callback_is_valid_phone_number";
-		$rules['email']         = "trim|required|valid_email|max_length[255]";
-		$rules['url']           = "trim|max_length[255]";
-		$rules['address']       = "trim|min_length[2]|max_length[255]";	
-		$rules['zipcode']       = "trim|required|min_length[5]|max_length[5]|numeric|callback_valid_zipcode";
-		$rules['tags']          = "trim|required|min_length[2]|max_length[255]|callback_tag_count_premium";
+		$rules['title']            = "trim|required|min_length[2]|max_length[255]";		
+		$rules['description']      = "trim|max_length[5000]";		
+		$rules['phone']            = "trim|min_length[12]|max_length[12]|callback_is_valid_phone_number";
+		$rules['email']            = "trim|required|valid_email|max_length[255]";
+		$rules['url']              = "trim|max_length[255]";
+		$rules['address']          = "trim|min_length[2]|max_length[255]";	
+		$rules['zipcode']          = "trim|required|min_length[5]|max_length[5]|numeric|callback_valid_zipcode";
+		$rules['tags']             = "trim|required|min_length[2]|max_length[255]|callback_tag_count_premium";
+		$rules['payment_interval'] = "trim|required|callback_payment_interval";
 		$this->validation->set_rules($rules);
 		
 		//define the fields we're using for validation purposes
-		$fields['ad']           = "Ad";		
-		$fields['coupon']       = "Coupon";		
-		$fields['title']        = "Title";		
-		$fields['description']  = "Description";		
-		$fields['phone']        = "Phone";
-		$fields['email']        = "Email";
-		$fields['url']          = "Url";
-		$fields['address']      = "Address";		
-		$fields['zipcode']      = "Zipcode";
-		$fields['tags']         = "Tags";
+		$fields['ad']               = "Ad";		
+		$fields['coupon']           = "Coupon";		
+		$fields['title']            = "Title";		
+		$fields['description']      = "Description";		
+		$fields['phone']            = "Phone";
+		$fields['email']            = "Email";
+		$fields['url']              = "Url";
+		$fields['address']          = "Address";		
+		$fields['zipcode']          = "Zipcode";
+		$fields['tags']             = "Tags";
+		$fields['payment_interval'] = "Payment interval";
 		$this->validation->set_fields($fields);
 		
 		//the form was not submitted, display default view
@@ -245,17 +254,20 @@ class Edit_listing extends Controller
 		//process form data and insert into db
 		$listing_data = array(
 		'listing_id'       => $listing_id,
-		'user_id'         => $this->session->userdata('user_id'),
-		'ad'              => $uploadedFileName,
-		'coupon'          => $uploadedCouponFileName,
-		'title'           => $this->input->post('title'),
-		'description'     => $this->cleanDescription($this->input->post('description')), //run description text through html filter
-		'phone'           => $this->input->post('phone'),
-		'email'           => $this->input->post('email'),
-		'url'             => $this->input->post('url'),
-		'address'         => $this->input->post('address'),			
-		'zipcode'         => $this->input->post('zipcode'),	
+		'user_id'          => $this->session->userdata('user_id'),
+		'ad'               => $uploadedFileName,
+		'coupon'           => $uploadedCouponFileName,
+		'title'            => $this->input->post('title'),
+		'description'      => $this->cleanDescription($this->input->post('description')), //run description text through html filter
+		'phone'            => $this->input->post('phone'),
+		'email'            => $this->input->post('email'),
+		'url'              => $this->input->post('url'),
+		'address'          => $this->input->post('address'),			
+		'zipcode'          => $this->input->post('zipcode'),	
+		'payment_interval' => $this->input->post('payment_interval'),			
 		);
+		
+		
 		
 		$newTags = $this->input->post('tags'); //tags the user has submitted via input field
 										
@@ -312,6 +324,18 @@ class Edit_listing extends Controller
 
 	
 	//----------- CALLBACKS (for input fields) ----------------//
+	
+	//verify the user has updated with a valid payment interval
+	function payment_interval($str)
+	{		
+		if($str !== '1' && $str !== '2' && $str !== '3' && $str !== '4')
+		{
+			$this->validation->set_message('payment_interval','The %s field must be a valid interval.');		
+			return FALSE;
+		}
+		
+		return TRUE;
+	}
 	
 	//checks if the tag field has spaces or words separated by commas
 	//RETURNS: FALSE on failure, or TRUE on success	

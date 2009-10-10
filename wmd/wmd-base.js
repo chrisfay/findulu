@@ -1134,6 +1134,10 @@ _fa.top="5px";
 _fa.display="inline";
 _fa.width="50px";
 _fa.height="25px";
+
+/*
+/////Remove WMD link/logo in editor
+
 _fb.href="http://www.wmd-editor.com/";
 _fb.target="_blank";
 _fb.title="WMD: The Wysiwym Markdown Editor";
@@ -1147,6 +1151,8 @@ _fb.style.cursor="pointer";
 _fb.onmouseout=function(){
 _6.setImage(_fc,"images/wmd.png");
 };
+*/
+
 _b8.appendChild(_fb);
 };
 var _e1=function(){
