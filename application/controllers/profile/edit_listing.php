@@ -128,11 +128,11 @@ class Edit_listing extends Controller
 			return;
 		}
 	
-		//build variables that should be passed to the avatar view
+		//build variables that should be passed to the listing edit view
 		$view_content['content'] = array(
-			'error'        => NULL,      //any error messages that should be displayed
-			'file_details' => NULL,      //file details after upload is successful
-			'message'      => NULL,      //any general messages to show			
+			'error'          => NULL,      //any error messages that should be displayed
+			'file_details'   => NULL,      //file details after upload is successful
+			'message'        => NULL,      //any general messages to show			
 			'existing_data'  => $this->profile_model->get_single_listing_details($listing_id, $this->session->userdata('user_id')),		
 			'tags'           => (($this->tag_model->get_tags($listing_id)) ? $this->tag_model->get_tags($listing_id) : array() ),
 		);
@@ -249,7 +249,7 @@ class Edit_listing extends Controller
 		'ad'              => $uploadedFileName,
 		'coupon'          => $uploadedCouponFileName,
 		'title'           => $this->input->post('title'),
-		'description'     => $this->cleanDescription($this->input->post('description')),
+		'description'     => $this->cleanDescription($this->input->post('description')), //run description text through html filter
 		'phone'           => $this->input->post('phone'),
 		'email'           => $this->input->post('email'),
 		'url'             => $this->input->post('url'),
@@ -257,12 +257,8 @@ class Edit_listing extends Controller
 		'zipcode'         => $this->input->post('zipcode'),	
 		);
 		
-		$newTags = $this->input->post('tags'); //tags the user has submitted
-		
-		//TODO: whitelist html tags in description, and filter unwanted tags
-		
-
-						
+		$newTags = $this->input->post('tags'); //tags the user has submitted via input field
+										
 		//lets update db with listing information
 		if(! $this->profile_model->update_premium_listing($listing_data)) //failed to update db for some reason
 		{
@@ -284,8 +280,12 @@ class Edit_listing extends Controller
 		//succssfully created listing
 		$view_content['content']['message'] = '<h3>Successfully edited listing</h3>';														
 		
-		//refresh file data
+		//refresh file data		
 		$view_content['content']['existing_data'] = $this->profile_model->get_single_listing_details($listing_id, $this->session->userdata('user_id'));
+		$view_content['content']['tags']          = (($this->tag_model->get_tags($listing_id)) ? $this->tag_model->get_tags($listing_id) : array() );
+		
+		//set form validation library to update form success so fields re-populate properly
+		$this->form_validation->set_form_update_status($success = TRUE);
 		
 		//display view
 		$data['content'] = $this->load->view('user_profile/edit_premium_listing', $view_content, TRUE);								
@@ -301,8 +301,8 @@ class Edit_listing extends Controller
 	  // load the config and overide defaults as necessary
 	  $config = HTMLPurifier_Config::createDefault();
 	  $config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
-	  $config->set('HTML.AllowedElements', 'a,em,blockquote,p,strong,pre,code');
-	  $config->set('HTML.AllowedAttributes', 'a.href,a.title');
+	  $config->set('HTML.AllowedElements', 'a,em,blockquote,p,strong,pre,code,img');
+	  $config->set('HTML.AllowedAttributes', 'a.href,a.title,img.alt,img.src');
 	  $config->set('HTML.TidyLevel', 'light'); 
 
 	  // run the escaped html code through the purifier 

@@ -2,6 +2,8 @@
 
 class MY_Form_validation extends CI_Form_validation
 {
+	private $form_update_success = FALSE; //track the state of form update
+
 	function __construct()
 	{
 		parent::CI_Form_validation();
@@ -20,11 +22,17 @@ class MY_Form_validation extends CI_Form_validation
 	 */
 	function set_value($field = '', $default = '')
 	{			
-		if (! isset($_POST[$field]))
-		{
-			return form_prep($default);
-		}
+		if (! isset($_POST[$field]))		
+			return form_prep($default);		
+		
+		if($this->form_update_success) //if the form was successfully updated			
+			return form_prep($default);						
 		
 		return form_prep($_POST[$field]);
 	}	
+	
+	function set_form_update_status($status = FALSE)
+	{
+		$this->form_update_success = $status;
+	}
 }
