@@ -20,7 +20,7 @@ $search_term = array(
 	'id'    => 'search_term',
 	'name'  => 'search_term',
 	'class' => 'input',
-	'value' => 'search for a listing',
+	'value' => '',
 );
 
 $submit = array(
