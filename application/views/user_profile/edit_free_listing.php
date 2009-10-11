@@ -26,7 +26,7 @@ if( ! is_null($content['error']))
 ?>
 
 <?php
-	echo form_open_multipart($this->uri->uri_string());		
+	echo form_open($this->uri->uri_string());		
 ?>
 	<label>Listing title (ie Business name, Organization name, etc...):</label>
 	<?php echo $this->validation->title_error; ?>

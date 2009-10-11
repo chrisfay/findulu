@@ -14,5 +14,34 @@
 
 <?php echo anchor('profile/create_listing/free','Create free listing', array('title' => 'Create new listing')); //create new listing link ?><br />
 <?php echo anchor('profile/purchase_listing','Purchase premium listing', array('title' => 'Create new listing')); //create new listing link ?>
+
+<?php
+$search_term = array(
+	'id'    => 'search_term',
+	'name'  => 'search_term',
+	'class' => 'input',
+	'value' => 'search for a listing',
+);
+
+$submit = array(
+	'class' => 'submit',
+	'value' => 'Go!',
+);
+?>
+
+<br />
+<br />
+<h3>Search listings.</h3>
+
+<?php
+echo form_open('search/listings');
+echo form_label('Search listings: ', $search_term['id']);
+echo form_input($search_term);
+echo form_submit($submit);
+echo form_hidden('listing_search_submitted','1');
+echo form_close();
+?>
+
+
 </body>
 </html>
