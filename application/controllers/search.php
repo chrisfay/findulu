@@ -11,9 +11,11 @@ class Search extends Controller
 		parent::__construct();
 		
 		$this->load->library('lib_main');
-		$this->load->library('form_validation');						
+		$this->load->library('form_validation');				
+		$this->load->library('validation');					
 		$this->load->library('load_view');
 		$this->load->library('sphinx');
+		$this->validation->set_error_delimiters('<div class="error">','</div>');
 		
 		//all default data that should be included when passed to the search results view
 		$this->view_content['content'] = array(
@@ -30,24 +32,44 @@ class Search extends Controller
 	function index()
 	{
 		//load default search page - no search was submitted
-		$this->view_content['content']['message'] = 'Please enter a search';					
-		$data['content'] = $this->load->view('front_end/search_results', $this->view_content, TRUE);
-		$this->load_view->_loadDefaultTemplate($data);
+		$this->_no_listing_results('Please enter a search');
+		return;
 	}
 	
 	//search against listings database via sphinx and output results
 	function listings()
-	{			
+	{	
+		//search was not submitted, lets show default search page
 		if(! $search_term = $this->input->post('search_term'))
 		{
-			//load default search page - no search was submitted
-			$this->_no_listing_results("Please enter a search");
-			return;						
+			$this->_no_listing_results(NULL);
+			return;	
+		}			
+				
+		//form rules
+		$rules['search_term']         = "trim|required|max_length[255]";		
+		$rules['search_location']     = "trim|max_length[255]|callback_is_valid_location";		
+		$this->validation->set_rules($rules);
+		
+		//define the fields we're using for validation purposes
+		$fields['search_term']         = "Search term";		
+		$fields['search_location']     = "Search location";		
+		$this->validation->set_fields($fields);
+		
+		//run validation		
+		if($this->validation->run() == FALSE)	
+		{				
+			$this->_no_listing_results("Form input errors");
+			return;
 		}
 		
-		//search was submitted, lets process it
+		//one last sanatization of any field input data
+		$search_term     = $this->sanitize_input($search_term);
+		$search_location = $this->sanitize_input($this->input->post('search_location'));
+		
+		//search was submitted and is sane, lets process it
 		$this->sphinx->SetArrayResult(TRUE);
-		if(! $result = $this->sphinx->Query($search_term))
+		if(! $result = $this->sphinx->Query($search_term . $this->build_search_location_string($search_location)))
 		{						
 			$this->_no_listing_results("Search failed for some reason");
 			return;			
@@ -81,5 +103,39 @@ class Search extends Controller
 		$data['content'] = $this->load->view('front_end/search_results', $this->view_content, TRUE);
 		$this->load_view->_loadDefaultTemplate($data);		
 		return;
+	}
+		
+	//callback function to verify location search parameter is a valid location
+	function valid_location($str)
+	{
+		$valid_location = TRUE;
+		
+		if( ! $valid_location)
+		{		
+			$this->validation->set_message('valid_location','%s is not a valid location.');		
+		}
+		
+		return TRUE;
+	}
+		
+	//cleanup the input parms
+	function sanitize_input($str)
+	{
+		return $str;
+	}
+	
+	// build_search_location_string
+	// takes the search location submitted by user and tries to decide which method to use
+	// Methods:
+	// 1: zipcode search
+	// 2: city search ONLY
+	// 3: state search only
+	// 4: city AND state only	
+	// RETURNS: the formatted second part of the query to append to the search_term part
+	// For example, could return ' -e @zip 85002' if its determined that we're only searching on zip
+	// OR could return '-e @city phoenix @state_prefix' if determined that search is city, state
+	function build_search_location_string($str)
+	{
+		return $str;
 	}
 }

@@ -12,12 +12,12 @@ class Create_listing extends Controller
 		}
 		
 		//load libraries, helpers, etc...
-		$this->load->library('profile');
 		$this->load->config('tank_auth', TRUE);		
-		$this->load->library('form_validation');		
-		$this->load->model('user_profile/profile_model');			
+		$this->load->library('profile');		
+		$this->load->library('form_validation');				
 		$this->load->library('validation');
 		$this->load->library('lib_tags');
+		$this->load->model('user_profile/profile_model');			
 		$this->validation->set_error_delimiters('<div class="error">','</div>');		
 	}
 	
