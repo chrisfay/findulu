@@ -124,16 +124,18 @@ class Search extends Controller
 		return $str;
 	}
 	
-	// build_search_location_string
-	// takes the search location submitted by user and tries to decide which method to use
-	// Methods:
-	// 1: zipcode search
-	// 2: city search ONLY
-	// 3: state search only
-	// 4: city AND state only	
-	// RETURNS: the formatted second part of the query to append to the search_term part
-	// For example, could return ' -e @zip 85002' if its determined that we're only searching on zip
-	// OR could return '-e @city phoenix @state_prefix' if determined that search is city, state
+	/* build_search_location_string
+	| takes the search location submitted by user and tries to decide which method to use. After we figure it out,
+	| we build out the second half of the query parameter for Sphinx and pass it back to complete the search	
+	| Methods/Possibilities:
+	| zipcode search
+	| city search ONLY
+	| state search only
+	| city AND state only	
+	| RETURNS: the formatted second part of the query to append to the search_term part
+	| For example, could return ' -e @zip 85002' if its determined that we're only searching on zip
+	| OR could return '-e @city phoenix @state_prefix' if determined that search is city, state
+	*/ 
 	function build_search_location_string($str)
 	{
 		return $str;
