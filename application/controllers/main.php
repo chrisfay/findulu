@@ -419,8 +419,8 @@ class Main extends Controller
 		}
 	}	
 	
-	function _load_main_page($data)
+	function _load_main_page($data, $define = 'HOME', $activeClass = 'home')
 	{
-		$this->load_view->_loadDefaultTemplate($data, $define = 'DEFAULT', $activeClass = 'home');
+		$this->load_view->_loadDefaultTemplate($data, $define, $activeClass);
 	}
 }

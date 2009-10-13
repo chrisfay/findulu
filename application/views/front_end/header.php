@@ -57,12 +57,13 @@ $submit = array(
 ?>
 
 </head>
-<body id="<?php echo (($define === 'SEARCH_RESULTS') ? 'shortPage' : 'page'); ?>">
+<body id="<?php echo (($define === 'HOME') ? 'page' : 'shortPage'); ?>">
 <div id="headerWraper">
 	<div id="header">
 		<div class="user">
 			<div id="basic-modal">			
-				<?php echo ((! $logged_in) ? '<a href="main/login" class="login">Login</a>' : 'Welcome <a href="profile/" class="profile">'. $username . '</a> <a href="'.base_url().'auth/logout" class="logout">Logout</a>'); ?> | <a href="#" class="register">Register</a>
+				<?php echo ((! $logged_in) ? '<a href="main/login" class="login">Login</a>' : 'Welcome <a href="profile/" class="profile">'. $username . '</a> <a href="'.base_url().'auth/logout" class="logout">Logout</a>'); ?> 
+				<?php echo ((! $logged_in) ? '| <a href="#" class="register">Register</a>' : ''); ?>
 					
 			</div>
 		</div>
@@ -71,10 +72,10 @@ $submit = array(
 		<div id="basic-modal-content">
 			<h1>Login.</h1>
 			<p>Fill in the details below to log into Findulu.</p>					
-			<form action="<?php echo base_url() ?>main/login" method="post" id="loginForm">
-				<label for="username">Username</label>
+			<form action="<?php echo base_url() ?>main/login" method="post" id="loginForm">				
+				<?php echo form_label('Username', $login['id']); ?>
 				<?php echo form_input($login); ?>
-				<label for="password" class="tall">Password</label>
+				<?php echo form_label('Password', $password['id']); ?>
 				<?php echo form_password($password); ?>
 				<input type="submit" value="SUBMIT" class="submit" />
 			</form>							
@@ -85,8 +86,9 @@ $submit = array(
 				
 		<?php echo form_open('search/listings', array('id'=>'searchForm'));?>
 			<div class="inputs">
-				<?php echo form_input($search_term); ?>
-				<?php echo form_input($search_location); ?>
+				<!--Only repopulate form elements if page is NOT the home page -->
+				<input type="text" name="search_term" id="search_term" value="<?php echo ((! $results_page) ? $search_term['value'] : form_prep($this->validation->search_term)); ?>" />
+				<input type="text" name="search_location" id="search_location" value="<?php echo ((! $results_page) ? $search_location['value'] : form_prep($this->validation->search_location)); ?>" />
 			</div>
 			<?php echo form_submit($submit); ?>
 			<?php echo form_hidden('listing_search_submitted','1'); ?>

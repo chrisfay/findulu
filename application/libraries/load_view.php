@@ -26,9 +26,13 @@ class Load_view
 	//default template loader - helper library to build template view for main content
 	//$data is the data to pass to the view
 	//$definePageName is the name to define in the header - used to include different css styles for diff pages
-	function _loadDefaultTemplate($data = NULL, $define = 'DEFAULT', $activeClass = '')
+	function _loadDefaultTemplate($data = NULL, $define = 'HOME', $activeClass = '')
 	{			
-		$data['logged_in'] = $this->ci->tank_auth->is_logged_in(TRUE);	
+		$data['logged_in']    = $this->ci->tank_auth->is_logged_in(TRUE);	
+		$data['is_home']      = $define === 'HOME';
+		$data['results_page'] = $define === 'SEARCH_RESULTS'; 
+		$data['page_defined'] = $define;
+		
 	
 		//build out nav - pass the nav class to activate as well!
 		$data['navList'] = $this->_main_nav('', $activeClass);

@@ -34,10 +34,10 @@ h6{font-size:10px;line-height:12px;}
 .user a.login{color:#666;padding:0 3px 0 0px;margin-left:10px;}
 .user a.logout{color:#666;padding:0 3px 0 0px;margin-left:10px;}
 .user a.register{color:#f4d009;padding-left:3px;}
-.user a.profile{color:#666;margin-right:10px;}
+.user a.profile{color:#f4d009;margin-right:10px;}
 .user a:hover.login{color:#fff;}
 .user a:hover.logout{color:#fff;}
-.user a:hover.register{color:#fbe257}
+.user a:hover.register{color:#fff;}
 .user a:hover.profile{color:#fff;}
 
 #header a.logo{display:block;width:576px;height:270px;background:url('../images/logo.jpg') no-repeat;position:absolute;top:28px;left:-170px;z-index:1;}
