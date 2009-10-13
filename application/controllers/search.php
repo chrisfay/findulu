@@ -9,8 +9,7 @@ class Search extends Controller
 	function __construct()
 	{
 		parent::__construct();
-		
-		$this->load->library('lib_main');
+				
 		$this->load->library('form_validation');				
 		$this->load->library('validation');					
 		$this->load->library('load_view');
@@ -120,6 +119,7 @@ class Search extends Controller
 	//callback function to verify location search parameter is a valid location
 	function is_valid_location($str)
 	{
+		//TODO: Decide/complete the valid location callback for location search input on home page/results page
 		$valid_location = TRUE;
 		
 		if( ! $valid_location)
@@ -133,6 +133,7 @@ class Search extends Controller
 	//cleanup the input parms
 	function sanitize_input($str)
 	{
+		//TODO: finnish search input sanitization function
 		return $str;
 	}
 	
@@ -150,6 +151,7 @@ class Search extends Controller
 	*/ 
 	function build_search_location_string($str)
 	{
+		//TODO: complete the build_search_location_string function for deciding the location search method used
 		return $str;
 	}
 }

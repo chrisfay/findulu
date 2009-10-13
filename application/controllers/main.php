@@ -7,7 +7,7 @@ class Main extends Controller
 		
 		$this->load->config('tank_auth', TRUE);		
 		$this->load->library('tank_auth');
-		$this->load->library('lib_main');
+		//$this->load->library('lib_main'); //not being used right now
 		$this->load->library('form_validation');						
 		$this->load->library('load_view');						
 		$this->load->model('tank_auth/users');		

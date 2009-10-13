@@ -8,8 +8,19 @@ class Load_view
 		
 		$this->ci->load->library('tank_auth');
 		$this->ci->lang->load('tank_auth');
-		$this->ci->load->library('lib_main');
+		//$this->ci->load->library('lib_main'); //not being used right now
 		$this->ci->load->library('session');
+	}
+	
+	//return the default nav links	
+	function _main_nav($user_level = 1)
+	{		   
+		$nav =  '<li class="home"><a href="'.base_url().'" class="active"><span>Home</span></a></li>' .
+				'<li class="about"><a href="#"><span>About</span></a></li>' .
+				'<li class="support"><a href="#"><span>Suppport</span></a></li>' .
+				'<li class="contact"><a href="#"><span>Contact Us</span></a></li>';
+		
+		return $nav;
 	}
 	
 	//default template loader - helper library to build template view for main content
@@ -23,7 +34,7 @@ class Load_view
 		}		
 	
 		//build out nav
-		$data['navList'] = $this->ci->lib_main->_mainNav();
+		$data['navList'] = $this->_main_nav();
 	
 		//load default view of the profile				
 		$username = $this->ci->session->userdata('username');
@@ -47,7 +58,7 @@ class Load_view
 		}		
 	
 		//build out nav
-		$data['navList'] = $this->ci->lib_main->_mainNav();
+		$data['navList'] = $this->_main_nav();
 	
 		//load default view of the profile				
 		$username = $this->ci->session->userdata('username');
