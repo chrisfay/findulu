@@ -30,21 +30,14 @@ class Search extends Controller
 	//RETURNS: the
 	function index()
 	{
-		//load default search page - no search was submitted
-		$this->_no_listing_results('Please enter a search');
+		//no search was submitted - send them to listings search by default
+		$this->listings();
 		return;
 	}
 	
 	//search against listings database via sphinx and output results
 	function listings()
-	{	
-		//search was not submitted, lets show default search page
-		if(! $search_term = $this->input->post('search_term'))
-		{
-			$this->_no_listing_results(NULL);
-			return;	
-		}			
-				
+	{					
 		//form rules
 		$rules['search_term']         = "trim|required|max_length[255]";		
 		$rules['search_location']     = "trim|max_length[255]|callback_is_valid_location";		
@@ -54,6 +47,13 @@ class Search extends Controller
 		$fields['search_term']         = "Search term";		
 		$fields['search_location']     = "Search location";		
 		$this->validation->set_fields($fields);
+		
+		//search was not submitted, lets show default search page
+		if(! $search_term = $this->input->post('search_term'))
+		{
+			$this->_no_listing_results(NULL);
+			return;	
+		}
 		
 		//run validation		
 		if($this->validation->run() == FALSE)	

@@ -53,11 +53,11 @@ h6{font-size:10px;line-height:12px;}
 #searchForm .submit{display:block;width:57px;height:73px;background:url('../images/submit.jpg') no-repeat;cursor:pointer;}
 
 	/*short page search form*/
-	#shortPage #searchForm {display:block;z-index:100;position:absolute;left:180px;width:664px;top:43px;}
-	#shortPage .inputs{display:block;width:432px;height:56px;background:url('../images/inputsBG_short.jpg') no-repeat;padding-top:13px;float:left;margin-right:-1px;}
+	#shortPage #searchForm {display:block;z-index:100;position:absolute;left:180px;width:780px;top:43px;}
+	#shortPage .inputs{display:block;width:733px;height:56px;background:url('../images/inputsBG_short.jpg') no-repeat;padding-top:13px;float:left;margin-right:1px;}
 	#shortPage #searchForm input{display:block;float:left;padding:7px;background:none;border:none;color:#fff;font-size:12px;}
-	#shortPage #searchForm #search_term{width:255px;margin:0 32px 0 25px;}
-	#shortPage #searchForm #search_location{width:77px;}
+	#shortPage #searchForm #search_term{width:435px;margin:0 32px 0 25px;}
+	#shortPage #searchForm #search_location{width:194px;}
 	#shortPage #searchForm .submit{display:block;width:44px;height:56px;background:url('../images/submit_short.jpg') no-repeat;cursor:pointer;}
 
 /*navigation*/
