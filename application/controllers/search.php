@@ -67,6 +67,27 @@ class Search extends Controller
 		$search_term     = $this->sanitize_input($search_term);
 		$search_location = $this->sanitize_input($this->input->post('search_location'));
 		
+		if($search_location === 'City, State or Zip') //location wasn't submitted
+			$search_location = '';
+				
+		$this->_display_listing_results($search_term, $search_location); //run the search and display results
+	}
+
+	//helper function to load search results view when a search has failed or is empty
+	function _no_listing_results($msg)
+	{		
+		//load default search page - no search was submitted
+		$this->view_content['content']['message'] = $msg;
+		$data['content'] = $this->load->view('front_end/search_results', $this->view_content, TRUE);
+		$this->load_view->_loadDefaultTemplate($data);		
+		return;
+	}
+	
+	//display listings - should only be 
+	//pass the data to be displayed on the search results page
+	//returns VOID
+	function _display_listing_results($search_term = '', $search_location = '')
+	{			
 		//search was submitted and is sane, lets process it
 		$this->sphinx->SetArrayResult(TRUE);
 		if(! $result = $this->sphinx->Query($search_term . $this->build_search_location_string($search_location)))
@@ -89,30 +110,21 @@ class Search extends Controller
 			$this->db->or_where('listing_id', $row['id']);
 		}
 		
-		$this->view_content['content']['search_results'] = $this->db->get('listings');
-		$data['content'] = $this->load->view('front_end/search_results', $this->view_content, TRUE);
-		$this->load_view->_loadDefaultTemplate($data);		
-		return FALSE;		
-	}
-
-	//helper function to load search results view when a search has failed or is empty
-	function _no_listing_results($msg)
-	{
-		//load default search page - no search was submitted
-		$this->view_content['content']['message'] = $msg;
+		$this->view_content['content']['search_results'] = $this->db->get('listings'); //get listing_id's from our db		
+		
 		$data['content'] = $this->load->view('front_end/search_results', $this->view_content, TRUE);
 		$this->load_view->_loadDefaultTemplate($data);		
 		return;
 	}
 		
 	//callback function to verify location search parameter is a valid location
-	function valid_location($str)
+	function is_valid_location($str)
 	{
 		$valid_location = TRUE;
 		
 		if( ! $valid_location)
 		{		
-			$this->validation->set_message('valid_location','%s is not a valid location.');		
+			$this->validation->set_message('is_valid_location','%s is not a valid location.');		
 		}
 		
 		return TRUE;

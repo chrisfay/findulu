@@ -2,7 +2,7 @@
    CSS Styles 
    Author: Chris Fay   
 */
-body{font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;}
+body{font-family:Tahoma, Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;background:#f7f7f7;}
 div{position:relative;}
 ul{}
 ul li{}
@@ -14,32 +14,56 @@ a:visited{text-decoration:none;}
 img{}
 p{padding:5px;padding-left:0;}
 .floatLeft{float:left;}
-h1{font-size:26px;line-height:28px;padding-bottom:15px;}
+h1{font-size:26px;line-height:28px;padding-bottom:5px;}
 h2{font-size:18px;line-height:20px;padding-bottom:5px;}
 h3{font-size:16px;line-height:18px;padding-bottom:5px;}
 h4{font-size:14px;line-height:16px;}
 h5{font-size:12px;line-height:14px;}
 h6{font-size:10px;line-height:12px;}
 .clear{display:block;clear:both;}
-input{display:block;}
-textarea{display:block;width:450px;height:200px;}
-textarea{display:block;}
-select{display:block;}
 
 #page{}
-#wrapper{width:960px;margin:0 auto;margin-top:15px;}
-#content{margin:25px 0;}
-#footer{margin:25px 0;border-top:1px solid #000;padding-top:10px;width:960px;}
-#mainNav li{display:inline;margin-right:15px;}
-ul.listing li{display:block;clear:both;}
-ul.listing li span{width:180px;display:block;float:left;}
+#wrapper{}
 
-/*user profile*/
-.userInfo h1{line-height:80px;}
-img.userAvatar{display:block;width:80px;height:80px;float:left;padding-right:15px;}
-ul.listing{padding:15px;background:#F1EFFE;border:1px solid #E1E1D5;margin: 5px 0;}
-ul.listing li{padding:2px 0;}
+/*header*/
+#headerWraper{height:381px;background:url('../images/headerBG.jpg') repeat-x;}
+#header{width:960px;margin:0 auto;}
+/*user nav*/
+.user {color:#fff;display:inline;float:right;padding-top:5px;z-index:300;}
+.user a.login{color:#fff;padding-right:3px;}
+.user a.register{color:#f4d009;padding-left:3px;}
 
-/*.error{background:#FFFECC none repeat scroll 0 0;border:1px solid #EFDC90;color:#A9A014;font-family:"Arial",Arial,sans-serif;font-size:12px;font-weight:700;margin:5px 0;padding:5px;}*/
-.error{margin-bottom:5px;padding:10px 20px 10px 15px;background-color:#FFC6CA;border:1px solid;border-color:#EFB9C3;}
+#header a.logo{display:block;width:576px;height:270px;background:url('../images/logo.jpg') no-repeat;position:absolute;top:28px;left:-170px;z-index:1;}
+#header a.logo span{display:block;position:absolute;left:-99999px;}
 
+/*main search form*/
+#searchForm {display:block;z-index:100;position:absolute;left:300px;width:664px;top:125px;}
+.inputs{display:block;width:601px;height:74px;background:url('../images/inputsBG.jpg') no-repeat;padding-top:23px;float:left;margin-right:5px;}
+#searchForm input{display:block;float:left;padding:7px;background:none;border:none;color:#fff;font-size:14px;}
+#searchForm #search_term{width:360px;margin:0 44px 0 35px;}
+#searchForm #search_location{width:60px;width:110px;}
+#searchForm .submit{display:block;width:57px;height:73px;background:url('../images/submit.jpg') no-repeat;cursor:pointer;}
+
+/*navigation*/
+.mainNavigation{padding-top:297px;}
+ul.nav li{display:block;float:left;}
+ul.nav li a span{display:block;position:absolute;left:-9999px;}
+ul.nav li a{display:block;float:left;height:52px;margin-top:1px;}
+	/*navigation bg stuff*/
+	ul.nav li.home a{width:97px;background:url('../images/navSprite.jpg') 0 0;}
+	ul.nav li.about a{width:97px;background:url('../images/navSprite.jpg') -97px 0;}
+	ul.nav li.support a{width:115px;background:url('../images/navSprite.jpg') -194px 0;}
+	ul.nav li.contact a{width:137px;background:url('../images/navSprite.jpg') -309px 0;}
+	/*hover states*/
+	ul.nav li.home a:hover{width:97px;background:url('../images/navSprite.jpg') 0 52px;}
+	ul.nav li.about a:hover{width:97px;background:url('../images/navSprite.jpg') -97px 52px;}
+	ul.nav li.support a:hover{width:115px;background:url('../images/navSprite.jpg') -194px 52px;}
+	ul.nav li.contact a:hover{width:137px;background:url('../images/navSprite.jpg') -309px 52px;}
+
+/*main content*/
+#contentWrapper{background:#fff;}
+#mainContent{min-height:300px;width:960px;margin:0 auto;}
+
+/*footer*/
+#footerWrapper{background:url('../images/footerBorder.jpg') repeat-x;}
+#footer{width:960px;margin:0 auto;padding-top:15px;}

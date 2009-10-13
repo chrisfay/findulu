@@ -1,0 +1,45 @@
+/* 
+   CSS Styles 
+   Author: Chris Fay   
+*/
+body{font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;}
+div{position:relative;}
+ul{}
+ul li{}
+
+a{text-decoration:none;}
+a:hover{}
+a:active {}
+a:visited{text-decoration:none;}
+img{}
+p{padding:5px;padding-left:0;}
+.floatLeft{float:left;}
+h1{font-size:26px;line-height:28px;padding-bottom:15px;}
+h2{font-size:18px;line-height:20px;padding-bottom:5px;}
+h3{font-size:16px;line-height:18px;padding-bottom:5px;}
+h4{font-size:14px;line-height:16px;}
+h5{font-size:12px;line-height:14px;}
+h6{font-size:10px;line-height:12px;}
+.clear{display:block;clear:both;}
+input{display:block;}
+textarea{display:block;width:450px;height:200px;}
+textarea{display:block;}
+select{display:block;}
+
+#page{}
+#wrapper{width:960px;margin:0 auto;margin-top:15px;}
+#content{margin:25px 0;}
+#footer{margin:25px 0;border-top:1px solid #000;padding-top:10px;width:960px;}
+#mainNav li{display:inline;margin-right:15px;}
+ul.listing li{display:block;clear:both;}
+ul.listing li span{width:180px;display:block;float:left;}
+
+/*user profile*/
+.userInfo h1{line-height:80px;}
+img.userAvatar{display:block;width:80px;height:80px;float:left;padding-right:15px;}
+ul.listing{padding:15px;background:#F1EFFE;border:1px solid #E1E1D5;margin: 5px 0;}
+ul.listing li{padding:2px 0;}
+
+/*.error{background:#FFFECC none repeat scroll 0 0;border:1px solid #EFDC90;color:#A9A014;font-family:"Arial",Arial,sans-serif;font-size:12px;font-weight:700;margin:5px 0;padding:5px;}*/
+.error{margin-bottom:5px;padding:10px 20px 10px 15px;background-color:#FFC6CA;border:1px solid;border-color:#EFB9C3;}
+

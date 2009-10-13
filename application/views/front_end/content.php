@@ -1,3 +1,6 @@
-<div id="content">	
-	<?php echo ((isset($content)) ? $content : ''); ?>
-</div>
+<div id="contentWrapper">
+	<div id="mainContent">
+		<?php echo ((isset($content)) ? $content : ''); ?>
+	</div>
+</div><!--[END] #contentWraper -->	
+	

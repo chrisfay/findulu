@@ -61,7 +61,7 @@ $submit = array(
 
 		<div class="mainNavigation">
 			<ul class="nav">
-				<?php echo $navList ?>				
+				<?php echo $navList ?>
 			</ul>
 		</div>
 	</div>

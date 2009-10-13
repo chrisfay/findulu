@@ -5,7 +5,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="<?php echo base_url() ?>css/reset.css" />
-<link rel="stylesheet" href="<?php echo base_url() ?>css/default.css" />
+<link rel="stylesheet" href="<?php echo base_url() ?>css/default_orig.css" />
 
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery-1.3.1.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/functions.js"></script>
