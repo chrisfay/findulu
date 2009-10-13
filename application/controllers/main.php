@@ -84,7 +84,7 @@ class Main extends Controller
 					if (isset($errors['banned'])) {								// banned user
 						//$this->_show_message($this->lang->line('auth_message_banned').' '.$errors['banned']);
 					    $data['content'] = $this->lang->line('auth_message_banned').' '.$errors['banned'];
-						$this->_load_main_page($data);
+						$this->_load_main_page($data, 'LOGIN');
 						return;
 
 					} elseif (isset($errors['not_activated'])) {				// not activated user
@@ -105,7 +105,7 @@ class Main extends Controller
 				}
 			}			
 			$data['content'] = $this->load->view('front_end/login_form', $data, TRUE);
-			$this->_load_main_page($data);
+			$this->_load_main_page($data, 'LOGIN');
 		}
 	}
 
@@ -124,7 +124,7 @@ class Main extends Controller
 
 		} elseif (!$this->config->item('allow_registration', 'tank_auth')) {	// registration is off
 			$data['content'] = $this->lang->line('auth_message_registration_disabled');
-			$this->_load_main_page($data);
+			$this->_load_main_page($data, 'REGISTER');
 			return;
 
 		} else {
@@ -166,7 +166,7 @@ class Main extends Controller
 						unset($data['password']); // Clear password (just for any case)
 
 						$data['content'] = $this->lang->line('auth_message_registration_completed_1');
-						$this->_load_main_page($data);
+						$this->_load_main_page($data, 'REGISTER');
 						return;
 
 					} else {
@@ -177,7 +177,7 @@ class Main extends Controller
 						unset($data['password']); // Clear password (just for any case)
 
 						$data['content'] = $this->lang->line('auth_message_registration_completed_2').' '.anchor(site_url('/main/login/'), 'Login');
-						$this->_load_main_page($data);
+						$this->_load_main_page($data, 'REGISTER');
 						return;
 					}
 				} else {
@@ -197,7 +197,7 @@ class Main extends Controller
 			$data['use_recaptcha'] = $use_recaptcha;
 			
 			$data['content'] = $this->load->view('auth/register_form', $data, TRUE);
-			$this->_load_main_page($data);
+			$this->_load_main_page($data, 'REGISTER');
 		}
 	}
 
@@ -391,7 +391,7 @@ class Main extends Controller
 				}
 			}
 			$data['content'] = $this->load->view('front_end/send_again_form', $data, TRUE);
-			$this->_load_main_page($data);
+			$this->_load_main_page($data, 'SEND_AGAIN');
 		}
 	}
 
@@ -411,16 +411,18 @@ class Main extends Controller
 		if ($this->tank_auth->activate_user($user_id, $new_email_key)) {		// success
 			$this->tank_auth->logout();
 			$data['content'] = $this->lang->line('auth_message_activation_completed').' '.anchor(site_url('/main/login/'), 'Login');
-			$this->_load_main_page($data);
+			$this->_load_main_page($data, 'ACTIVATE');
 
 		} else {																// fail
 			$data['content'] = $this->lang->line('auth_message_activation_failed');
-			$this->_load_main_page($data);
+			$this->_load_main_page($data, 'ACTIVATE');
 		}
 	}	
 	
-	function _load_main_page($data, $define = 'HOME', $activeClass = 'home')
+	//helper function to call the template loader 
+	//definePageName is the page to load into the header
+	function _load_main_page($data, $definePageName = 'HOME')
 	{
-		$this->load_view->_loadDefaultTemplate($data, $define, $activeClass);
+		$this->load_view->_loadDefaultTemplate($data, $definePageName);
 	}
 }

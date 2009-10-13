@@ -13,9 +13,9 @@ class Load_view
 	}
 	
 	//return the default nav links	
-	function _main_nav($user_level = 1, $activeClass = '')
+	function _main_nav($user_level = 1, $definePageName = '')
 	{			
-		$nav =  '<li class="home'.(($activeClass === 'home') ? ' active': '').'"><a href="'.base_url().'" class="active"><span>Home</span></a></li>' .
+		$nav =  '<li class="home'.(($definePageName === 'HOME') ? ' active': '').'"><a href="'.base_url().'" class="active"><span>Home</span></a></li>' .
 				'<li class="about"><a href="#"><span>About</span></a></li>' .
 				'<li class="support"><a href="#"><span>Suppport</span></a></li>' .
 				'<li class="contact"><a href="#"><span>Contact Us</span></a></li>';
@@ -25,18 +25,18 @@ class Load_view
 	
 	//default template loader - helper library to build template view for main content
 	//$data is the data to pass to the view
-	//$definePageName is the name to define in the header - used to include different css styles for diff pages
-	function _loadDefaultTemplate($data = NULL, $define = 'HOME', $activeClass = '')
+	//$define is the page name to define in the header - used to style links and pages properly
+	function _loadDefaultTemplate($data = NULL, $definePageName = 'HOME')
 	{			
 		$data['logged_in']    = $this->ci->tank_auth->is_logged_in(TRUE);	
-		$data['is_home']      = $define === 'HOME';
-		$data['results_page'] = $define === 'SEARCH_RESULTS'; 
-		$data['page_defined'] = $define;
+		$data['is_home']      = $definePageName === 'HOME';
+		$data['results_page'] = $definePageName === 'SEARCH_RESULTS'; 
+		$data['page_defined'] = $definePageName;
 		
 	
 		//build out nav - pass the nav class to activate as well!
-		$data['navList'] = $this->_main_nav('', $activeClass);
-		$data['define']  = $define;
+		$data['navList'] = $this->_main_nav('', $definePageName);
+		$data['define']  = $definePageName;
 	
 		//load default view of the profile				
 		$username = $this->ci->session->userdata('username');
