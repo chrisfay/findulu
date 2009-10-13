@@ -30,7 +30,7 @@ h6{font-size:10px;line-height:12px;}
 #header{width:960px;margin:0 auto;}
 /*user nav*/
 .user {color:#fff;display:inline;float:right;padding-top:5px;z-index:300;}
-.user a.login{color:#fff;padding-right:3px;}
+.user a.login{color:#fff;padding:0 3px 0 0px;margin-left:10px;}
 .user a.register{color:#f4d009;padding-left:3px;}
 
 #header a.logo{display:block;width:576px;height:270px;background:url('../images/logo.jpg') no-repeat;position:absolute;top:28px;left:-170px;z-index:1;}

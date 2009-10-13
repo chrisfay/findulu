@@ -5,10 +5,16 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="<?php echo base_url() ?>css/reset.css" />
-<link rel="stylesheet" href="<?php echo base_url() ?>css/default.css" />
+<link rel="stylesheet" href="<?php echo base_url() ?>css/simple_model.css" />
 
-<script type="text/javascript" src="<?php echo base_url() ?>js/jquery-1.3.1.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url() ?>js/functions.js"></script>
+<!--[START] get correct stylesheet depending on page -->
+<?php if($define === 'DEFAULT') :?>
+<link rel="stylesheet" href="<?php echo base_url() ?>css/default.css" />
+<?php elseif($define === 'SEARCH_RESULTS') : ?>
+<link rel="stylesheet" href="<?php echo base_url() ?>css/default.css" />
+<?php endif;?>
+<!--[END] get correct stylesheet depending on page -->
+
 <!--[if IE 6]>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>css/ie6.css" />
 	<script type="text/javascript" src="<?php echo base_url() ?>js/DD_belatedPNG_0.0.7a.js"></script>
@@ -20,6 +26,22 @@
 <![endif]--> 
 
 <?php
+$login = array(
+	'name'	=> 'login',
+	'id'	=> 'login',
+	'value' => set_value('login'),
+	'maxlength'	=> 80,
+	'size'	=> 30,
+	'class' => 'input required',
+);
+
+$password = array(
+	'name'	=> 'password',
+	'id'	=> 'password',
+	'size'	=> 30,
+	'class' => 'input required',
+);
+
 $search_term = array(
 	'id'    => 'search_term',
 	'name'  => 'search_term',
@@ -38,6 +60,7 @@ $submit = array(
 	'class' => 'submit',
 	'value' => '',
 );
+
 ?>
 
 </head>
@@ -45,8 +68,24 @@ $submit = array(
 <div id="headerWraper">
 	<div id="header">
 		<div class="user">
-			<a href="#" class="login">Login</a> | <a href="#" class="register">Register</a>
+			<div id="basic-modal">			
+				<?php echo ((! $logged_in) ? '<a href="#" class="login">Login</a>' : 'Welcome '. $username . ' <a href="'.base_url().'auth/logout" class="login">Logout</a>'); ?> | <a href="#" class="register">Register</a>
+			</div>
 		</div>
+		
+		<!-- [START] modal signin form (uses simple dialog framework) -->
+		<div id="basic-modal-content">
+			<h1>Login.</h1>
+			<p>Fill in the details below to log into Findulu.</p>					
+			<form action="<?php echo base_url() ?>main/login" method="post" id="loginForm">
+				<label for="username">Username</label>
+				<?php echo form_input($login); ?>
+				<label for="password" class="tall">Password</label>
+				<?php echo form_password($password); ?>
+				<input type="submit" value="SUBMIT" class="submit" />
+			</form>							
+		</div>
+		<!-- [END] modal signin form (uses simple dialog framework) -->
 	
 		<a href="<?php echo base_url(); ?>" class="logo"><span>findulu - the better business finder</span></a>
 				

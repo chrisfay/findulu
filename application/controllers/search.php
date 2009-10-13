@@ -78,7 +78,7 @@ class Search extends Controller
 		//load default search page - no search was submitted
 		$this->view_content['content']['message'] = $msg;
 		$data['content'] = $this->load->view('front_end/search_results', $this->view_content, TRUE);
-		$this->load_view->_loadDefaultTemplate($data);		
+		$this->load_view->_loadDefaultTemplate($data, 'SEARCH_RESULTS');		
 		return;
 	}
 	
@@ -112,7 +112,7 @@ class Search extends Controller
 		$this->view_content['content']['search_results'] = $this->db->get('listings'); //get listing_id's from our db		
 		
 		$data['content'] = $this->load->view('front_end/search_results', $this->view_content, TRUE);
-		$this->load_view->_loadDefaultTemplate($data);		
+		$this->load_view->_loadDefaultTemplate($data, 'SEARCH_RESULTS');		
 		return;
 	}
 		

@@ -1,0 +1,16 @@
+/*simple model styles*/
+h3 {}
+#basic-modal-content {display:none;}
+/* Overlay */
+#simplemodal-overlay {background-color:#000; cursor:wait;}
+
+#simplemodal-container h1{color:#fff;}
+#simplemodal-container {height:310px; width:440px; color:#bbb; background-color:#333; border:4px solid #444; padding:12px;}
+#simplemodal-container code {background:#141414; border-left:3px solid #65B43D; color:#bbb; display:block; margin-bottom:12px; padding:4px 6px 6px;}
+#simplemodal-container label{display:block;font-size:20px;line-height:28px;padding-bottom:5px;}
+#simplemodal-container input{background:#141414; border:none;border-left:3px solid #65B43D; color:#bbb; display:block; margin-bottom:12px; padding:12px 10px;width:400px;}
+#simplemodal-container .submit{width:120px;border-left:none;color:#fff;padding:15px 15px;cursor:pointer;}
+#simplemodal-container a {color:#ddd;}
+#simplemodal-container a.modalCloseImg {background:url(../images/x.png) no-repeat; width:25px; height:29px; display:inline; z-index:3200; position:absolute; top:-15px; right:-16px; cursor:pointer;}
+#simplemodal-container #basic-modal-content,#simplemodal-container #basic-modal-content-reg {padding:8px;}
+#basic-modal-content-reg{display:none;}
