@@ -2,6 +2,8 @@
 class Main extends Controller
 {
 	//TODO: consolidate all template loading into one function
+	private $view_content = array();
+	
 	function __construct()
 	{
 		parent::__construct();		
@@ -12,15 +14,21 @@ class Main extends Controller
 		$this->load->library('form_validation');						
 		$this->load->library('load_view');						
 		$this->load->model('tank_auth/users');		
-		$this->lang->load('tank_auth');				
+		$this->lang->load('tank_auth');	
+
+		//data to pass to main page
+		$this->view_content  = array(
+			'logged_in'      => $this->tank_auth->is_logged_in(),
+			'username'       => $this->session->userdata('username'),
+		);
+
+			
 	}
 	
 	function index($data = NULL)
 	{			
-		$view_content['view_content']['stuff'] = 'Some content to load in the future for the index page';		
-		$view_content['view_content']['username'] = $this->session->userdata('username');		
-		$data['content'] = $this->load->view('front_end/index', $view_content, TRUE);
-		$this->load_view->_loadDefaultTemplate($data);					
+		$data['content'] = $this->load->view('front_end/index', $this->view_content, TRUE);				
+		$this->_load_main_page($data);
 	}
 		
 	/**
@@ -76,7 +84,7 @@ class Main extends Controller
 					if (isset($errors['banned'])) {								// banned user
 						//$this->_show_message($this->lang->line('auth_message_banned').' '.$errors['banned']);
 					    $data['content'] = $this->lang->line('auth_message_banned').' '.$errors['banned'];
-						$this->load_view->_loadDefaultTemplate($data);
+						$this->_load_main_page($data);
 						return;
 
 					} elseif (isset($errors['not_activated'])) {				// not activated user
@@ -97,7 +105,7 @@ class Main extends Controller
 				}
 			}			
 			$data['content'] = $this->load->view('front_end/login_form', $data, TRUE);
-			$this->load_view->_loadDefaultTemplate($data);
+			$this->_load_main_page($data);
 		}
 	}
 
@@ -116,7 +124,7 @@ class Main extends Controller
 
 		} elseif (!$this->config->item('allow_registration', 'tank_auth')) {	// registration is off
 			$data['content'] = $this->lang->line('auth_message_registration_disabled');
-			$this->load_view->_loadDefaultTemplate($data);
+			$this->_load_main_page($data);
 			return;
 
 		} else {
@@ -158,7 +166,7 @@ class Main extends Controller
 						unset($data['password']); // Clear password (just for any case)
 
 						$data['content'] = $this->lang->line('auth_message_registration_completed_1');
-						$this->load_view->_loadDefaultTemplate($data);
+						$this->_load_main_page($data);
 						return;
 
 					} else {
@@ -169,7 +177,7 @@ class Main extends Controller
 						unset($data['password']); // Clear password (just for any case)
 
 						$data['content'] = $this->lang->line('auth_message_registration_completed_2').' '.anchor(site_url('/main/login/'), 'Login');
-						$this->load_view->_loadDefaultTemplate($data);
+						$this->_load_main_page($data);
 						return;
 					}
 				} else {
@@ -189,7 +197,7 @@ class Main extends Controller
 			$data['use_recaptcha'] = $use_recaptcha;
 			
 			$data['content'] = $this->load->view('auth/register_form', $data, TRUE);
-			$this->load_view->_loadDefaultTemplate($data);
+			$this->_load_main_page($data);
 		}
 	}
 
@@ -337,7 +345,7 @@ class Main extends Controller
 
 					//$this->_show_message($this->lang->line('auth_message_new_password_sent'));
 					$data['content'] = $this->lang->line('auth_message_new_password_sent');
-					$this->load_view->_loadDefaultTemplate($data);					
+					$this->_load_main_page($data);
 					return;
 
 				} else {
@@ -346,7 +354,7 @@ class Main extends Controller
 				}
 			}
 			$data['content'] = $this->load->view('front_end/forgot_password_form', $data, TRUE);
-			$this->load_view->_loadDefaultTemplate($data);
+			$this->_load_main_page($data);
 		}
 	}
 
@@ -383,7 +391,7 @@ class Main extends Controller
 				}
 			}
 			$data['content'] = $this->load->view('front_end/send_again_form', $data, TRUE);
-			$this->load_view->_loadDefaultTemplate($data);
+			$this->_load_main_page($data);
 		}
 	}
 
@@ -403,11 +411,16 @@ class Main extends Controller
 		if ($this->tank_auth->activate_user($user_id, $new_email_key)) {		// success
 			$this->tank_auth->logout();
 			$data['content'] = $this->lang->line('auth_message_activation_completed').' '.anchor(site_url('/main/login/'), 'Login');
-			$this->load_view->_loadDefaultTemplate($data);
+			$this->_load_main_page($data);
 
 		} else {																// fail
 			$data['content'] = $this->lang->line('auth_message_activation_failed');
-			$this->load_view->_loadDefaultTemplate($data);
+			$this->_load_main_page($data);
 		}
 	}	
+	
+	function _load_main_page($data)
+	{
+		$this->load_view->_loadDefaultTemplate($data, $define = 'DEFAULT', $activeClass = 'home');
+	}
 }

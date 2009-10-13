@@ -13,9 +13,9 @@ class Load_view
 	}
 	
 	//return the default nav links	
-	function _main_nav($user_level = 1)
-	{		   
-		$nav =  '<li class="home"><a href="'.base_url().'" class="active"><span>Home</span></a></li>' .
+	function _main_nav($user_level = 1, $activeClass = '')
+	{			
+		$nav =  '<li class="home'.(($activeClass === 'home') ? ' active': '').'"><a href="'.base_url().'" class="active"><span>Home</span></a></li>' .
 				'<li class="about"><a href="#"><span>About</span></a></li>' .
 				'<li class="support"><a href="#"><span>Suppport</span></a></li>' .
 				'<li class="contact"><a href="#"><span>Contact Us</span></a></li>';
@@ -26,12 +26,12 @@ class Load_view
 	//default template loader - helper library to build template view for main content
 	//$data is the data to pass to the view
 	//$definePageName is the name to define in the header - used to include different css styles for diff pages
-	function _loadDefaultTemplate($data = NULL, $define = 'DEFAULT')
-	{		
+	function _loadDefaultTemplate($data = NULL, $define = 'DEFAULT', $activeClass = '')
+	{			
 		$data['logged_in'] = $this->ci->tank_auth->is_logged_in(TRUE);	
 	
-		//build out nav
-		$data['navList'] = $this->_main_nav();
+		//build out nav - pass the nav class to activate as well!
+		$data['navList'] = $this->_main_nav('', $activeClass);
 		$data['define']  = $define;
 	
 		//load default view of the profile				

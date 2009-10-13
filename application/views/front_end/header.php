@@ -6,14 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="<?php echo base_url() ?>css/reset.css" />
 <link rel="stylesheet" href="<?php echo base_url() ?>css/simple_model.css" />
-
-<!--[START] get correct stylesheet depending on page -->
-<?php if($define === 'DEFAULT') :?>
 <link rel="stylesheet" href="<?php echo base_url() ?>css/default.css" />
-<?php elseif($define === 'SEARCH_RESULTS') : ?>
-<link rel="stylesheet" href="<?php echo base_url() ?>css/default.css" />
-<?php endif;?>
-<!--[END] get correct stylesheet depending on page -->
 
 <!--[if IE 6]>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>css/ie6.css" />
@@ -64,12 +57,13 @@ $submit = array(
 ?>
 
 </head>
-<body id="page">
+<body id="<?php echo (($define === 'SEARCH_RESULTS') ? 'shortPage' : 'page'); ?>">
 <div id="headerWraper">
 	<div id="header">
 		<div class="user">
 			<div id="basic-modal">			
-				<?php echo ((! $logged_in) ? '<a href="#" class="login">Login</a>' : 'Welcome '. $username . ' <a href="'.base_url().'auth/logout" class="login">Logout</a>'); ?> | <a href="#" class="register">Register</a>
+				<?php echo ((! $logged_in) ? '<a href="main/login" class="login">Login</a>' : 'Welcome <a href="profile/" class="profile">'. $username . '</a> <a href="'.base_url().'auth/logout" class="logout">Logout</a>'); ?> | <a href="#" class="register">Register</a>
+					
 			</div>
 		</div>
 		
