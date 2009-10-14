@@ -158,23 +158,46 @@ class Search extends Controller
 	function build_search_location_string($str)
 	{
 		//TODO: complete the build_search_location_string function for deciding the location search method used
-						
+		
+		//Zip ONLY
 		//check if the location is a zip code ONLY
 		if (preg_match('/^[0-9]{5}([- ]?[0-9]{4})?$/', $str)) 
 		{
 			return '@zip ' . $str;
 		}
+		//City, State_Prefix
 		//match examples:
 		//mission, ks
-		//mission,ks
-		else if(eregi('^[a-zA-Z ]+,[[:space:]]|[a-zA-Z]{2}$',$str))
+		//mission,ks		
+		else if(eregi('(^[a-zA-Z ]+,[a-zA-Z]{2}$)|(^[a-zA-Z ]+, [a-zA-Z]{2}$)',$str))
+		{				
+			//remove spaces
+			$str=str_replace(" ","",$str);
+			$str = trim($str);
+			$local_pair = explode(",", $str);
+			
+			if(sizeof($local_pair) == 2)
+				return '@city '. $local_pair[0] . ' @state_prefix  '. $local_pair[1];
+		}
+		//City, StateName
+		//match examples:
+		//mission, kansas
+		//mission,kansas
+		else if(eregi('(^[a-zA-Z ]+,[a-zA-Z]{1,}$)|(^[a-zA-Z ]+, [a-zA-Z]{1,}$)',$str))
 		{			
 			//remove spaces
 			$str=str_replace(" ","",$str);
 			$str = trim($str);
 			$local_pair = explode(",", $str);
 						
-			return '@city '. $local_pair[0] . ' @state_prefix  '. $local_pair[1];
+			if(sizeof($local_pair) == 2)			
+				return '@city '. $local_pair[0] . ' @state_name  '. $local_pair[1];
 		}
-	}
+
+		//could be junk data, lets just run a city search as the default
+		else 
+		{
+			return '@city ' . $str;
+		}
+	}	
 }
