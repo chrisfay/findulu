@@ -40,7 +40,7 @@ class Search extends Controller
 	{					
 		//form rules
 		$rules['search_term']         = "trim|required|max_length[255]";		
-		$rules['search_location']     = "trim|max_length[255]|callback_is_valid_location";		
+		$rules['search_location']     = "trim|max_length[255]|callback__is_valid_location";		
 		$this->validation->set_rules($rules);
 		
 		//define the fields we're using for validation purposes
@@ -89,12 +89,16 @@ class Search extends Controller
 	{			
 		//search was submitted and is sane, lets process it
 		$this->sphinx->SetArrayResult(TRUE);
-		if(! $result = $this->sphinx->Query($search_term . $this->build_search_location_string($search_location)))
-		{						
+		$this->sphinx->SetMatchMode(SPH_MATCH_EXTENDED); //so we can do field searches
+		if(! $result = $this->sphinx->Query($search_term . ' ' .$this->build_search_location_string($search_location)))		
+		{				
 			$this->_no_listing_results("Search failed for some reason");
 			return;			
-		}
+		}	
+
+		//echo $search_term . ' ' .$this->build_search_location_string($search_location);		
 		
+		//echo print_r($result);
 		//make sure we have some results
 		//echo sizeof($result['status']);
 		if($result['total_found'] == 0)
@@ -117,8 +121,8 @@ class Search extends Controller
 	}
 		
 	//callback function to verify location search parameter is a valid location
-	function is_valid_location($str)
-	{
+	function _is_valid_location($str)
+	{		
 		//TODO: Decide/complete the valid location callback for location search input on home page/results page
 		$valid_location = TRUE;
 		
@@ -146,12 +150,17 @@ class Search extends Controller
 	| state search only
 	| city AND state only	
 	| RETURNS: the formatted second part of the query to append to the search_term part
-	| For example, could return ' -e @zip 85002' if its determined that we're only searching on zip
+	| For example, could return '-e @zip 85002' if its determined that we're only searching on zip
 	| OR could return '-e @city phoenix @state_prefix' if determined that search is city, state
 	*/ 
 	function build_search_location_string($str)
 	{
 		//TODO: complete the build_search_location_string function for deciding the location search method used
-		return $str;
+		
+		//check if the location is a zip code ONLY
+		if (preg_match('/^[0-9]{5}([- ]?[0-9]{4})?$/', $str)) 
+		{
+			return '@zip ' . $str;
+		}		
 	}
 }
