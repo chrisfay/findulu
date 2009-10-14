@@ -148,9 +148,9 @@ class Search extends Controller
 	| we build out the second half of the query parameter for Sphinx and pass it back to complete the search	
 	| Methods/Possibilities:
 	| zipcode search
-	| city search ONLY
-	| state search only
-	| city AND state only	
+	| city search ONLY (default)	| 
+	| city AND state_prefix
+	| city AND state_name
 	| RETURNS: the formatted second part of the query to append to the search_term part
 	| For example, could return '-e @zip 85002' if its determined that we're only searching on zip
 	| OR could return '-e @city phoenix @state_prefix' if determined that search is city, state
@@ -163,8 +163,9 @@ class Search extends Controller
 		//check if the location is a zip code ONLY
 		if (preg_match('/^[0-9]{5}([- ]?[0-9]{4})?$/', $str)) 
 		{
-			return '@zip ' . $str;
+			return '@zip ' . $str;					
 		}
+		
 		//City, State_Prefix
 		//match examples:
 		//mission, ks
@@ -197,7 +198,7 @@ class Search extends Controller
 		//could be junk data, lets just run a city search as the default
 		else 
 		{
-			return '@city ' . $str;
+			return '@city ' . $str;			
 		}
 	}	
 }
