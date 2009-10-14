@@ -85,7 +85,7 @@ class Search extends Controller
 		return;
 	}
 	
-	//display listings - should only be 
+	//display listings
 	//pass the data to be displayed on the search results page
 	//returns VOID
 	function _display_listing_results($search_term = '', $search_location = '')
@@ -109,15 +109,8 @@ class Search extends Controller
 			$this->_no_listing_results("No results found");
 			return;
 		}		
-		
-		//build out query against mysql core db matching id's found
-		foreach($result['matches'] as $row)
-		{			
-			$this->db->or_where('listing_id', $row['id']);
-		}
-		
-		$this->view_content['content']['search_results'] = $this->db->get('listings'); //get listing_id's from our db		
-		
+				
+		$this->view_content['content']['search_results'] = $this->model_search->get_search_results($result['matches']); //get listing_id's from our db				
 		$data['content'] = $this->load->view('front_end/search_results', $this->view_content, TRUE);
 		$this->load_view->_loadDefaultTemplate($data, 'SEARCH_RESULTS');		
 		return;
