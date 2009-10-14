@@ -29,5 +29,6 @@ class Model_search extends Model
 		}
 		
 		return FALSE;
-	}
+	}			
 }
+

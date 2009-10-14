@@ -157,11 +157,9 @@ class Search extends Controller
 		
 		//Zip ONLY
 		//check if the location is a zip code ONLY
-		if (preg_match('/^[0-9]{5}([- ]?[0-9]{4})?$/', $str)) 
-		{
+		if (preg_match('/^[0-9]{5}([- ]?[0-9]{4})?$/', $str)) 		
 			return '@zip ' . $str;					
-		}
-		
+				
 		//City, State_Prefix
 		//match examples:
 		//mission, ks
@@ -174,8 +172,7 @@ class Search extends Controller
 			$local_pair[1] = trim($local_pair[1]);
 			
 			if(sizeof($local_pair) == 2)							
-				return '@city '. $local_pair[0] . ' @state_prefix  '. $local_pair[1];
-			
+				return '@city '. $local_pair[0] . ' @state_prefix  '. $local_pair[1];			
 		}
 		//City, StateName
 		//match examples:
