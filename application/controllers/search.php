@@ -168,13 +168,14 @@ class Search extends Controller
 		//mission,ks		
 		else if(eregi('(^[a-zA-Z ]+,[a-zA-Z]{2}$)|(^[a-zA-Z ]+, [a-zA-Z]{2}$)',$str))
 		{				
-			//remove spaces
-			$str=str_replace(" ","",$str);
-			$str = trim($str);
+			//remove spaces						
 			$local_pair = explode(",", $str);
+			$local_pair[0] = trim($local_pair[0]);
+			$local_pair[1] = trim($local_pair[1]);
 			
-			if(sizeof($local_pair) == 2)
+			if(sizeof($local_pair) == 2)							
 				return '@city '. $local_pair[0] . ' @state_prefix  '. $local_pair[1];
+			
 		}
 		//City, StateName
 		//match examples:
@@ -182,10 +183,10 @@ class Search extends Controller
 		//mission,kansas
 		else if(eregi('(^[a-zA-Z ]+,[a-zA-Z]{1,}$)|(^[a-zA-Z ]+, [a-zA-Z]{1,}$)',$str))
 		{			
-			//remove spaces
-			$str=str_replace(" ","",$str);
-			$str = trim($str);
+			//remove spaces			
 			$local_pair = explode(",", $str);
+			$local_pair[0] = trim($local_pair[0]);
+			$local_pair[1] = trim($local_pair[1]);
 						
 			if(sizeof($local_pair) == 2)			
 				return '@city '. $local_pair[0] . ' @state_name  '. $local_pair[1];
