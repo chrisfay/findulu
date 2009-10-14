@@ -66,8 +66,10 @@ class Search extends Controller
 		$search_term     = $this->sanitize_input($search_term);
 		$search_location = $this->sanitize_input($this->input->post('search_location'));
 		
-		if($search_location === 'City, State or Zip') //location wasn't submitted
+		if($search_location === 'City, State or Zip' || strlen($search_location) <= 0) //location wasn't submitted
 			$search_location = '';
+		if($search_term === 'Search for business or service here...' || strlen($search_term) <= 0) //term wasn't submitted
+			$search_term = '';
 				
 		$this->_display_listing_results($search_term, $search_location); //run the search and display results
 	}
@@ -156,11 +158,23 @@ class Search extends Controller
 	function build_search_location_string($str)
 	{
 		//TODO: complete the build_search_location_string function for deciding the location search method used
-		
+						
 		//check if the location is a zip code ONLY
 		if (preg_match('/^[0-9]{5}([- ]?[0-9]{4})?$/', $str)) 
 		{
 			return '@zip ' . $str;
-		}		
+		}
+		//match examples:
+		//mission, ks
+		//mission,ks
+		else if(eregi('^[a-zA-Z ]+,[[:space:]]|[a-zA-Z]{2}$',$str))
+		{			
+			//remove spaces
+			$str=str_replace(" ","",$str);
+			$str = trim($str);
+			$local_pair = explode(",", $str);
+						
+			return '@city '. $local_pair[0] . ' @state_prefix  '. $local_pair[1];
+		}
 	}
 }
