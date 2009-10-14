@@ -14,6 +14,7 @@ class Search extends Controller
 		$this->load->library('validation');					
 		$this->load->library('load_view');
 		$this->load->library('sphinx');
+		$this->load->model('front_end/model_search');
 		$this->validation->set_error_delimiters('<div class="error">','</div>');
 		
 		//all default data that should be included when passed to the search results view
@@ -109,7 +110,7 @@ class Search extends Controller
 			return;
 		}		
 		
-		//build out where clause with all matching id's found
+		//build out query against mysql core db matching id's found
 		foreach($result['matches'] as $row)
 		{			
 			$this->db->or_where('listing_id', $row['id']);
@@ -156,8 +157,10 @@ class Search extends Controller
 	| OR could return '-e @city phoenix @state_prefix' if determined that search is city, state
 	*/ 
 	function build_search_location_string($str)
-	{
-		//TODO: complete the build_search_location_string function for deciding the location search method used
+	{		
+		//empty or default location submitted - search based only on primary field and don't build location string
+		if(strlen($str) <= 0)			
+			return $str;		
 		
 		//Zip ONLY
 		//check if the location is a zip code ONLY

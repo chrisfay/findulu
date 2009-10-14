@@ -62,7 +62,7 @@ $submit = array(
 	<div id="header">
 		<div class="user">
 			<div id="basic-modal">			
-				<?php echo ((! $logged_in) ? '<a href="main/login" class="login">Login</a>' : 'Welcome <a href="profile/" class="profile">'. $username . '</a> <a href="'.base_url().'auth/logout" class="logout">Logout</a>'); ?> 
+				<?php echo ((! $logged_in) ? '<a href="'.base_url().'main/login" class="login">Login</a>' : 'Welcome <a href="'.base_url().'profile/" class="profile">'. $username . '</a> <a href="'.base_url().'auth/logout" class="logout">Logout</a>'); ?> 
 				<?php echo ((! $logged_in) ? '| <a href="#" class="register">Register</a>' : ''); ?>
 					
 			</div>

@@ -8,8 +8,13 @@
 if(! is_null($content['search_results']))
 {
 	echo '<h3>Results:</h3>';
-	foreach($content['search_results']->result() as $row)
-		echo $row->title . "<br />";
+	foreach($content['search_results']->result() as $row) 
+	{
+		echo '<strong>Title</strong>: '. $row->title . "<br />";
+		echo print_r($row) . "<br /><br />";		
+	}
 }
-?>
+		
+
+
 

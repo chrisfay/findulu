@@ -24,7 +24,7 @@ $payment_intervals = array(
 
 $submit = array(	
 	'class' => 'input',
-	'value' => 'Submit edits',
+	'value' => 'Submit',
 );
 
 //show errors
