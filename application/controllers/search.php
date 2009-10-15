@@ -14,8 +14,9 @@ class Search extends Controller
 		$this->load->library('validation');					
 		$this->load->library('load_view');
 		$this->load->library('sphinx');
-		$this->load->model('front_end/model_search');
-		$this->validation->set_error_delimiters('<div class="error">','</div>');
+		$this->load->library('lib_zipcode');
+		$this->load->model('front_end/model_search');		
+		$this->validation->set_error_delimiters('<div class="error">','</div>');		
 		
 		//all default data that should be included when passed to the search results view
 		$this->view_content['content'] = array(
@@ -38,7 +39,7 @@ class Search extends Controller
 	
 	//search against listings database via sphinx and output results
 	function listings()
-	{					
+	{							
 		//form rules
 		$rules['search_term']         = "trim|required|max_length[255]";		
 		$rules['search_location']     = "trim|max_length[255]|callback__is_valid_location";		
@@ -157,8 +158,10 @@ class Search extends Controller
 		
 		//Zip ONLY
 		//check if the location is a zip code ONLY
-		if (preg_match('/^[0-9]{5}([- ]?[0-9]{4})?$/', $str)) 		
+		if (preg_match('/^[0-9]{5}([- ]?[0-9]{4})?$/', $str)) 
+		{			
 			return '@zip ' . $str;					
+		}
 				
 		//City, State_Prefix
 		//match examples:
@@ -170,10 +173,21 @@ class Search extends Controller
 			$local_pair = explode(",", $str);
 			$local_pair[0] = trim($local_pair[0]);
 			$local_pair[1] = trim($local_pair[1]);
-			
+						
 			if(sizeof($local_pair) == 2)							
-				return '@city '. $local_pair[0] . ' @state_prefix  '. $local_pair[1];			
-		}
+			{
+				//get a zipcode for this city
+				//If we can get a zip for this city, we build out a list of zips in range
+				//otherwise we just run the search with the original, city, state_prefix format
+				if(! $result = $this->model_zipcode->get_zip_from_city_state_prefix($local_pair[0],$local_pair[1] ))						
+					return '@city '. $local_pair[0] . ' @state_prefix  '. $local_pair[1];											
+					
+				//get all zips within a certain mile range and build out the location parm based on that								
+				$range = $this->config->item('ulu_zip_range');
+				echo $result->zip_code;
+				echo print_r($this->lib_zipcode->get_zips_in_range($result->zip_code, 5, _ZIPS_SORT_BY_DISTANCE_ASC, true));
+			}
+		}	
 		//City, StateName
 		//match examples:
 		//mission, kansas

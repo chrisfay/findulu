@@ -69,7 +69,7 @@ class Markdown_Parser {
 	# Change to `true` to disallow markup or entities.
 	var $no_markup = false;
 	var $no_entities = false;
-	
+		
 	# Predefined urls and titles for reference links and images.
 	var $predef_urls = array();
 	var $predef_titles = array();
