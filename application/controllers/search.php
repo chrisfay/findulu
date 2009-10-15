@@ -159,8 +159,22 @@ class Search extends Controller
 		//Zip ONLY
 		//check if the location is a zip code ONLY
 		if (preg_match('/^[0-9]{5}([- ]?[0-9]{4})?$/', $str)) 
-		{			
-			return '@zip ' . $str;					
+		{	
+			//get all zips within a certain mile range and build out the location parm based on that								
+			$range = $this->config->item('ulu_zip_range');
+			
+			if(! $zips_in_range = $this->lib_zipcode->get_zips_in_range($str, $range, _ZIPS_SORT_BY_DISTANCE_ASC, true))
+				return '@zip ' . $str;
+				
+			$local_output = '';				
+			
+			//build final local output (ie @zip 66205 | @zip 66203)
+			foreach($zips_in_range as $zip_in_range => $distance)
+			{
+				$local_output .= '@zip ' . $zip_in_range . ' | ';	
+			}				
+							
+			return $local_output;		
 		}
 				
 		//City, State_Prefix
