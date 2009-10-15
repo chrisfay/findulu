@@ -184,8 +184,20 @@ class Search extends Controller
 					
 				//get all zips within a certain mile range and build out the location parm based on that								
 				$range = $this->config->item('ulu_zip_range');
-				echo $result->zip_code;
-				echo print_r($this->lib_zipcode->get_zips_in_range($result->zip_code, 5, _ZIPS_SORT_BY_DISTANCE_ASC, true));
+				
+				if(! $zips_in_range = $this->lib_zipcode->get_zips_in_range($result->zip_code, $range, _ZIPS_SORT_BY_DISTANCE_ASC, true))
+					return '@city '. $local_pair[0] . ' @state_prefix  '. $local_pair[1];											
+					
+				$local_output = '';				
+				
+				foreach($zips_in_range as $zip_in_range => $distance)
+				{
+					$local_output .= '@zip ' . $zip_in_range . ' | ';	
+				}
+				
+				//return final local output (ie @zip 66205 | @zip 66203)
+				//echo $local_output;
+				return $local_output;				
 			}
 		}	
 		//City, StateName

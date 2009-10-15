@@ -206,7 +206,7 @@ class Lib_zipcode {
 	  
 	  $this->last_time = $this->chronometer();
 	  
-	  if (empty($return)) return false;
+	  if (empty($return)) return FALSE;
 	  return $return;
 	}
 	
