@@ -76,9 +76,9 @@ ul.nav li a{display:block;float:left;height:52px;margin-top:1px;}
 	ul.nav li.contact a{width:137px;background:url('../images/navSprite.jpg') -309px 0;}
 	/*hover/active states*/
 	ul.nav li.home a:hover,ul.nav li.home.active a{width:97px;background:url('../images/navSprite.jpg') 0 52px;}
-	ul.nav li.about a:hover{width:97px;background:url('../images/navSprite.jpg') -97px 52px;}
-	ul.nav li.support a:hover{width:115px;background:url('../images/navSprite.jpg') -194px 52px;}
-	ul.nav li.contact a:hover{width:137px;background:url('../images/navSprite.jpg') -309px 52px;}
+	ul.nav li.about a:hover,ul.nav li.about.active a{width:97px;background:url('../images/navSprite.jpg') -97px 52px;}
+	ul.nav li.support a:hover,ul.nav li.support.active a{width:115px;background:url('../images/navSprite.jpg') -194px 52px;}
+	ul.nav li.contact a:hover,ul.nav li.contact.active a{width:137px;background:url('../images/navSprite.jpg') -309px 52px;}
 
 /*main content*/
 #contentWrapper{background:#fff;}

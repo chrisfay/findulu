@@ -12,7 +12,7 @@ if(! is_null($content['search_results']))
 	{
 		//echo print_r($row);?>
 		<ul class="listing_result">
-			<li><a href="<?php echo base_url() . 'view_single_listing/' .$row->listing_id?>"><?php echo $row->title ?></a></li>
+			<li><a href="<?php echo base_url() . 'view_single_listing/locate/'.$row->listing_id.'/'.str_replace(' ', '-', $row->title)?>"><?php echo $row->title ?></a></li>
 			<li>Phone: <?php echo $row->phone ?></li>
 			<li>Email: <?php echo $row->email ?></li>
 			<li>zip: <?php echo $row->zip ?></li>

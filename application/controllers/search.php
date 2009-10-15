@@ -85,38 +85,7 @@ class Search extends Controller
 		$this->load_view->_loadDefaultTemplate($data, 'SEARCH_RESULTS');		
 		return;
 	}
-	
-	//display listings
-	//pass the data to be displayed on the search results page
-	//returns VOID
-	function _display_listing_results($search_term = '', $search_location = '')
-	{			
-		//search was submitted and is sane, lets process it
-		$this->sphinx->SetArrayResult(TRUE);
-		$this->sphinx->SetMatchMode(SPH_MATCH_EXTENDED); //so we can do field searches
-		if(! $result = $this->sphinx->Query($search_term . ' ' .$this->build_search_location_string($search_location)))		
-		{				
-			$this->_no_listing_results("Search failed for some reason");
-			return;			
-		}	
-
-		//echo $search_term . ' ' .$this->build_search_location_string($search_location);		
-		
-		//echo print_r($result);
-		//make sure we have some results
-		//echo sizeof($result['status']);
-		if($result['total_found'] == 0)
-		{
-			$this->_no_listing_results("No results found");
-			return;
-		}		
-				
-		$this->view_content['content']['search_results'] = $this->model_search->get_search_results($result['matches']); //get listing_id's from our db				
-		$data['content'] = $this->load->view('front_end/search_results', $this->view_content, TRUE);
-		$this->load_view->_loadDefaultTemplate($data, 'SEARCH_RESULTS');		
-		return;
-	}
-		
+			
 	//callback function to verify location search parameter is a valid location
 	function _is_valid_location($str)
 	{		
@@ -255,5 +224,36 @@ class Search extends Controller
 		{
 			return '@city ' . $str;			
 		}
+	}
+	
+	//display listings
+	//pass the data to be displayed on the search results page
+	//returns VOID
+	function _display_listing_results($search_term = '', $search_location = '')
+	{			
+		//search was submitted and is sane, lets process it
+		$this->sphinx->SetArrayResult(TRUE);
+		$this->sphinx->SetMatchMode(SPH_MATCH_EXTENDED); //so we can do field searches
+		if(! $result = $this->sphinx->Query($search_term . ' ' .$this->build_search_location_string($search_location)))		
+		{				
+			$this->_no_listing_results("Search failed for some reason");
+			return;			
+		}	
+
+		//echo $search_term . ' ' .$this->build_search_location_string($search_location);		
+		
+		//echo print_r($result);
+		//make sure we have some results
+		//echo sizeof($result['status']);
+		if($result['total_found'] == 0)
+		{
+			$this->_no_listing_results("No results found");
+			return;
+		}		
+				
+		$this->view_content['content']['search_results'] = $this->model_search->get_search_results($result['matches']); //get listing_id's from our db				
+		$data['content'] = $this->load->view('front_end/search_results', $this->view_content, TRUE);
+		$this->load_view->_loadDefaultTemplate($data, 'SEARCH_RESULTS');		
+		return;
 	}	
 }

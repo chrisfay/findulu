@@ -15,10 +15,10 @@ class Load_view
 	//return the default nav links	
 	function _main_nav($user_level = 1, $definePageName = '')
 	{			
-		$nav =  '<li class="home'.(($definePageName === 'HOME') ? ' active': '').'"><a href="'.base_url().'" class="active"><span>Home</span></a></li>' .
-				'<li class="about"><a href="#"><span>About</span></a></li>' .
-				'<li class="support"><a href="#"><span>Suppport</span></a></li>' .
-				'<li class="contact"><a href="#"><span>Contact Us</span></a></li>';
+		$nav =  '<li class="home'.(($definePageName === 'HOME') ? ' active': '').'"><a href="'.base_url().'"><span>Home</span></a></li>' .
+				'<li class="about'.(($definePageName === 'ABOUT') ? ' active': '').'"><a href="#"><span>About</span></a></li>' .
+				'<li class="support'.(($definePageName === 'SUPPORT') ? ' active': '').'"><a href="#"><span>Suppport</span></a></li>' .
+				'<li class="contact'.(($definePageName === 'CONTACT') ? ' active': '').'"><a href="#"><span>Contact Us</span></a></li>';
 		
 		return $nav;
 	}
@@ -32,16 +32,11 @@ class Load_view
 		$data['is_home']      = $definePageName === 'HOME';
 		$data['results_page'] = $definePageName === 'SEARCH_RESULTS'; 
 		$data['page_defined'] = $definePageName;
-		
-	
-		//build out nav - pass the nav class to activate as well!
+		$data['page_title'] = 'Findulu - the better business finder';		
 		$data['navList'] = $this->_main_nav('', $definePageName);
-		$data['define']  = $definePageName;
-	
-		//load default view of the profile				
-		$username = $this->ci->session->userdata('username');
-		$data['page_title'] = 'Findulu - the better business finder';
-		$data['username'] = $username;		
+		$data['define']  = $definePageName;			
+		$data['username'] = $this->ci->session->userdata('username');
+				 	
 		$this->ci->load->view('front_end/default_layout', array(
 			'header'    => $this->ci->load->view('front_end/header', $data, true),			
 			'content'   => $this->ci->load->view('front_end/content', array(), true),
