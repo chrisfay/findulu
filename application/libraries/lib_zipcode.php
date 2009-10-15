@@ -213,10 +213,7 @@ class Lib_zipcode {
 	// chronometer function taken from the php manual.  This is used primarily
 	// for debugging and anlyzing the functions while developing this class.  
 	function chronometer()  
-	{
-	
-	   
-	  
+	{	  
 	   $now = microtime(TRUE);  // float, in _seconds_
 	   $now = $now + time();
 	   $malt = 1;

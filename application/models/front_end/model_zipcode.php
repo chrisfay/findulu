@@ -10,11 +10,7 @@ class Model_zipcode extends Model
 		
 		 //$this->load->library('');					
 	}
-	
-	function index()
-	{	
-		 //code here...	
-	}
+		
 	// This function pulls just the lattitude and longitude from the
   	// database for a given zip code.
 	function get_zip_point($zip) {	
