@@ -190,13 +190,12 @@ class Search extends Controller
 					
 				$local_output = '';				
 				
+				//build final local output (ie @zip 66205 | @zip 66203)
 				foreach($zips_in_range as $zip_in_range => $distance)
 				{
 					$local_output .= '@zip ' . $zip_in_range . ' | ';	
-				}
-				
-				//return final local output (ie @zip 66205 | @zip 66203)
-				//echo $local_output;
+				}				
+								
 				return $local_output;				
 			}
 		}	
@@ -206,13 +205,35 @@ class Search extends Controller
 		//mission,kansas
 		else if(eregi('(^[a-zA-Z ]+,[a-zA-Z]{1,}$)|(^[a-zA-Z ]+, [a-zA-Z]{1,}$)',$str))
 		{			
-			//remove spaces			
+			//remove spaces						
 			$local_pair = explode(",", $str);
 			$local_pair[0] = trim($local_pair[0]);
 			$local_pair[1] = trim($local_pair[1]);
 						
-			if(sizeof($local_pair) == 2)			
-				return '@city '. $local_pair[0] . ' @state_name  '. $local_pair[1];
+			if(sizeof($local_pair) == 2)							
+			{
+				//get a zipcode for this city
+				//If we can get a zip for this city, we build out a list of zips in range
+				//otherwise we just run the search with the original, city, state_prefix format
+				if(! $result = $this->model_zipcode->get_zip_from_city_state_name($local_pair[0],$local_pair[1] ))						
+					return '@city '. $local_pair[0] . ' @state_name  '. $local_pair[1];											
+					
+				//get all zips within a certain mile range and build out the location parm based on that								
+				$range = $this->config->item('ulu_zip_range');
+				
+				if(! $zips_in_range = $this->lib_zipcode->get_zips_in_range($result->zip_code, $range, _ZIPS_SORT_BY_DISTANCE_ASC, true))
+					return '@city '. $local_pair[0] . ' @state_name  '. $local_pair[1];											
+					
+				$local_output = '';				
+				
+				//build final local output (ie @zip 66205 | @zip 66203)
+				foreach($zips_in_range as $zip_in_range => $distance)
+				{
+					$local_output .= '@zip ' . $zip_in_range . ' | ';	
+				}				
+								
+				return $local_output;				
+			}
 		}
 
 		//could be junk data, lets just run a city search as the default
