@@ -10,7 +10,7 @@ class View_single_listing extends Controller
 	{
 		parent::__construct();
 		
-		 $this->load->library('load_view');		 
+		 $this->load->library('load_view');			 
 		 $this->load->model('model_listing');		 
 		 $this->load->model('tag_model');
 		 
@@ -21,6 +21,8 @@ class View_single_listing extends Controller
 			'message'            => NULL,
 			'error'              => NULL,			
 			'search_parm'		 => NULL,
+			'listing_type'		 => NULL,
+			'tags'				 => NULL,
 			
 		);
 	}
@@ -38,13 +40,28 @@ class View_single_listing extends Controller
 					
 		//TODO: sanitize input received
 									
-		//TODO: load listing details from db
+		//get listing type (free or premium)
 		if(! $listing_type_id = $this->model_listing->get_listing_type_id($listing_id))
 		{	
 			$this->_no_listing_found();
 			return;
-		}	
+		}
 		
+		//get listing details based on listing type
+		switch($listing_type_id)
+		{
+			case 1: //free
+				$this->view_content['listing_type'] = 'FREE';
+				$this->view_content['listing_details'] = $this->model_listing->get_single_listing_details_free($listing_id);
+				$this->view_content['tags'] = $this->tag_model->get_tags($listing_id);
+				break;
+				$this->view_content['listing_type'] = 'PREMIUM';
+			case 2: //premium
+				break;
+			default: //something else - send to _no_listing_found
+				$this->_no_listing_found();
+				break;
+		}		
 		
 		//TODO: load view_single_listing view with details info				 
 		$this->_listing_found();			

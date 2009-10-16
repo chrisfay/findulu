@@ -28,15 +28,13 @@ class Model_listing extends Model
 	//get all listing data for a single listing	
 	//returns a result set on success
 	//or FALSE on failure
+	//title,phone,email,address,zip,tag
 	function get_single_listing_details_free($listing_id)
 	{		
-		$this->db->select('*');
-		$this->db->from($this->table_listings);		
+		$this->db->select('listings.title,listings.phone,listings.email,listings.address,listings.zip,zip_code.city,zip_code.state_prefix');
+		$this->db->from('listings');		
 		$this->db->where('listings.listing_id', $listing_id);
-		$this->db->where('user_id', $user_id);
-		$this->db->join($this->table_listing_details, $this->table_listings .'.listing_id = ' . $this->table_listing_details .'.listing_id');
-		$this->db->join($this->table_location, $this->table_listings .'.zip = '. $this->table_location .'.zip_code');
-						
+		$this->db->join('zip_code','zip_code.zip_code = listings.zip');		
 		$query = $this->db->get();			
 		
 		if($query->num_rows() > 0)				
