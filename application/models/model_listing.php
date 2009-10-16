@@ -48,19 +48,20 @@ class Model_listing extends Model
 	//or FALSE on failure
 	function get_single_listing_details_premium($listing_id)
 	{		
-		$this->db->select('*');
-		$this->db->from($this->table_listings);		
+		$this->db->select('listings.title,listings.phone,listings.email,listings.address,
+							listing_details_meta.listing_description,listing_details_meta.listing_ad_filename,
+							listing_details_meta.listing_coupon_filename,listing_details_meta.listing_url,
+							listings.zip,zip_code.city,zip_code.state_prefix');
+		$this->db->from('listings');		
 		$this->db->where('listings.listing_id', $listing_id);
-		$this->db->where('user_id', $user_id);
-		$this->db->join($this->table_listing_details, $this->table_listings .'.listing_id = ' . $this->table_listing_details .'.listing_id');
-		$this->db->join($this->table_location, $this->table_listings .'.zip = '. $this->table_location .'.zip_code');
-						
+		$this->db->join('listing_details_meta','listing_details_meta.listing_id = listings.listing_id');		
+		$this->db->join('zip_code','zip_code.zip_code = listings.zip');				
 		$query = $this->db->get();			
 		
 		if($query->num_rows() > 0)				
 			return $query->row();
 		else
-			return FALSE;		
+			return FALSE;								
 	}	
 }
 

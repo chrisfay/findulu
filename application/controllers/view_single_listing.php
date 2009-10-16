@@ -54,9 +54,11 @@ class View_single_listing extends Controller
 				$this->view_content['listing_type'] = 'FREE';
 				$this->view_content['listing_details'] = $this->model_listing->get_single_listing_details_free($listing_id);
 				$this->view_content['tags'] = $this->tag_model->get_tags($listing_id);
-				break;
-				$this->view_content['listing_type'] = 'PREMIUM';
+				break;				
 			case 2: //premium
+				$this->view_content['listing_type'] = 'PREMIUM';
+				$this->view_content['listing_details'] = $this->model_listing->get_single_listing_details_premium($listing_id);
+				$this->view_content['tags'] = $this->tag_model->get_tags($listing_id);
 				break;
 			default: //something else - send to _no_listing_found
 				$this->_no_listing_found();
