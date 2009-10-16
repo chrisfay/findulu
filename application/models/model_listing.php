@@ -62,6 +62,20 @@ class Model_listing extends Model
 			return $query->row();
 		else
 			return FALSE;								
+	}
+	
+	//return a subset of listing info in order to do a review
+	function get_listing_details_for_review($listing_id)
+	{
+		$this->db->select('listings.title,listings.phone,listings.email');
+		$this->db->from('listings');		
+		$this->db->where('listings.listing_id', $listing_id);		
+		$query = $this->db->get();			
+		
+		if($query->num_rows() > 0)				
+			return $query->row();
+		else
+			return FALSE;		
 	}	
 }
 

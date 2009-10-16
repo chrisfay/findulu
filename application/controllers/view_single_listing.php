@@ -23,7 +23,7 @@ class View_single_listing extends Controller
 			'search_parm'		 => NULL,
 			'listing_type'		 => NULL,
 			'tags'				 => NULL,
-			
+			'listing_id'   		 => NULL,			
 		);
 	}
 	
@@ -46,6 +46,8 @@ class View_single_listing extends Controller
 			$this->_no_listing_found();
 			return;
 		}
+		
+		$this->view_content['listing_id'] = $listing_id;
 		
 		//get listing details based on listing type
 		switch($listing_type_id)
@@ -82,7 +84,36 @@ class View_single_listing extends Controller
 		$data['content'] = $this->load->view('front_end/view_single_listing', $this->view_content, TRUE);
 		$this->load_view->_loadDefaultTemplate($data, 'SINGLE_LISTING');		
 		return;
-	}	
+	}
+	
+	function _show_review_page()
+	{		
+		$data['content'] = $this->load->view('front_end/review_listing', $this->view_content, TRUE);
+		$this->load_view->_loadDefaultTemplate($data, 'REVIEW_LISTING');		
+		return;		
+	}
+	
+	//review a listing
+	function review($listing_id	= NULL)
+	{		
+		if(is_null($listing_id))		
+		{	
+			$this->_no_listing_found();	
+			return;
+		}
+		
+		//TODO: sanitize listing_id input received	
+		
+		if(! $this->model_listing->get_listing_details_for_review($listing_id))
+		{
+			$this->_no_listing_found();
+			return;
+		}									
+			
+		$this->view_content['listing_id'] = $listing_id;
+		$this->_show_review_page();	
+		return;	
+	}
 }
 
 /* End of file view_single_listing.php */

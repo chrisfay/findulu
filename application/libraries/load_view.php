@@ -37,6 +37,7 @@ class Load_view
 		$data['define']  			 = $definePageName;			
 		$data['username'] 			 = $this->ci->session->userdata('username');
 		$data['single_listing_page'] = $definePageName === 'SINGLE_LISTING';
+		$data['review_page'] 		 = $definePageName === 'REVIEW_LISTING';
 				 	
 		$this->ci->load->view('front_end/default_layout', array(
 			'header'    => $this->ci->load->view('front_end/header', $data, true),			

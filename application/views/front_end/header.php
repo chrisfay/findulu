@@ -7,6 +7,24 @@
 <link rel="stylesheet" href="<?php echo base_url() ?>css/reset.css" />
 <link rel="stylesheet" href="<?php echo base_url() ?>css/simple_model.css" />
 <link rel="stylesheet" href="<?php echo base_url() ?>css/default.css" />
+<?php echo (($review_page) ? '<link rel="stylesheet" href="'.base_url().'css/uni-form.css" />' : '') ?>
+<?php echo (($review_page) ? '<link rel="stylesheet" href="'.base_url().'css/crystal-stars.css" />' : '') ?>
+
+<script type="text/javascript" src="<?php echo base_url() ?>js/jquery-1.3.1.min.js"></script>
+
+<?php if($review_page) : ?>
+<script type="text/javascript">
+	$(function(){
+		$("#starify").children().not(":input").hide();
+		
+		// Create stars from :radio boxes
+		$("#starify").stars({
+			cancelShow: false
+		});
+	});
+</script>
+<?php endif; ?>
+
 
 <!--[if IE 6]>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>css/ie6.css" />
