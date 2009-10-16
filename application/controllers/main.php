@@ -1,7 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 class Main extends Controller
-{
-	//TODO: consolidate all template loading into one function
+{	
 	private $view_content = array();
 	
 	function __construct()

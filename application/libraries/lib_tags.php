@@ -13,7 +13,7 @@ class Lib_tags
 	function __construct()
 	{
 		$this->ci =& get_instance();
-		$this->ci->load->model('user_profile/tag_model');
+		$this->ci->load->model('tag_model');
 		$this->errors = array(); //any errors durring processing we should add them here		
 	}
 	

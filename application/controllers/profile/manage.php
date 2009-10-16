@@ -20,7 +20,7 @@ class Manage extends Controller
 		$this->load->model('user_profile/profile_model');	
 		$this->lang->load('tank_auth');
 		$this->load->library('validation');		
-		$this->load->model('user_profile/tag_model');
+		$this->load->model('tag_model');
 		$this->load->helper('markdown');
 		$this->validation->set_error_delimiters('<div class="error">','</div>');
 		

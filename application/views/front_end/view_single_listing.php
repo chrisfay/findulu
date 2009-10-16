@@ -1,4 +1,4 @@
 <?php
 //view single listing (View)
-echo 'Single view';
+echo 'Listing details to come here';
 ?>

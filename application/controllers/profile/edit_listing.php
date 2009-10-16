@@ -19,7 +19,7 @@ class Edit_listing extends Controller
 		$this->load->library('validation');		
 		$this->load->library('lib_tags');
 		$this->load->library('HTMLPurifier');
-		$this->load->model('user_profile/tag_model');
+		$this->load->model('tag_model');
 		$this->validation->set_error_delimiters('<div class="error">','</div>');
 	}
 	

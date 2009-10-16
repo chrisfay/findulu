@@ -15,7 +15,7 @@ class General extends Controller
 		$this->load->library('profile');
 		$this->load->library('lib_tags');
 		$this->load->model('admin/admin_model');
-		$this->load->model('user_profile/tag_model');
+		$this->load->model('tag_model');
 		$this->load->library('validation');
 		$this->validation->set_error_delimiters('<div class="error">','</div>');							
 		
