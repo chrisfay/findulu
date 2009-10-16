@@ -84,6 +84,8 @@ ul.nav li a{display:block;float:left;height:52px;margin-top:1px;}
 #contentWrapper{background:#fff;}
 #mainContent{min-height:300px;width:960px;margin:0 auto;padding-bottom:15px;}
 
+
+
 /*footer*/
 #footerWrapper{background:url('../images/footerBorder.jpg') repeat-x;}
 #footer{width:960px;margin:0 auto;padding-top:15px;}

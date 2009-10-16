@@ -44,4 +44,4 @@ Tags:
 	?>
 </ul>
 
-<a href="<?php echo base_url() . 'view_single_listing/review/'.$listing_id;?>">Write a review!</a>
+<a href="<?php echo base_url() . 'review/create_review/'.$listing_id;?>">Write a review!</a>

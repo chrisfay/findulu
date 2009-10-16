@@ -8,11 +8,12 @@
     .uniForm fieldset legend{ color: #333; font-weight: bold; font-size: 100%; margin: 0; padding: 1.5em 0; }
     
     /* This is the main unit that contains our form elements */
-    .uniForm .ctrlHolder{ padding: 7px; border-bottom: 1px solid #dfdfdf; }
-    
+    .uniForm .ctrlHolder{ padding: 7px;}
+    /*
     .uniForm .buttonHolder{ text-align: right; }
       .uniForm .resetButton{ float: left; }
       .uniForm .primaryAction{ font-weight: bold; }
+     */
     
     /* This class gets added to div.ctrlHolder to highlight the row */
     .uniForm .focused{ background: #fffcdf; }
@@ -115,28 +116,12 @@ YOU CAN VERY EASILY REVERT TO A GENERIC STYLE OF UNI-FORM. BEST OF LUCK...
 */
 
 /* ------------------------------------------------------------------------------ */
-.uniForm {
-	font: normal normal 12px/1.8em Verdana, Arial, sans-serif;
-}
-.uniForm fieldset {
-	margin: 1em;
-}
-.uniForm .inlineLabels .multiField .blockLabel {
-	white-space: nowrap;
-}
-.uniForm .inlineLabels label,
-.uniForm .inlineLabels .label {
-	cursor: pointer;
-}
-.uniForm .ctrlHolder + .buttonHolder {
-	margin: 10px 8% 20px 0
-}
-.uniForm .inlineLabels textarea {
-	height: 6em;
-}
-.uniForm .inlineLabels .multiField {
-	margin: 0 0 .6em;
-}
-.uniForm .inlineLabels .formHint {
-	line-height: 1.2em;
-}
+/*review page*/
+.uniForm {}
+.uniForm fieldset {}
+.uniForm .inlineLabels .multiField .blockLabel {white-space: nowrap;}
+.uniForm .inlineLabels label,.uniForm .inlineLabels .label {cursor: pointer;}
+.uniForm .ctrlHolder + .buttonHolder {}
+.uniForm .inlineLabels textarea {display:block;height:250px;width:550px;}
+.uniForm .inlineLabels .multiField {}
+.uniForm .inlineLabels .formHint {}
