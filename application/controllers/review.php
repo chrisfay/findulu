@@ -78,9 +78,10 @@ class Review extends Controller
 			return;
 		}
 		
-		//TODO: check if user has already left a review for this listing, if so, inform them somehow
-		
 		//TODO: sanitize listing_id input received	
+		
+		//TODO: check if user has already left a review for this listing, if so, inform them somehow		
+		
 		
 		if(! $this->view_content['listing_details'] = $this->model_listing->get_listing_details_for_review($listing_id))
 		{
@@ -96,6 +97,7 @@ class Review extends Controller
 	//process the submitted review form
 	function _process_review_form()
 	{
+		//TODO: Logic to process review submission form
 		/*
 		 //form rules
 		$rules['title']     = "trim|required|min_length[2]|max_length[255]";				

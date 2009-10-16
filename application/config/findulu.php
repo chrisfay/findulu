@@ -29,7 +29,7 @@ $config['ulu_default_listing_ad_image']      = 'defaultListingAd.jpg';
 $config['ulu_default_listing_coupon_image']  = 'defaultListingCoupon.jpg';
 $config['ulu_free_site_enabled']             = TRUE;                          //whether the site is in free mode or pay mode (FALSE)
 $config['ulu_max_tags']                      = 10;                    //maximum number of tags allowed for premuim uploads
-$config['ulu_zip_range']                     = 10;                    //the maximum range in miles to return searches for based on a single zip
+$config['ulu_zip_range']                     = 20;                    //the maximum range in miles to return searches for based on a single zip
 
 /* End of file findulu.php */
 /* Location: ./application/config/findulu.php */

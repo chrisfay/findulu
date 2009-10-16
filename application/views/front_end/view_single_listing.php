@@ -20,7 +20,7 @@ if(! is_null($listing_details) && $listing_type === 'FREE') : ?>
 	
 <ul class="listingDetails">	
 	<li><span>title:</span> <?php echo $listing_details->title ?></li>
-	<li><span>url:</span> <a href="<?php echo $listing_details->listing_url?>"><?php echo $listing_details->listing_url?></a></li>
+	<li><span>url:</span> <a href="<?php echo prep_url($listing_details->listing_url)?>"><?php echo $listing_details->listing_url?></a></li>
 	<li><span>phone:</span> <?php echo $listing_details->phone ?></li>
 	<li><span>email:</span> <?php echo $listing_details->email ?></li>
 	<li><span>address:</span> <?php echo $listing_details->address ?></li>

@@ -1,4 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); //TODO: Complete form elements for review form?>
 
 <div class="review">
 	<!--listing details -->
@@ -10,10 +10,7 @@
 
 	<form class="uniForm" action="<?php echo $this->uri->uri_string() ?>" method="post">
 	
-		<fieldset class="inlineLabels">			
-			<legend>
-				form (<a href="demo3a.html" class="unlink">before</a>|<a href="demo3b.html" class="">after1</a>|<a href="demo3c.html" class="">after2</a>)
-			</legend>		
+		<fieldset class="inlineLabels">								
 			<div class="clear"></div>
 			<div class="ctrlHolder">		
 				<div class="multiField" id="starify">
