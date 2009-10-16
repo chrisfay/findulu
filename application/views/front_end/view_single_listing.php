@@ -12,7 +12,8 @@ if(! is_null($listing_details) && $listing_type === 'FREE') : ?>
 	<li><span>city:</span> <?php echo $listing_details->city ?></li>	
 	<li><span>state abbrev:</span> <?php echo $listing_details->state_prefix ?></li>	
 	<li><span>zip:</span> <?php echo $listing_details->zip ?></li>					
-	<li><span>listing_ad_filename:</span><br><img src="<?php echo base_url() . 'uploads/' .$this->config->item('ulu_default_listing_ad_image')?>" alt="ad image" /></li>	
+	<li><img src="<?php echo base_url() . 'uploads/' .$this->config->item('ulu_default_listing_ad_image')?>" alt="ad image" /></li>	
+	<li><img src="<?php echo base_url() . 'uploads/' .$this->config->item('ulu_default_listing_coupon_image')?>" alt="coupon image" /></li>	
 </ul>
 
 <?php elseif(! is_null($listing_details) && $listing_type === 'PREMIUM') : ?>
