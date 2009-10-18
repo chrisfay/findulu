@@ -25,6 +25,7 @@ class Review extends Controller
 			'tags'				 => NULL,
 			'listing_id'   		 => NULL,			
 			'rating_allowed'     => TRUE,
+			'rating_value' 		 => NULL,
 		);
 	}
 	
@@ -99,7 +100,13 @@ class Review extends Controller
 		if($this->input->post('create_review')) 		
 			$this->_process_review_form($listing_id);					
 		else
-		{					
+		{	
+			//form was not submitted, show default review page
+			if($this->model_reviews->rating_already_submitted($this->session->userdata('user_id'), $listing_id))
+			{
+				$this->view_content['rating_allowed'] = FALSE;				
+				$this->view_content['rating_value']   = $this->model_reviews->get_rating($this->session->userdata('user_id'), $listing_id);												
+			}
 			$this->view_content['listing_id'] = $listing_id;
 			$this->_show_review_form();	
 			return;			

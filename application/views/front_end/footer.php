@@ -17,6 +17,20 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.uni-form.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/ui.core.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/ui.stars.js"></script>	
+
+<script type="text/javascript">
+	$(function(){
+		$("#starify").children().not(":input").hide();
+		
+		// Create stars from :radio boxes
+		$("#starify").stars({
+			cancelShow: false,
+			<?php echo ((! $rating_allowed) ? 'disabled: true' : '') ?>
+		});
+		
+		<?php echo ((! $rating_allowed) ? '$("#starify").stars("select", '.$rating_value.');' : '') ?>
+	});
+</script>
 <?php endif;?>
 </body>
 </html>

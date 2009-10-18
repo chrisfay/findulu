@@ -33,6 +33,17 @@ class Model_reviews extends Model
 		$this->db->insert('ratings', array('user_id' => $user_id, 'listing_id' => $listing_id, 'rating'=> $rating_value, 'created' => gmdate("Y-m-d H:i:s", time())));
 		return $this->db->affected_rows() > 0;
 	}
+	
+	//return the star rating value for the give listing based on the user
+	function get_rating($user_id, $listing_id)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->where('listing_id', $listing_id);
+		$query = $this->db->get('ratings'); 
+		
+		$row = $query->row();				
+		return $row->rating;
+	}
 }
 
 /* End of file model_reviews.php */

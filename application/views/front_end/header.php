@@ -13,18 +13,7 @@
 
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery-1.3.1.min.js"></script>
 
-<?php if($review_page) : ?>
-<script type="text/javascript">
-	$(function(){
-		$("#starify").children().not(":input").hide();
-		
-		// Create stars from :radio boxes
-		$("#starify").stars({
-			cancelShow: false
-		});
-	});
-</script>
-<?php endif; ?>
+
 
 
 <!--[if IE 6]>
