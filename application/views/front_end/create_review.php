@@ -25,6 +25,23 @@ $video = array(
 		<li>Total ratings: <?php echo $total_rating_count ?></li>
 		<li>Rating average: <?php echo (($rating_average == 0) ? 'Unrated' : $rating_average); ?></li>
 	</ul>
+	<!-- display any messages -->
+	<?php if((sizeof($messages) > 0)) :	?>
+		<ul class="messages">
+		<?php foreach($messages as $message) : ?>			
+			<li><?php echo $message ?></li>			
+		<?php endforeach; ?>
+		</ul>
+	<?php endif; ?>
+	
+	<!-- display any errors -->
+	<?php if((sizeof($errors) > 0)) :	?>
+		<ul class="errors">
+		<?php foreach($errors as $error) : ?>			
+			<li><?php echo $error ?></li>			
+		<?php endforeach; ?>
+		</ul>
+	<?php endif; ?>
 	
 	<?php echo form_open_multipart($this->uri->uri_string(),array('class'=>'uniForm')); ?>
 	

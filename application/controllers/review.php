@@ -143,7 +143,7 @@ class Review extends Controller
 		else
 		{
 			//rating is out of range
-			if(! in_array($this->input->post('vote'), range(0, 5)))
+			if(! in_array($this->input->post('vote'), range(1, 5)))
 			{
 				$this->view_content['errors']['invalid_rating'] = "Rating must be within 1 - 5";
 				$this->_show_review_form();			

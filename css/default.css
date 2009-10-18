@@ -88,7 +88,7 @@ ul.nav li a{display:block;float:left;height:52px;margin-top:1px;}
 
 /*footer*/
 #footerWrapper{background:url('../images/footerBorder.jpg') repeat-x;}
-#footer{width:960px;margin:0 auto;padding-top:15px;}
+#footer{width:960px;margin:0 auto;padding:15px 0;}
 #footer a{color:#666666;}
 #footer a:hover{color:#000;}
 
