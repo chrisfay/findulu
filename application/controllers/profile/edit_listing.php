@@ -190,8 +190,8 @@ class Edit_listing extends Controller
 		$config['upload_path']   = $this->config->item('ulu_upload_path');
 		$config['allowed_types'] = 'gif|jpg|png';
 		$config['max_size']      = '1000';
-		$config['max_width']     = '600';
-		$config['max_height']    = '400';		
+		$config['max_width']     = '720';
+		$config['max_height']    = '300';		
 		$field_name              = 'ad';		
 		
 		$this->load->library('upload', $config);	
@@ -222,8 +222,8 @@ class Edit_listing extends Controller
 		$config['upload_path']   = $this->config->item('ulu_upload_path');
 		$config['allowed_types'] = 'gif|jpg|png';
 		$config['max_size']      = '1000';
-		$config['max_width']     = '400';
-		$config['max_height']    = '400';		
+		$config['max_width']     = '720';
+		$config['max_height']    = '300';		
 		$field_name              = 'coupon';		
 		
 		$this->load->library('upload', $config);	
