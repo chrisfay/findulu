@@ -13,19 +13,23 @@ class Search extends Controller
 		$this->load->library('form_validation');				
 		$this->load->library('validation');					
 		$this->load->library('load_view');
+		$this->load->library('lib_review');		
 		$this->load->library('sphinx');
 		$this->load->library('lib_zipcode');
 		$this->load->model('front_end/model_search');		
+		$this->load->model('model_reviews');	
+		$this->load->model('model_listing');		
 		$this->validation->set_error_delimiters('<div class="error">','</div>');		
 		
 		//all default data that should be included when passed to the search results view
-		$this->view_content['content'] = array(
-			'username'          => $this->session->userdata('username'),
-			'search_results'    => NULL,
-			'message'           => '',
-			'error'            =>  '',
-			'search_type'       => 'listings',
-		);
+		$this->view_content = array(
+			'username'          			=> $this->session->userdata('username'),
+			'search_results'    			=> NULL,
+			'search_results_review_data'	=> array(), //multi-d array of review details for each search results
+			'message'           			=> '',
+			'error'            				=>  '',
+			'search_type'       			=> 'listings',			
+		);		
 	}
 	
 	//run a search against the database
@@ -80,7 +84,7 @@ class Search extends Controller
 	function _no_listing_results($msg)
 	{		
 		//load default search page - no search was submitted
-		$this->view_content['content']['message'] = $msg;
+		$this->view_content['message'] = $msg;
 		$data['content'] = $this->load->view('front_end/search_results', $this->view_content, TRUE);
 		$this->load_view->_loadDefaultTemplate($data, 'SEARCH_RESULTS');		
 		return;
@@ -226,6 +230,19 @@ class Search extends Controller
 		}
 	}
 	
+	//takes a db object of search results and builds out the search_results_review_data for each record
+	function _build_search_review_data($search_results_obj)
+	{
+		foreach($search_results_obj->result() as $row) 
+		{				
+			//get ratings and compute average			
+			$rating_count   = $this->view_content['search_results_review_data'][$row->listing_id]['total_rating_count']  = $this->model_reviews->get_total_ratings_count($row->listing_id);
+			$rating_sum     = $this->view_content['search_results_review_data'][$row->listing_id]['total_rating_sum']    = $this->model_reviews->get_total_ratings_sum($row->listing_id);															
+			$rating_average = $this->view_content['search_results_review_data'][$row->listing_id]['rating_average']      = $this->lib_review->compute_rating_average($rating_sum,$rating_count);
+			$this->view_content['search_results_review_data'][$row->listing_id]['rating_value_global'] = $rating_average;
+		}
+	}
+	
 	//display listings
 	//pass the data to be displayed on the search results page
 	//returns VOID
@@ -251,7 +268,11 @@ class Search extends Controller
 			return;
 		}		
 				
-		$this->view_content['content']['search_results'] = $this->model_search->get_search_results($result['matches']); //get listing_id's from our db				
+		$this->view_content['search_results'] = $this->model_search->get_search_results($result['matches']); //get listing_id's from our db				
+		$this->_build_search_review_data($this->view_content['search_results']);
+		
+		
+		
 		$data['content'] = $this->load->view('front_end/search_results', $this->view_content, TRUE);
 		$this->load_view->_loadDefaultTemplate($data, 'SEARCH_RESULTS');		
 		return;

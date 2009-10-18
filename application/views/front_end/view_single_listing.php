@@ -8,7 +8,7 @@ echo '<h3>Listing Details</h3>';
 		<li>Total ratings: <?php echo $total_rating_count ?></li>
 		<li>Rating average: <?php echo (($rating_average == 0) ? 'Unrated' : $rating_average); ?></li>
 	</ul>
-	<div class="multiField" id="starify">
+	<div class="starify multiField">
 		<label for="vote1" class="blockLabel"><input type="radio" name="vote" id="vote1" value="1" /> Poor</label>
 		<label for="vote2" class="blockLabel"><input type="radio" name="vote" id="vote2" value="2" /> Fair</label>
 		<label for="vote3" class="blockLabel"><input type="radio" name="vote" id="vote3" value="3" checked="checked" /> Average</label>

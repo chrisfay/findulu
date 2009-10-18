@@ -59,7 +59,7 @@ $video = array(
 		<fieldset class="inlineLabels">								
 			<div class="clear"></div>
 			<div class="ctrlHolder">		
-				<div class="multiField" id="starify">
+				<div class="starify multiField">
 					<label for="vote1" class="blockLabel"><input type="radio" name="vote" id="vote1" value="1" /> Poor</label>
 					<label for="vote2" class="blockLabel"><input type="radio" name="vote" id="vote2" value="2" /> Fair</label>
 					<label for="vote3" class="blockLabel"><input type="radio" name="vote" id="vote3" value="3" checked="checked" /> Average</label>

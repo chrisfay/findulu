@@ -21,29 +21,29 @@
 <?php if($review_page): ?>
 <script type="text/javascript">
 	$(function(){
-		$("#starify").children().not(":input").hide();
+		$(".starify").children().not(":input").hide();
 		
 		// Create stars from :radio boxes
-		$("#starify").stars({
+		$(".starify").stars({
 			cancelShow: false,
 			<?php echo ((! $rating_allowed) ? 'disabled: true' : '') ?>
 		});
 		
-		<?php echo ((! $rating_allowed) ? '$("#starify").stars("select", '.$rating_value_user.');' : '$("#starify").stars("select", '.$rating_value_global.');') ?>
+		<?php echo ((! $rating_allowed) ? '$(".starify").stars("select", '.$rating_value_user.');' : '$(".starify").stars("select", '.$rating_value_global.');') ?>
 	});
 </script>
 <?php elseif($single_listing_page) : ?>
 <script type="text/javascript">
 	$(function(){
-		$("#starify").children().not(":input").hide();
+		$(".starify").children().not(":input").hide();
 		
 		// Create stars from :radio boxes
-		$("#starify").stars({
+		$(".starify").stars({
 			cancelShow: false,
 			disabled: true
 		});
 		
-		<?php echo '$("#starify").stars("select", '.$rating_value_global.');'; ?>
+		<?php echo '$(".starify").stars("select", '.$rating_value_global.');'; ?>
 	});
 </script>
 <?php endif; ?>
