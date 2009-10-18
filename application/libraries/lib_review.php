@@ -22,7 +22,7 @@ class Lib_review
 				
 		return round($ratings_sum / $total_ratings_count);
 	}
-}
+}		
 
 
 /* End of file lib_review.php */

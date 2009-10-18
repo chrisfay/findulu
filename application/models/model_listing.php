@@ -77,7 +77,18 @@ class Model_listing extends Model
 			return $query->row();
 		else
 			return FALSE;		
-	}	
+	}
+	
+	//checks whether a certain user is the owner of the listing
+	//RETURNS: TRUE if so, FALSE otherwise
+	function is_listing_owner($listing_id, $user_id)
+	{
+		$this->db->where('listing_id', $listing_id);
+		$this->db->where('user_id', $user_id);
+		$query = $this->db->get('listings',1);
+	
+		return $query->num_rows() == 1;
+	}
 }
 
 /* End of file model_listing.php */

@@ -19,7 +19,9 @@ echo '<h3>Listing Details</h3>';
 </div>
 
 <?php
-if(! is_null($listing_details) && $listing_type === 'FREE') : ?>
+if(! is_null($listing_details) && $listing_type === 'FREE') : 
+	$listing_type_short = 'free';
+?>
 	
 <ul class="listingDetails">	
 	<li><span>title:</span> <?php echo $listing_details->title ?></li>
@@ -33,7 +35,9 @@ if(! is_null($listing_details) && $listing_type === 'FREE') : ?>
 	<li><img src="<?php echo base_url() . 'uploads/' .$this->config->item('ulu_default_listing_coupon_image')?>" alt="coupon image" /></li>	
 </ul>
 
-<?php elseif(! is_null($listing_details) && $listing_type === 'PREMIUM') : ?>
+<?php elseif(! is_null($listing_details) && $listing_type === 'PREMIUM') : 
+	$listing_type_short = 'premium';
+?>
 	
 <ul class="listingDetails">	
 	<li><span>title:</span> <?php echo $listing_details->title ?></li>
@@ -61,4 +65,6 @@ Tags:
 	?>
 </ul>
 
-<a href="<?php echo base_url() . 'review/create_review/'.$listing_id.'/'.str_replace(' ', '-', $listing_details->title);?>">Write a review!</a>
+<?php echo anchor('review/create_review/'.$listing_id.'/'.str_replace(' ', '-', $listing_details->title), 'Write a review!'); ?><br />
+<?php echo (($is_owner) ? anchor('profile/edit_listing/'.$listing_type_short.'/'.$listing_id.'/'.str_replace(' ', '-', $listing_details->title), '[Edit listing]') : '');?>
+

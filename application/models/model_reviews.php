@@ -40,7 +40,7 @@ class Model_reviews extends Model
 		$this->db->select('rating');		
 		$this->db->where('user_id', $user_id);
 		$this->db->where('listing_id', $listing_id);
-		$query = $this->db->get('ratings'); 
+		$query = $this->db->get('ratings',1); 
 		
 		$row = $query->row();				
 		return $row->rating;

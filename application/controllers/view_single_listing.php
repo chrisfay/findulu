@@ -30,6 +30,7 @@ class View_single_listing extends Controller
 			'total_rating_count'   => NULL,
 			'total_rating_sum' 	   => NULL,
 			'rating_average' 	   => 0,
+			'is_owner'			   => FALSE,
 		);
 	}
 	
@@ -80,6 +81,7 @@ class View_single_listing extends Controller
 		$this->view_content['total_rating_sum']    = $this->model_reviews->get_total_ratings_sum($listing_id);															
 		$this->view_content['rating_average']      = $this->lib_review->compute_rating_average($this->view_content['total_rating_sum'],$this->view_content['total_rating_count']);
 		$this->view_content['rating_value_global'] = $this->view_content['rating_average'];		 
+		$this->view_content['is_owner']			   = $this->model_listing->is_listing_owner($listing_id, $this->session->userdata('user_id'));
 		$this->_listing_found();			
 	}
 	

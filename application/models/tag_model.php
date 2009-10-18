@@ -91,10 +91,7 @@ class Tag_model extends Model
 		$this->db->where('tag_text', $tag);
 		$query = $this->db->get('tags',1);
 	
-		if ( $query->num_rows() == 1 )		
-			return TRUE;
-		else
-			return FALSE;
+		return $query->num_rows() == 1;
 	}
 	
 	//get the id of the tag from the tag text
@@ -118,10 +115,7 @@ class Tag_model extends Model
 		$this->db->where('listing_id', $listing_id);
 		$query = $this->db->get('tag_mapping',1);
 	
-		if ( $query->num_rows() == 1 )		
-			return TRUE;
-		else
-			return FALSE;
+		return $query->num_rows() == 1;
 	}
 	
 	//clear out tag mapping entries for listing via listing_id
