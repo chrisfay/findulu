@@ -1,4 +1,20 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); //TODO: Complete form elements for review form?>
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); //TODO: Complete form elements for review form
+
+$audio = array(
+	'id'    => 'audio',
+	'name'  => 'audio',
+	'class' => 'input',
+	'value' => '',
+);
+
+$video = array(
+	'id'    => 'video',
+	'name'  => 'video',
+	'class' => 'input',
+	'value' => '',
+);
+
+?>
 
 <div class="review">
 	<!--listing details -->
@@ -7,8 +23,19 @@
 		<li><span>phone:</span> <?php echo $listing_details->phone ?></li>
 		<li><span>email:</span> <?php echo $listing_details->email ?></li>
 	</ul>
-
-	<form class="uniForm" action="<?php echo $this->uri->uri_string() ?>" method="post">
+	
+	<?php echo form_open_multipart($this->uri->uri_string(),array('class'=>'uniForm')); ?>
+	
+		<?php
+		echo form_label('Audio clip (15 pts):', $audio['id']);
+		echo $this->validation->audio_error;	
+		echo form_upload($audio);
+		echo "<br />";
+			
+		echo form_label('Video clip (30 pts):', $video['id']);
+		echo $this->validation->video_error;	
+		echo form_upload($video);
+		?>
 	
 		<fieldset class="inlineLabels">								
 			<div class="clear"></div>
@@ -24,10 +51,11 @@
 			</div>
 			
 			<label>Leave a review</label>
-			<textarea class="reviewText" rows="5" cols="8"></textarea>
+			<?php echo $this->validation->textReview_error;	?>
+			<textarea class="reviewText" name="textReview" rows="5" cols="8"></textarea>
 	
 			<div class="buttonHolder">
-				<button type="reset" class="resetButton">Reset</button>
+				<!--<button type="reset" class="resetButton">Reset</button>-->
 				<button type="submit" class="primaryAction">Submit</button>
 			</div>
 	
