@@ -11,19 +11,25 @@ class View_single_listing extends Controller
 		parent::__construct();
 		
 		$this->load->library('load_view');			 
+		$this->load->library('lib_review');	
 		$this->load->model('model_listing');		 
 		$this->load->model('tag_model');
+		$this->load->model('model_reviews');
 		 
 		 //all default data that should be included when passed to the search results view
 		$this->view_content = array(
-			'username'           => $this->session->userdata('username'),
-			'listing_details'    => NULL,
-			'message'            => NULL,
-			'error'              => NULL,			
-			'search_parm'		 => NULL,
-			'listing_type'		 => NULL,
-			'tags'				 => NULL,
-			'listing_id'   		 => NULL,			
+			'username'             => $this->session->userdata('username'),
+			'listing_details'      => NULL,
+			'message'              => NULL,
+			'error'                => NULL,			
+			'search_parm'		   => NULL,
+			'listing_type'		   => NULL,
+			'tags'				   => NULL,
+			'listing_id'   		   => NULL,			
+			'rating_value_global'  => 0,			
+			'total_rating_count'   => NULL,
+			'total_rating_sum' 	   => NULL,
+			'rating_average' 	   => 0,
 		);
 	}
 	
@@ -64,10 +70,16 @@ class View_single_listing extends Controller
 				break;
 			default: //something else - send to _no_listing_found
 				$this->_no_listing_found();
+				return;
 				break;
 		}		
 		
-		//TODO: load view_single_listing view with details info				 
+		//TODO: load view_single_listing view with details info		
+		//get ratings and compute average
+		$this->view_content['total_rating_count']  = $this->model_reviews->get_total_ratings_count($listing_id);
+		$this->view_content['total_rating_sum']    = $this->model_reviews->get_total_ratings_sum($listing_id);															
+		$this->view_content['rating_average']      = $this->lib_review->compute_rating_average($this->view_content['total_rating_sum'],$this->view_content['total_rating_count']);
+		$this->view_content['rating_value_global'] = $this->view_content['rating_average'];		 
 		$this->_listing_found();			
 	}
 	
@@ -75,7 +87,7 @@ class View_single_listing extends Controller
 	function _no_listing_found()
 	{		
 		$data['content'] = $this->load->view('front_end/no_listing_found', $this->view_content, TRUE);
-		$this->load_view->_loadDefaultTemplate($data, 'NO_LISTING_FOUND');		
+		$this->load_view->_loadDefaultTemplate($data, 'SINGLE_LISTING');		
 		return;
 	}
 	

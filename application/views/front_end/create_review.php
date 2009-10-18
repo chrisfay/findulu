@@ -22,6 +22,8 @@ $video = array(
 		<li><?php echo $listing_details->title ?></li>
 		<li><span>phone:</span> <?php echo $listing_details->phone ?></li>
 		<li><span>email:</span> <?php echo $listing_details->email ?></li>
+		<li>Total ratings: <?php echo $total_rating_count ?></li>
+		<li>Rating average: <?php echo (($rating_average == 0) ? 'Unrated' : $rating_average); ?></li>
 	</ul>
 	
 	<?php echo form_open_multipart($this->uri->uri_string(),array('class'=>'uniForm')); ?>

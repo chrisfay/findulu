@@ -9,6 +9,7 @@ class Review extends Controller
 		$this->load->library('load_view');			 
 		$this->load->library('form_validation');				
 		$this->load->library('validation');
+		$this->load->library('lib_review');
 		$this->load->model('model_listing');		 
 		$this->load->model('tag_model');
 		$this->load->model('model_reviews');
@@ -16,16 +17,20 @@ class Review extends Controller
 		 
 		 //all default data that should be included when passed to the search results view
 		$this->view_content = array(
-			'username'           => $this->session->userdata('username'),
-			'listing_details'    => NULL,
-			'messages'           => array(),
-			'errors'             => array(),			
-			'search_parm'		 => NULL,
-			'listing_type'		 => NULL,
-			'tags'				 => NULL,
-			'listing_id'   		 => NULL,			
-			'rating_allowed'     => TRUE,
-			'rating_value' 		 => NULL,
+			'username'             => $this->session->userdata('username'),
+			'listing_details'      => NULL,
+			'messages'             => array(),
+			'errors'               => array(),			
+			'search_parm'		   => NULL,
+			'listing_type'		   => NULL,
+			'tags'				   => NULL,
+			'listing_id'   		   => NULL,			
+			'rating_allowed'       => TRUE,
+			'rating_value_global'  => 0,
+			'rating_value_user'    => 0,
+			'total_rating_count'   => NULL,
+			'total_rating_sum' 	   => NULL,
+			'rating_average' 	   => 0,
 		);
 	}
 	
@@ -58,7 +63,7 @@ class Review extends Controller
 		$this->load_view->_loadDefaultTemplate($data, 'REVIEW_LISTING');		
 		return;				
 	}
-		
+			
 	//manage a new review request via 'Write review' link
 	function create_review($listing_id = NULL)
 	{
@@ -85,8 +90,7 @@ class Review extends Controller
 			return;
 		}
 		
-		//TODO: sanitize listing_id input received		
-							
+		//TODO: sanitize listing_id input received								
 		//TODO: check if user has already left a review for this listing, if so, inform them somehow and pre-populate whatever review info they've created so far		
 		
 		
@@ -94,8 +98,14 @@ class Review extends Controller
 		{
 			$this->_no_listing_found();
 			return;
-		}													
+		}
 		
+		//get ratings and compute average
+		$this->view_content['total_rating_count']  = $this->model_reviews->get_total_ratings_count($listing_id);
+		$this->view_content['total_rating_sum']    = $this->model_reviews->get_total_ratings_sum($listing_id);															
+		$this->view_content['rating_average']      = $this->lib_review->compute_rating_average($this->view_content['total_rating_sum'],$this->view_content['total_rating_count']);
+		$this->view_content['rating_value_global'] = $this->view_content['rating_average'];
+						
 		//check if form was submitted, if so lets process it, otherwise, show form
 		if($this->input->post('create_review')) 		
 			$this->_process_review_form($listing_id);					
@@ -104,8 +114,8 @@ class Review extends Controller
 			//form was not submitted, show default review page
 			if($this->model_reviews->rating_already_submitted($this->session->userdata('user_id'), $listing_id))
 			{
-				$this->view_content['rating_allowed'] = FALSE;				
-				$this->view_content['rating_value']   = $this->model_reviews->get_rating($this->session->userdata('user_id'), $listing_id);												
+				$this->view_content['rating_allowed']    = FALSE;				
+				$this->view_content['rating_value_user'] = $this->model_reviews->get_rating($this->session->userdata('user_id'), $listing_id); //show the user's rating if he's submitted one, otherwise the global average rating												
 			}
 			$this->view_content['listing_id'] = $listing_id;
 			$this->_show_review_form();	

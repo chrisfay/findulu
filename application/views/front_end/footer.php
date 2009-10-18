@@ -13,11 +13,12 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.simplemodal.js"></script>
 <?php endif; ?>
 
-<?php if($review_page): ?>
+
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.uni-form.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/ui.core.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/ui.stars.js"></script>	
 
+<?php if($review_page): ?>
 <script type="text/javascript">
 	$(function(){
 		$("#starify").children().not(":input").hide();
@@ -28,9 +29,23 @@
 			<?php echo ((! $rating_allowed) ? 'disabled: true' : '') ?>
 		});
 		
-		<?php echo ((! $rating_allowed) ? '$("#starify").stars("select", '.$rating_value.');' : '') ?>
+		<?php echo ((! $rating_allowed) ? '$("#starify").stars("select", '.$rating_value_user.');' : '$("#starify").stars("select", '.$rating_value_global.');') ?>
 	});
 </script>
-<?php endif;?>
+<?php elseif($single_listing_page) : ?>
+<script type="text/javascript">
+	$(function(){
+		$("#starify").children().not(":input").hide();
+		
+		// Create stars from :radio boxes
+		$("#starify").stars({
+			cancelShow: false,
+			disabled: true
+		});
+		
+		<?php echo '$("#starify").stars("select", '.$rating_value_global.');'; ?>
+	});
+</script>
+<?php endif; ?>
 </body>
 </html>

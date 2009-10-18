@@ -6,15 +6,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="<?php echo base_url() ?>css/reset.css" />
 <link rel="stylesheet" href="<?php echo base_url() ?>css/simple_model.css" />
-<?php echo (($review_page) ? '<link rel="stylesheet" href="'.base_url().'css/uni-form.css" />' : '') ?>
-<?php echo (($review_page) ? '<link rel="stylesheet" href="'.base_url().'css/crystal-stars.css" />' : '') ?>
+<link rel="stylesheet" href="<?php echo base_url() ?>css/uni-form.css" />
+<link rel="stylesheet" href="<?php echo base_url() ?>css/crystal-stars.css" />
 <link rel="stylesheet" href="<?php echo base_url() ?>css/default.css" />
 
-
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery-1.3.1.min.js"></script>
-
-
-
 
 <!--[if IE 6]>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>css/ie6.css" />
