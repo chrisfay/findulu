@@ -22,28 +22,7 @@ class Load_view
 		
 		return $nav;
 	}
-	
-	//builds out the strings to add into the search and location input boxes
-	function repopulate_search_fields()
-	{
-		$input_values = array('search_term' => 'Search for business or service here...', 'search_location' => 'City, State or Zip'); //the values that will be returned ie $input_values = array('search_term' => 'string, 'seach_location' =>'ks')
-		
-		if($this->ci->input->post('search_term') || $this->ci->input->post('search_location'))
-		{
-			$input_values['search_term']     = form_prep($this->ci->input->post('search_term'));
-			$input_values['search_location'] = form_prep($this->ci->input->post('search_location'));
-			//$input_values['search_location'] = ((strlen($this->ci->input->post('search_location')) > 0) ? form_prep($this->ci->input->post('search_location')) : 'City, State or Zip');
-		}
-		else if($this->ci->uri->segment(3) || $this->ci->uri->segment(4))
-		{
-			$input_values['search_term']     = form_prep($this->ci->uri->segment(3));
-			$input_values['search_location'] = form_prep($this->ci->uri->segment(4));
-			//$input_values['search_location'] = (($this->ci->uri->segment(4)) ? form_prep($this->ci->uri->segment(4)) : 'City, State or Zip');			
-		}
-		
-		return $input_values;
-	}
-	
+			
 	//default template loader - helper library to build template view for main content
 	//$data is the data to pass to the view
 	//$define is the page name to define in the header - used to style links and pages properly
@@ -58,8 +37,7 @@ class Load_view
 		$data['define']  			 = $definePageName;			
 		$data['username'] 			 = $this->ci->session->userdata('username');
 		$data['single_listing_page'] = $definePageName === 'SINGLE_LISTING';
-		$data['review_page'] 		 = $definePageName === 'REVIEW_LISTING';
-		$data['input_values']		 = $this->repopulate_search_fields();
+		$data['review_page'] 		 = $definePageName === 'REVIEW_LISTING';		
 						 	
 		$this->ci->load->view('front_end/default_layout', array(
 			'header'    => $this->ci->load->view('front_end/header', $data, true),			

@@ -67,16 +67,22 @@ class Search extends Controller
 		//check whether the search is from input fields or url
 		if($this->input->post('search_term') || $this->input->post('search_location'))
 		{			
-			$search_term     = $this->input->post('search_term');
-			$search_location = $this->input->post('search_location');
-			$search_from_url = FALSE;			
+			$search_term     = $this->sanitize_input($this->input->post('search_term'));
+			$search_location = $this->sanitize_input($this->input->post('search_location'));
+			$search_from_url = FALSE;						
 		}
 		else
 		{
-			$search_term      = $search_term_parm;			
-			$search_location = (($search_location_parm == 'empty') ? '' : $search_location_parm);				
+			$search_term      = $this->sanitize_input($search_term_parm);			
+			$search_location = (($search_location_parm == 'empty') ? '' : $this->sanitize_input($search_location_parm));				
 			$search_from_url  = TRUE;			
-		}		 
+		}				
+		
+		//set the session userdata			
+		$this->session->set_userdata(array(
+			'search_term' 	  => $search_term,
+			'search_location' => $search_location,
+		));		 		
 		
 		//if search_term is empty we should throw an error message
 		if(strlen($search_term) <= 0 || is_null($search_term) || $search_term === 'Search for business or service here...')
@@ -95,11 +101,7 @@ class Search extends Controller
 				return;
 			}
 		}
-		
-		//one last sanatization of any field input data
-		$search_term     = $this->sanitize_input($search_term);
-		$search_location = $this->sanitize_input($search_location);
-		
+				
 		if($search_location === 'City, State or Zip' || strlen($search_location) <= 0 || is_null($search_location)) //location wasn't submitted
 			$search_location = '';
 		if($search_term === 'Search for business or service here...' || strlen($search_term) <= 0) //term wasn't submitted
@@ -137,7 +139,7 @@ class Search extends Controller
 	{
 		//TODO: finnish search input sanitization function		
 		//make sure a search term was submitted (if by url, since we don't use validation on urls)
-		return $str;
+		return trim($str);
 	}
 	
 	/* build_search_location_string
@@ -318,9 +320,9 @@ class Search extends Controller
 		//pagination stuff	
 		$search_location = ((strlen($search_location) <= 0) ? 'empty' : $search_location);			
 		$this->load->library('pagination');
-		$config['base_url'] = base_url() .'search/listings/'.$search_term.'/'.$search_location.'/';
-		$config['total_rows'] = $this->model_search->count_search_results($result['matches']);
-		$per_page = $config['per_page'] = '2';	
+		$config['base_url']    = base_url() .'search/listings/'.$search_term.'/'.$search_location.'/';
+		$config['total_rows']  = $this->model_search->count_search_results($result['matches']);
+		$per_page              = $config['per_page'] = '4';	
 		$config['uri_segment'] = '5'; 			
 		$this->pagination->initialize($config);	
 		$this->view_content['pagination_markup'] = $this->pagination->create_links();			
