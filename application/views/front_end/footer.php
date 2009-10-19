@@ -25,8 +25,8 @@
 		
 		// Create stars from :radio boxes
 		$(".starify").stars({
-			cancelShow: false,
-			<?php echo ((! $rating_allowed) ? 'disabled: true' : '') ?>
+			<?php echo ((! $rating_allowed) ? 'disabled: true,' : '') ?>
+			cancelShow: false			
 		});
 		
 		<?php echo ((! $rating_allowed) ? '$(".starify").stars("select", '.$rating_value_user.');' : '$(".starify").stars("select", '.$rating_value_global.');') ?>

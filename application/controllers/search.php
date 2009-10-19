@@ -318,11 +318,11 @@ class Search extends Controller
 		}		
 			
 		//pagination stuff	
-		$search_location = ((strlen($search_location) <= 0) ? 'empty' : $search_location);			
+		$search_location = ((strlen($search_location) <= 0) ? 'empty' : $search_location); //set empty location to a string so url still works			
 		$this->load->library('pagination');
 		$config['base_url']    = base_url() .'search/listings/'.$search_term.'/'.$search_location.'/';
 		$config['total_rows']  = $this->model_search->count_search_results($result['matches']);
-		$per_page              = $config['per_page'] = '4';	
+		$per_page              = $config['per_page'] = $this->config->item('ulu_max_search_results');	
 		$config['uri_segment'] = '5'; 			
 		$this->pagination->initialize($config);	
 		$this->view_content['pagination_markup'] = $this->pagination->create_links();			

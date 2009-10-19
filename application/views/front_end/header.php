@@ -90,8 +90,8 @@ $submit = array(
 		<?php echo form_open('search/listings', array('id'=>'searchForm'));?>
 			<div class="inputs">
 				<!--Only repopulate form elements if page is NOT the home page -->
-				<input type="text" name="search_term" id="search_term" value="<?php echo (($this->session->userdata('search_term')) ? $this->session->userdata('search_term') : 'not set' ); ?>" />
-				<input type="text" name="search_location" id="search_location" value="<?php echo (($this->session->userdata('search_location')) ? $this->session->userdata('search_location') : 'empty' ); ?>" />
+				<input type="text" name="search_term" id="search_term" value="<?php echo (($this->session->userdata('search_term')) ? form_prep($this->session->userdata('search_term')) : 'Search for business or service here...' ); ?>" />
+				<input type="text" name="search_location" id="search_location" value="<?php echo (($this->session->userdata('search_location')) ? form_prep($this->session->userdata('search_location')) : 'City, State or Zip' ); ?>" />
 			</div>
 			<?php echo form_submit($submit); ?>
 			<?php echo form_hidden('listing_search_submitted','1'); ?>
