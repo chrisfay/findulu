@@ -48,7 +48,7 @@ h6{font-size:10px;line-height:12px;}
 #searchForm {display:block;z-index:100;position:absolute;left:300px;width:664px;top:125px;}
 .inputs{display:block;width:601px;height:74px;background:url('../images/inputsBG.jpg') no-repeat;padding-top:23px;float:left;margin-right:5px;}
 #searchForm input{display:block;float:left;padding:7px;background:none;border:none;color:#fff;font-size:14px;}
-#searchForm #search_term{width:360px;margin:0 44px 0 35px;}
+#searchForm #search_term{width:360px;margin:0 46px 0 35px;}
 #searchForm #search_location{width:60px;width:110px;}
 #searchForm .submit{display:block;width:57px;height:73px;background:url('../images/submit.jpg') no-repeat;cursor:pointer;}
 
@@ -56,8 +56,8 @@ h6{font-size:10px;line-height:12px;}
 	#shortPage #searchForm {display:block;z-index:100;position:absolute;left:180px;width:780px;top:43px;}
 	#shortPage .inputs{display:block;width:733px;height:56px;background:url('../images/inputsBG_short.jpg') no-repeat;padding-top:13px;float:left;margin-right:1px;}
 	#shortPage #searchForm input{display:block;float:left;padding:7px;background:none;border:none;color:#fff;font-size:12px;}
-	#shortPage #searchForm #search_term{width:435px;margin:0 32px 0 25px;}
-	#shortPage #searchForm #search_location{width:194px;}
+	#shortPage #searchForm #search_term{width:435px;margin:0 20px 0 25px;}
+	#shortPage #searchForm #search_location{width:216px;}
 	#shortPage #searchForm .submit{display:block;width:44px;height:56px;background:url('../images/submit_short.jpg') no-repeat;cursor:pointer;}
 	
 /*listing search results*/

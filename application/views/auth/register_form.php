@@ -1,37 +1,37 @@
 <?php
-if ($use_username) {
-	$username = array(
+if ($use_username = TRUE) {
+	$reg_username = array(
 		'name'	=> 'username',
-		'id'	=> 'username',
+		'id'	=> 'reg_username',
 		'value' => set_value('username'),
 		'maxlength'	=> $this->config->item('username_max_length', 'tank_auth'),
 		'size'	=> 30,
 	);
 }
-$email = array(
+$reg_email = array(
 	'name'	=> 'email',
-	'id'	=> 'email',
+	'id'	=> 'reg_email',
 	'value'	=> set_value('email'),
 	'maxlength'	=> 80,
 	'size'	=> 30,
 );
-$password = array(
+$reg_password = array(
 	'name'	=> 'password',
-	'id'	=> 'password',
+	'id'	=> 'reg_password',
 	'value' => set_value('password'),
 	'maxlength'	=> $this->config->item('password_max_length', 'tank_auth'),
 	'size'	=> 30,
 );
 $confirm_password = array(
 	'name'	=> 'confirm_password',
-	'id'	=> 'confirm_password',
+	'id'	=> 'reg_confirm_password',
 	'value' => set_value('confirm_password'),
 	'maxlength'	=> $this->config->item('password_max_length', 'tank_auth'),
 	'size'	=> 30,
 );
 $captcha = array(
 	'name'	=> 'captcha',
-	'id'	=> 'captcha',
+	'id'	=> 'reg_captcha',
 	'maxlength'	=> 8,
 );
 ?>
@@ -39,20 +39,20 @@ $captcha = array(
 <table>
 	<?php if ($use_username) { ?>
 	<tr>
-		<td><?php echo form_label('Username', $username['id']); ?></td>
-		<td><?php echo form_input($username); ?></td>
-		<td style="color: red;"><?php echo form_error($username['name']); ?><?php echo isset($errors[$username['name']])?$errors[$username['name']]:''; ?></td>
+		<td><?php echo form_label('Username', $reg_username['id']); ?></td>
+		<td><?php echo form_input($reg_username); ?></td>
+		<td style="color: red;"><?php echo form_error($reg_username['name']); ?><?php echo isset($errors[$reg_username['name']])?$errors[$reg_username['name']]:''; ?></td>
 	</tr>
 	<?php } ?>
 	<tr>
-		<td><?php echo form_label('Email Address', $email['id']); ?></td>
-		<td><?php echo form_input($email); ?></td>
-		<td style="color: red;"><?php echo form_error($email['name']); ?><?php echo isset($errors[$email['name']])?$errors[$email['name']]:''; ?></td>
+		<td><?php echo form_label('Email Address', $reg_email['id']); ?></td>
+		<td><?php echo form_input($reg_email); ?></td>
+		<td style="color: red;"><?php echo form_error($reg_email['name']); ?><?php echo isset($errors[$reg_email['name']])?$errors[$reg_email['name']]:''; ?></td>
 	</tr>
 	<tr>
-		<td><?php echo form_label('Password', $password['id']); ?></td>
-		<td><?php echo form_password($password); ?></td>
-		<td style="color: red;"><?php echo form_error($password['name']); ?></td>
+		<td><?php echo form_label('Password', $reg_password['id']); ?></td>
+		<td><?php echo form_password($reg_password); ?></td>
+		<td style="color: red;"><?php echo form_error($reg_password['name']); ?></td>
 	</tr>
 	<tr>
 		<td><?php echo form_label('Confirm Password', $confirm_password['id']); ?></td>
@@ -60,7 +60,7 @@ $captcha = array(
 		<td style="color: red;"><?php echo form_error($confirm_password['name']); ?></td>
 	</tr>
 
-	<?php if ($captcha_registration) {
+	<?php if ($captcha_registration = TRUE) {
 		if ($use_recaptcha) { ?>
 	<tr>
 		<td colspan="2">

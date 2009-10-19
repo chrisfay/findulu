@@ -3,8 +3,9 @@ $(document).ready(function () {
 		e.preventDefault();
 		$('#basic-modal-content').modal();
 	});
+	
 	/*
-	$('#basic-modal a.reg').click(function (e) {
+	$('#basic-modal a.register').click(function (e) {
 		e.preventDefault();
 		$('#basic-modal-content-reg').modal();
 	});*/
