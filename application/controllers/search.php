@@ -26,9 +26,10 @@ class Search extends Controller
 			'username'          			=> $this->session->userdata('username'),
 			'search_results'    			=> NULL,
 			'search_results_review_data'	=> array(), //multi-d array of review details for each search results
-			'message'           			=> '',
-			'error'            				=>  '',
-			'search_type'       			=> 'listings',			
+			'message'           			=> NULL,
+			'error'            				=> NULL,
+			'search_type'       			=> 'listings',	
+			'pagination_markup'				=> NULL,		
 		);		
 	}
 	
@@ -42,7 +43,8 @@ class Search extends Controller
 	}
 	
 	//search against listings database via sphinx and output results
-	function listings()
+	//search can be submitted via input fields or via url with parms
+	function listings($search_term_parm = NULL, $search_location_parm = NULL)
 	{							
 		//form rules
 		$rules['search_term']         = "trim|required|max_length[255]";		
@@ -53,26 +55,46 @@ class Search extends Controller
 		$fields['search_term']         = "Search term";		
 		$fields['search_location']     = "Search location";		
 		$this->validation->set_fields($fields);
-		
-		//search was not submitted, lets show default search page
-		if(! $search_term = $this->input->post('search_term'))
-		{
+				
+		//search was not submitted, lets show default search page		
+		//echo ((! $this->input->post('search_term')) ? 'not_populated' : 'populated');		
+		if(! $this->input->post('search_term') && is_null($search_term_parm))
+		{				
 			$this->_no_listing_results(NULL);
 			return;	
 		}
 		
-		//run validation		
-		if($this->validation->run() == FALSE)	
-		{				
-			$this->_no_listing_results("Form input errors");
-			return;
+		//check whether the search is from input fields or url
+		if($this->input->post('search_term'))
+		{
+			$search_term     = $this->input->post('search_term');
+			$search_location = $this->input->post('search_location');
+			$search_from_url = FALSE;
+		}
+		else
+		{
+			$search_term      = $search_term_parm;
+			//$search_location  = $search_location_parm;
+			$search_location = (($search_location_parm == 'empty') ? '' : $search_location_parm);				
+			$search_from_url  = TRUE;
+		}		 
+		
+		//only run validation if search was sent via form
+		if(! $search_from_url)
+		{
+			//run validation		
+			if($this->validation->run() == FALSE)	
+			{				
+				$this->_no_listing_results("Form input errors");
+				return;
+			}
 		}
 		
 		//one last sanatization of any field input data
 		$search_term     = $this->sanitize_input($search_term);
-		$search_location = $this->sanitize_input($this->input->post('search_location'));
+		$search_location = $this->sanitize_input($search_location);
 		
-		if($search_location === 'City, State or Zip' || strlen($search_location) <= 0) //location wasn't submitted
+		if($search_location === 'City, State or Zip' || strlen($search_location) <= 0 || is_null($search_location)) //location wasn't submitted
 			$search_location = '';
 		if($search_term === 'Search for business or service here...' || strlen($search_term) <= 0) //term wasn't submitted
 			$search_term = '';
@@ -107,7 +129,7 @@ class Search extends Controller
 	//cleanup the input parms
 	function sanitize_input($str)
 	{
-		//TODO: finnish search input sanitization function
+		//TODO: finnish search input sanitization function		
 		return $str;
 	}
 	
@@ -148,6 +170,16 @@ class Search extends Controller
 			}				
 							
 			return $local_output;		
+		}
+		
+		//State only (ie KS)
+		//match examples:
+		//ks
+		//KS		
+		else if(eregi('(^[a-zA-Z]{2}$)',$str))
+		{										
+			$str = trim($str);
+			return '@state_prefix  '. $str;																
 		}
 				
 		//City, State_Prefix
@@ -256,23 +288,29 @@ class Search extends Controller
 			$this->_no_listing_results("Search failed for some reason");
 			return;			
 		}	
-
-		//echo $search_term . ' ' .$this->build_search_location_string($search_location);		
-		
+				
 		//echo print_r($result);
 		//make sure we have some results
 		//echo sizeof($result['status']);
 		if($result['total_found'] == 0)
-		{
+		{				
 			$this->_no_listing_results("No results found");
 			return;
 		}		
-				
-		$this->view_content['search_results'] = $this->model_search->get_search_results($result['matches']); //get listing_id's from our db				
+			
+		//pagination stuff	
+		$search_location = ((strlen($search_location) <= 0) ? 'empty' : $search_location);	
+		$this->load->library('pagination');
+		$config['base_url'] = base_url() .'search/listings/'.$search_term.'/'.$search_location.'/';
+		$config['total_rows'] = $this->model_search->count_search_results($result['matches']);
+		$per_page = $config['per_page'] = '2';	
+		$config['uri_segment'] = '5'; 			
+		$this->pagination->initialize($config);	
+		$this->view_content['pagination_markup'] = $this->pagination->create_links();			
+								
+		$this->view_content['search_results'] = $this->model_search->get_search_results($result['matches'],$per_page, $this->uri->segment(5)); //get listing_id's from our db				
 		$this->_build_search_review_data($this->view_content['search_results']);
-		
-		
-		
+				
 		$data['content'] = $this->load->view('front_end/search_results', $this->view_content, TRUE);
 		$this->load_view->_loadDefaultTemplate($data, 'SEARCH_RESULTS');		
 		return;

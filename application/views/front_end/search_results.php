@@ -1,3 +1,5 @@
+<?php echo ((! is_null($message)) ? '<div class="message">'.$message.'</div>' : '');?>
+
 <?php echo $this->validation->error_string; ?>
 
 <?php 
@@ -50,6 +52,9 @@ if(! is_null($search_results))
 	$loop++;
 	}
 }
+
+echo ((! is_null($pagination_markup)) ? $pagination_markup : '');
+
 ?>
 		
 
