@@ -179,7 +179,7 @@ class Search extends Controller
 			return $local_output;		
 		}
 		
-		//State only (ie KS)
+		//State prefix only (ie KS)
 		//match examples:
 		//ks
 		//KS		
@@ -300,9 +300,19 @@ class Search extends Controller
 		//make sure we have some results
 		//echo sizeof($result['status']);
 		if($result['total_found'] == 0)
-		{				
-			$this->_no_listing_results("No results found");
-			return;
+		{		
+			//try one last ditch effort (search by state_name)						
+			if(! $result = $this->sphinx->Query($search_term . ' @state_name  '. $search_location))		
+			{				
+				$this->_no_listing_results("Search failed for some reason");
+				return;			
+			}
+			
+			if($result['total_found'] == 0)
+			{		
+				$this->_no_listing_results("No results found");
+				return;
+			}
 		}		
 			
 		//pagination stuff	
